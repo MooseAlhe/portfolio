@@ -16,6 +16,19 @@ export default function Experience() {
           command="git log --oneline"
         />
 
+        <p className={styles.subhead}>
+          A snapshot of where I&apos;ve worked and what the day-to-day actually
+          looked like.{" "}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.resumeLink}
+          >
+            full résumé →
+          </a>
+        </p>
+
         <ol className={styles.timeline}>
           {experience.map((job, i) => (
             <ScrollReveal
@@ -45,16 +58,39 @@ export default function Experience() {
                   </span>
                 </header>
 
-                <ul className={styles.bullets}>
-                  {job.bullets.map((b, idx) => (
-                    <li key={idx}>
-                      <span className={styles.bulletArrow} aria-hidden="true">
-                        ▸
-                      </span>
-                      {b}
-                    </li>
-                  ))}
-                </ul>
+                <p className={styles.blurb}>{job.blurb}</p>
+
+                {job.scope.length > 0 && (
+                  <div
+                    className={styles.chipRow}
+                    aria-label={`Scope at ${job.company}`}
+                  >
+                    <span className={styles.chipLabel}>scope</span>
+                    <div className={styles.chips}>
+                      {job.scope.map((s) => (
+                        <span key={s} className={styles.scopeChip}>
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {job.stack.length > 0 && (
+                  <div
+                    className={styles.chipRow}
+                    aria-label={`Stack at ${job.company}`}
+                  >
+                    <span className={styles.chipLabel}>stack</span>
+                    <div className={styles.chips}>
+                      {job.stack.map((s) => (
+                        <span key={s} className="tag">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </article>
             </ScrollReveal>
           ))}

@@ -60,16 +60,16 @@ export default function Hero() {
           <p className={`${styles.role} ${bootDone ? styles.roleIn : ""}`}>
             <span className="text-muted">&gt; </span>
             <span>{profile.role}</span>
-            <span className="text-dim"> — building distributed backend systems.</span>
+            <span className="text-dim"> — full-stack, building distributed systems.</span>
           </p>
 
           <p
             className={`${styles.tagline} ${bootDone ? styles.taglineIn : ""}`}
           >
-            Currently at <strong>Bank of America Merrill Lynch</strong>, owning
-            services in a trade-confirmation platform that processes millions of
-            daily institutional transactions. On the side, I prototype
-            AI-driven finance tools and reinforcement-learning agents.
+            Currently at <strong>Bank of America Merrill Lynch</strong>, working
+            across the stack on a trade-confirmation platform that processes
+            millions of daily institutional transactions. On the side, I
+            prototype AI-driven finance tools and reinforcement-learning agents.
           </p>
 
           <div className={`${styles.ctas} ${bootDone ? styles.ctasIn : ""}`}>

@@ -5,14 +5,14 @@ export const profile = {
   handle: "mustafa",
   host: "portfolio",
   role: "Software Engineer",
-  tagline: "Backend systems. Distributed trades. Curious about everything.",
+  tagline: "Full-stack engineer. Distributed systems. Curious about everything.",
   location: "New Jersey, USA",
   email: "mustafa.alhelawe@gmail.com",
   phone: "(732) 337-8562",
   github: "https://github.com/MooseAlhe",
   githubHandle: "MooseAlhe",
-  // Add your real LinkedIn URL by editing this string.
-  linkedin: "",
+  linkedin: "https://www.linkedin.com/in/mustafa-alhelawe-116391197",
+  linkedinHandle: "mustafa-alhelawe",
   resumePath: "/resume.pdf",
 } as const;
 
@@ -23,9 +23,9 @@ export const heroLines: string[] = [
 ];
 
 export const aboutBio: string[] = [
-  "I'm a software engineer based in New Jersey. I currently build backend services on the trade-confirmation and allocation platform at Bank of America Merrill Lynch, where my code handles millions of daily transactions across high-value institutional trades.",
-  "I gravitate toward distributed systems — anything that has to be fast, correct, and survive failure. Lately I've been spending evenings on personal projects: a Plaid-backed personal-finance app with shared-bill tracking, and a reinforcement-learning sandbox where I train PPO agents in custom Unity environments.",
-  "Outside the editor, I'm a Rutgers ECE grad who genuinely enjoys figuring out how things work — whether that's a trading protocol, a reward function, or a new framework I haven't tried yet.",
+  "Software engineer based in New Jersey. I work full-stack at Bank of America Merrill Lynch on a trade-confirmation platform that moves millions of daily institutional transactions.",
+  "Off-hours I'm usually building something — a Plaid-backed finance app right now, plus a reinforcement-learning sandbox for training PPO agents in Unity.",
+  "Rutgers ECE '22. I like distributed systems, figuring out how things work, and shipping.",
 ];
 
 export type SkillGroup = {
@@ -67,12 +67,7 @@ export const skills: SkillGroup[] = [
   },
   {
     label: "AI / ML",
-    items: [
-      "PyTorch",
-      "Scikit-learn",
-      "Reinforcement Learning",
-      "LLMs",
-    ],
+    items: ["PyTorch", "Scikit-learn", "Reinforcement Learning", "LLMs"],
   },
   {
     label: "Tools",
@@ -95,7 +90,12 @@ export type Job = {
   location: string;
   start: string;
   end: string;
-  bullets: string[];
+  /** One short conversational paragraph: what the day-to-day actually looks like. */
+  blurb: string;
+  /** Scale/scope chips — quick numbers a recruiter scans for. */
+  scope: string[];
+  /** Tech stack used in this specific role (different from global skills). */
+  stack: string[];
 };
 
 export const experience: Job[] = [
@@ -105,16 +105,15 @@ export const experience: Job[] = [
     location: "Jersey City, NJ",
     start: "Jan 2023",
     end: "Present",
-    bullets: [
-      "Own backend services within a distributed trade confirmation and allocation system processing millions of daily transactions across high-value institutional trades.",
-      "Built and maintained allocation workflows supporting 10+ distinct trade flows — matching, booking, confirmation, amendment, and cancellation across the full trade lifecycle.",
-      "Built services to ingest and link orders from upstream systems including FIX-based messaging and file-based workflows, enabling real-time trade matching and confirmation.",
-      "Led migration of 300+ client configurations to a new JSON schema in AMPS SOW, improving query performance and reducing ongoing manual support.",
-      "Replaced biweekly release-dependent YAML/Ansible onboarding flows with a self-service platform, letting operations onboard clients independently — no engineering bottleneck.",
-      "Designed approval and diff-review workflows for configuration changes, raising reliability and cutting production risk.",
-      "Enhanced search and filtering for the operations UI used to navigate high-volume datasets.",
-      "Led coordination of global teams to ensure zero-downtime rollout of next-generation architecture across 15+ production servers.",
+    blurb:
+      "I work full-stack on the trade-confirmation platform — the system that takes institutional orders and gets them matched, booked, and confirmed without anyone losing money. Scala services and ingestion pipelines on the backend, JavaScript/React on the operations UI, and zero-downtime rollouts across a distributed cluster in between. Most weeks are a mix of building new flows, getting ops out of release-cycle jail, and chasing down whatever is misbehaving in production.",
+    scope: [
+      "~M daily txns",
+      "10+ trade flows",
+      "15+ prod servers",
+      "300+ client configs",
     ],
+    stack: ["Scala", "JavaScript", "React", "AMPS", "Jenkins", "Splunk"],
   },
   {
     company: "Capri Holdings Limited",
@@ -122,58 +121,111 @@ export const experience: Job[] = [
     location: "East Rutherford, NJ",
     start: "Jun 2022",
     end: "Aug 2022",
-    bullets: [
-      "Performed vendor risk assessments on corporate partners; reviewed security policies to ensure best practices were in place when confidential information was at risk.",
-      "Used SIEM platforms (LogRhythm) to assist Level 2 & 3 security event investigations — including detecting unauthorized communications with banned IPs in shut-down locations.",
-      "Reviewed inbound suspicious emails for indicators of compromise using CrowdStrike's sandbox tooling.",
-    ],
+    blurb:
+      "A summer in corporate security. I sat with the SOC and triaged real Level 2/3 alerts — sometimes routine, sometimes someone's machine quietly phoning home to an IP nobody should be talking to. I also ran vendor risk reviews, which taught me that \"security\" is half tooling and half reading other companies' policies very carefully.",
+    scope: ["L2/L3 alert triage", "vendor risk reviews", "IOC review"],
+    stack: ["LogRhythm SIEM", "CrowdStrike", "Splunk-style workflows"],
   },
 ];
 
+/**
+ * Media item used in project covers and galleries.
+ * `type` defaults to "image". For videos, point `src` at an mp4/webm in /public/projects/<slug>/.
+ */
+export type Media = {
+  src: string;
+  alt: string;
+  type?: "image" | "video";
+  poster?: string;
+};
+
 export type Project = {
+  slug: string;
   name: string;
   tagline: string;
-  description: string;
+  summary: string;
+  period: string;
+  status: "active" | "completed" | "archived";
+  featured?: boolean;
   stack: string[];
+  overview: string[];
   highlights: string[];
-  // Optional links — leave blank if you don't want to surface them yet.
+  cover?: Media;
+  gallery?: Media[];
   links: {
     github?: string;
     demo?: string;
   };
-  period: string;
 };
 
 export const projects: Project[] = [
   {
-    name: "Finance App",
-    tagline: "Personal finance & shared bills",
-    description:
-      "Full-stack personal finance app with bank-account linking, expense tracking, shared bills, and automated repayment tracking across users.",
-    stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Plaid"],
-    highlights: [
-      "Designed the full-stack architecture for secure financial data access, user auth, and scalable workflows.",
-      "Integrated Plaid for spending breakdowns, recurring-expense views, contact-based tracking, and reporting.",
-      "Built server-side routes and API handlers for secure financial data retrieval and transaction syncing.",
-      "Prototyped AI-assisted workflows for natural-language spending queries, categorization help, and automated insights.",
+    slug: "echobound",
+    name: "Echobound",
+    tagline: "Multiplayer Extraction Roguelike",
+    summary:
+      "Multiplayer extraction roguelike in Unity 6. You play alongside an AI pet you can talk to through your mic — speech is transcribed and routed through an LLM that figures out what you actually meant.",
+    period: "Dec 2025 — Present",
+    status: "active",
+    featured: true,
+    stack: [
+      "Unity 6",
+      "C#",
+      "FishNet",
+      "Steamworks",
+      "whisper.unity",
+      "LLM",
+      "HDRP",
     ],
+    overview: [
+      "Echobound is a multiplayer extraction roguelike I'm building with a small team. The core hook is the companion system: instead of binding pet commands to a hotbar, you press-to-talk on your mic and tell the thing what to do — \"attack the big one,\" \"follow me,\" \"bolt the guy on the ridge\" — and it actually does it.",
+      "Audio is captured locally and transcribed with whisper.unity, the transcript runs through an LLM that interprets intent against the companion's available abilities, and the resulting command is dispatched through FishNet so every player on the server sees the same companion behavior. Steamworks handles lobbies and identity.",
+    ],
+    highlights: [],
     links: {},
-    period: "Feb 2026 — Present",
   },
   {
-    name: "AI Simulation Platform",
-    tagline: "Reinforcement learning in Unity",
-    description:
-      "Custom Unity ML-Agents environment for training autonomous agents with PPO, plus the surrounding training pipeline.",
-    stack: ["Unity", "C#", "Python", "ML-Agents", "PPO", "PyTorch"],
+    slug: "finance-app",
+    name: "Finance App",
+    tagline: "Personal finance & shared bills",
+    summary:
+      "Full-stack personal finance app with bank linking, shared bills, and AI-assisted spending insights.",
+    period: "Feb 2026 — Present",
+    status: "active",
+    featured: true,
+    stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Plaid"],
+    overview: [
+      "A personal finance app that does what bank apps refuse to — let people who share rent, utilities, and groceries actually settle up without a spreadsheet.",
+      "Plaid handles the bank linking and transaction sync, Supabase backs auth and storage, and a layer of LLM tooling translates natural-language questions like \"how much did I spend on coffee in March?\" into structured queries against the user's own data.",
+    ],
     highlights: [
-      "Built a modular simulation environment in Unity ML-Agents.",
-      "Designed reward systems, state observations, and training pipelines for iterative agent improvement.",
-      "Ran experiments, tuned hyperparameters, and analyzed performance metrics to improve learning stability.",
-      "Wrote production-style modular C# environment logic integrated with Python training pipelines.",
+      "Designed the full-stack architecture: auth, secure financial data access, transaction syncing.",
+      "Plaid integration powering spending breakdowns, recurring-expense views, and contact-based shared bills.",
+      "Server-side API routes for secure data retrieval and transaction reconciliation.",
+      "Prototyped AI workflows for natural-language spend queries and automated categorization.",
     ],
     links: {},
+  },
+  {
+    slug: "ai-simulation-platform",
+    name: "AI Simulation Platform",
+    tagline: "Reinforcement learning in Unity",
+    summary:
+      "Custom Unity ML-Agents environment for training autonomous agents with PPO + Python training pipelines.",
     period: "Jan 2025 — Present",
+    status: "active",
+    featured: true,
+    stack: ["Unity", "C#", "Python", "ML-Agents", "PPO", "PyTorch"],
+    overview: [
+      "A modular Unity environment for training reinforcement-learning agents end-to-end — environment, reward shaping, training pipeline, and analysis.",
+      "Wrote production-grade C# for the environment side and clean Python on the training side, with TensorBoard wired in for run comparison.",
+    ],
+    highlights: [
+      "Built a modular Unity ML-Agents environment with configurable reward systems and state observations.",
+      "Tuned PPO hyperparameters across experiments to improve learning stability.",
+      "Production-style C# integrated cleanly with Python training pipelines.",
+    ],
+    links: {},
   },
 ];
 

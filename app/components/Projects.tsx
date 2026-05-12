@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { projects } from "../lib/data";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeader from "./SectionHeader";
@@ -14,59 +15,37 @@ export default function Projects() {
 
         <div className={styles.grid}>
           {projects.map((p, i) => (
-            <ScrollReveal key={p.name} className={styles.card} delay={i * 100}>
-              <header className={styles.cardHeader}>
-                <span className={styles.folder} aria-hidden="true">
-                  ▢
-                </span>
-                <div className={styles.titles}>
-                  <h3 className={styles.name}>{p.name}</h3>
-                  <p className={styles.tagline}>{p.tagline}</p>
-                </div>
-                <span className={styles.period}>{p.period}</span>
-              </header>
+            <ScrollReveal key={p.slug} delay={i * 80}>
+              <Link
+                href={`/projects/${p.slug}`}
+                className={styles.card}
+                aria-label={`Open ${p.name} project details`}
+              >
+                <header className={styles.cardHeader}>
+                  <span className={styles.folder} aria-hidden="true">▢</span>
+                  <div className={styles.titles}>
+                    <h3 className={styles.name}>{p.name}</h3>
+                    <p className={styles.tagline}>{p.tagline}</p>
+                  </div>
+                  <span className={styles.period}>{p.period}</span>
+                </header>
 
-              <p className={styles.desc}>{p.description}</p>
+                <p className={styles.summary}>{p.summary}</p>
 
-              <ul className={styles.highlights}>
-                {p.highlights.slice(0, 3).map((h, idx) => (
-                  <li key={idx}>
-                    <span aria-hidden="true">›</span> {h}
-                  </li>
-                ))}
-              </ul>
-
-              <footer className={styles.cardFooter}>
-                <div className={styles.tags}>
-                  {p.stack.map((s) => (
-                    <span key={s} className="tag">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-                <div className={styles.links}>
-                  {p.links.github && (
-                    <a
-                      href={p.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${p.name} on GitHub`}
-                    >
-                      code →
-                    </a>
-                  )}
-                  {p.links.demo && (
-                    <a
-                      href={p.links.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${p.name} live demo`}
-                    >
-                      live →
-                    </a>
-                  )}
-                </div>
-              </footer>
+                <footer className={styles.cardFooter}>
+                  <div className={styles.tags}>
+                    {p.stack.slice(0, 5).map((s) => (
+                      <span key={s} className="tag">{s}</span>
+                    ))}
+                    {p.stack.length > 5 && (
+                      <span className="tag">+{p.stack.length - 5}</span>
+                    )}
+                  </div>
+                  <span className={styles.openArrow} aria-hidden="true">
+                    open &nbsp;→
+                  </span>
+                </footer>
+              </Link>
             </ScrollReveal>
           ))}
         </div>
