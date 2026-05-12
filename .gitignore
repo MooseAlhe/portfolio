@@ -36,3 +36,5 @@ next-env.d.ts
 
 # stray resume copies at root (canonical copy lives at public/resume.pdf)
 /Mustafa*Resume*.pdf
+
+.vercel

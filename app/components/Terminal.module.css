@@ -38,15 +38,9 @@
   height: 11px;
   border-radius: 50%;
 }
-.dot[data-c="r"] {
-  background: #ff5f56;
-}
-.dot[data-c="y"] {
-  background: #ffbd2e;
-}
-.dot[data-c="g"] {
-  background: #27c93f;
-}
+.dot[data-c="r"] { background: #ff5f56; }
+.dot[data-c="y"] { background: #ffbd2e; }
+.dot[data-c="g"] { background: #27c93f; }
 .title {
   margin-left: 12px;
   color: var(--fg-muted);
@@ -68,25 +62,9 @@
   color: var(--fg);
   font-family: var(--font-mono);
 }
-.input {
-  color: var(--fg);
-}
-.input.output {
-  color: var(--fg);
-}
-.line.system {
-  color: var(--fg-muted);
-}
-.line.error {
-  color: var(--danger);
-}
-.line.input {
-  color: var(--fg-muted);
-}
-.line.input::before {
-  /* The prompt is already in the text */
-  content: "";
-}
+.line.system { color: var(--fg-muted); }
+.line.error  { color: var(--danger); }
+.line.input  { color: var(--fg-muted); }
 
 .ascii {
   color: var(--accent);
@@ -98,31 +76,56 @@
   text-shadow: 0 0 8px var(--accent-glow);
 }
 
+/*
+ * Input row: prompt + visible typed-text + custom blinky caret + (optional hint).
+ * The real <input> sits invisibly on top so it still receives focus and keystrokes
+ * (and pops the mobile keyboard on tap). The visible "typed" span shows whatever
+ * the user has typed so the caret naturally sits at the end of that text.
+ */
 .inputRow {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0;
   margin-top: 4px;
+  position: relative;
+  min-height: 1.65em;
 }
 .prompt {
   color: var(--accent);
   white-space: pre;
   user-select: none;
 }
-.input {
-  flex: 1;
+.typed {
+  color: var(--fg);
+  white-space: pre;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  min-width: 1px;
+}
+.hint {
+  color: var(--fg-dim);
+  margin-left: 8px;
+  font-style: italic;
+  opacity: 0.7;
+  user-select: none;
+}
+.hiddenInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background: transparent;
   border: 0;
   outline: 0;
-  color: var(--fg);
-  font-family: var(--font-mono);
-  font-size: 13.5px;
   padding: 0;
   margin: 0;
-  caret-color: transparent; /* we render our own */
+  color: transparent;
+  caret-color: transparent;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
 }
-.input::placeholder {
-  color: var(--fg-dim);
+.hiddenInput::selection {
+  background: transparent;
 }
 
 .suggestRow {

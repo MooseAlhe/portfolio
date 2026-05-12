@@ -47,7 +47,6 @@ export default function Terminal() {
   const run = useCallback(
     (raw: string) => {
       const text = raw.trim();
-      // Echo the command in history view
       const echo: TerminalLine = { kind: "input", text: PROMPT + raw };
       setLines((prev) => [...prev, echo]);
 
@@ -65,7 +64,6 @@ export default function Terminal() {
         ]);
         return;
       }
-      // Run command synchronously or as promise — both are supported.
       const ctx = { print, clear, run };
       try {
         const maybe = cmd.run(args, ctx);
@@ -87,14 +85,12 @@ export default function Terminal() {
     [print, clear]
   );
 
-  // Auto-scroll on new output
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     el.scrollTop = el.scrollHeight;
   }, [lines]);
 
-  // Focus input when the terminal scrolls into view (desktop only)
   useEffect(() => {
     const node = scrollRef.current?.parentElement;
     if (!node) return;
@@ -117,7 +113,6 @@ export default function Terminal() {
     return () => obs.disconnect();
   }, []);
 
-  // Keyboard shortcuts: Ctrl+L clears
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "l") {
@@ -166,13 +161,11 @@ export default function Terminal() {
       if (e.key === "Tab") {
         e.preventDefault();
         const parts = input.split(/\s+/);
-        // Only autocomplete the command name (first token)
         if (parts.length === 1) {
           const matches = completeCommand(parts[0]);
           if (matches.length === 1) {
             setInput(matches[0] + " ");
           } else if (matches.length > 1) {
-            // Show possible completions
             print([
               { kind: "input", text: PROMPT + input },
               { kind: "output", text: matches.join("    ") },
@@ -205,6 +198,7 @@ export default function Terminal() {
   );
 
   const totalCommands = COMMAND_LIST.length;
+  const showHint = !input && lines.length <= WELCOME.length;
 
   return (
     <section id="terminal" className="section" aria-label="Interactive terminal">
@@ -248,16 +242,25 @@ export default function Terminal() {
                 {l.kind === "ascii" ? (
                   <pre className={styles.ascii}>{l.text}</pre>
                 ) : (
-                  l.text || " "
+                  l.text || " "
                 )}
               </div>
             ))}
 
             <div className={styles.inputRow}>
               <span className={styles.prompt}>{PROMPT}</span>
+              <span className={styles.typed} aria-hidden="true">
+                {input}
+              </span>
+              <span className="caret" aria-hidden="true" />
+              {showHint && (
+                <span className={styles.hint} aria-hidden="true">
+                  type &apos;help&apos;
+                </span>
+              )}
               <input
                 ref={inputRef}
-                className={styles.input}
+                className={styles.hiddenInput}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onKeyDown}
@@ -268,9 +271,7 @@ export default function Terminal() {
                 autoCapitalize="none"
                 autoCorrect="off"
                 aria-label="Terminal input — type a command"
-                placeholder={lines.length <= WELCOME.length ? "type `help`" : ""}
               />
-              <span className="caret" aria-hidden="true" />
             </div>
           </div>
         </div>
