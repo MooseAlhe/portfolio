@@ -23,6 +23,15 @@ export default function Footer() {
             github
           </a>
           <span className="text-dim">·</span>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            linkedin
+          </a>
+          <span className="text-dim">·</span>
           <a href={`mailto:${profile.email}`} aria-label="Email">
             email
           </a>

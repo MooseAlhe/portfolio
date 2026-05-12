@@ -6,11 +6,8 @@ export type TerminalLine = {
 };
 
 export type CommandContext = {
-  /** Append lines to the visible terminal output. */
   print: (lines: TerminalLine[] | TerminalLine) => void;
-  /** Clear the entire output. */
   clear: () => void;
-  /** Programmatically execute a command (used by clickable suggestions). */
   run: (cmd: string) => void;
 };
 
@@ -18,12 +15,9 @@ export type Command = {
   name: string;
   aliases?: string[];
   description: string;
-  /** Free-form usage string for `help` and `<cmd> --help` */
   usage?: string;
   run: (args: string[], ctx: CommandContext) => void | Promise<void>;
 };
-
-/* ----------------------------- helpers ----------------------------- */
 
 const line = (text = "", kind: TerminalLine["kind"] = "output"): TerminalLine => ({
   kind,
@@ -32,8 +26,6 @@ const line = (text = "", kind: TerminalLine["kind"] = "output"): TerminalLine =>
 
 const sys = (text: string): TerminalLine => ({ kind: "system", text });
 const err = (text: string): TerminalLine => ({ kind: "error", text });
-
-/* ----------------------------- commands ---------------------------- */
 
 const help: Command = {
   name: "help",
@@ -65,9 +57,10 @@ const whoami: Command = {
       line(""),
       line(profile.tagline),
       line(""),
-      line(`  email   : ${profile.email}`),
-      line(`  github  : github.com/${profile.githubHandle}`),
-      line(`  edu     : ${education.degree}, ${education.school} · ${education.year}`),
+      line(`  email    : ${profile.email}`),
+      line(`  github   : github.com/${profile.githubHandle}`),
+      line(`  linkedin : ${profile.linkedin}`),
+      line(`  edu      : ${education.degree}, ${education.school} · ${education.year}`),
     ]);
   },
 };
@@ -95,14 +88,15 @@ const projectsCmd: Command = {
       out.push(line(`  [${i + 1}] ${p.name} — ${p.tagline}`));
       out.push(line(`      stack: ${p.stack.join(", ")}`));
       out.push(line(`      when:  ${p.period}`));
+      out.push(line(`      url:   /projects/${p.slug}`));
       if (verbose) {
-        out.push(line(`      ${p.description}`));
+        out.push(line(`      ${p.summary}`));
         p.highlights.forEach((h) => out.push(line(`        · ${h}`)));
       }
       out.push(line(""));
     });
     if (!verbose) {
-      out.push(sys("Run `projects --verbose` for full details."));
+      out.push(sys("Run `projects --verbose` for details, or click a card to open it."));
     }
     print(out);
   },
@@ -117,10 +111,11 @@ const experienceCmd: Command = {
     experience.forEach((j) => {
       out.push(line(`  ${j.role} @ ${j.company}`));
       out.push(line(`  ${j.start} — ${j.end} · ${j.location}`));
-      j.bullets.slice(0, 4).forEach((b) => out.push(line(`    · ${b}`)));
-      if (j.bullets.length > 4) {
-        out.push(line(`    · …+${j.bullets.length - 4} more (see Experience section)`));
-      }
+      out.push(line(""));
+      out.push(line(`    ${j.blurb}`));
+      out.push(line(""));
+      out.push(line(`    scope : ${j.scope.join(" · ")}`));
+      out.push(line(`    stack : ${j.stack.join(" · ")}`));
       out.push(line(""));
     });
     print(out);
@@ -134,10 +129,11 @@ const contactCmd: Command = {
     print([
       sys("Ways to reach me:"),
       line(""),
-      line(`  email  : ${profile.email}`),
-      line(`  github : ${profile.github}`),
-      line(`  phone  : ${profile.phone}`),
-      line(`  resume : ${profile.resumePath}`),
+      line(`  email    : ${profile.email}`),
+      line(`  github   : ${profile.github}`),
+      line(`  linkedin : ${profile.linkedin}`),
+      line(`  phone    : ${profile.phone}`),
+      line(`  resume   : ${profile.resumePath}`),
     ]);
   },
 };
@@ -149,6 +145,17 @@ const githubCmd: Command = {
     print(sys(`Opening ${profile.github} …`));
     if (typeof window !== "undefined") {
       window.open(profile.github, "_blank", "noopener,noreferrer");
+    }
+  },
+};
+
+const linkedinCmd: Command = {
+  name: "linkedin",
+  description: "Open my LinkedIn profile in a new tab",
+  run: (_args, { print }) => {
+    print(sys(`Opening ${profile.linkedin} …`));
+    if (typeof window !== "undefined") {
+      window.open(profile.linkedin, "_blank", "noopener,noreferrer");
     }
   },
 };
@@ -249,12 +256,9 @@ const bannerCmd: Command = {
   description: "Show the welcome banner",
   run: (_args, { print }) => {
     print([
-      {
-        kind: "ascii",
-        text: BANNER,
-      },
+      { kind: "ascii", text: BANNER },
       line(""),
-      sys(`Welcome — type \`help\` to begin.`),
+      sys("Welcome — type `help` to begin."),
     ]);
   },
 };
@@ -370,6 +374,7 @@ export const COMMAND_LIST: Command[] = [
   contactCmd,
   emailCmd,
   githubCmd,
+  linkedinCmd,
   resumeCmd,
   lsCmd,
   catCmd,
@@ -393,7 +398,6 @@ export function findCommand(name: string): Command | undefined {
   return COMMAND_MAP.get(name.toLowerCase());
 }
 
-/** Return commands whose name starts with `prefix` (for autocomplete) */
 export function completeCommand(prefix: string): string[] {
   const p = prefix.toLowerCase();
   return COMMAND_LIST.map((c) => c.name)
@@ -403,7 +407,6 @@ export function completeCommand(prefix: string): string[] {
 
 export const ALL_COMMAND_NAMES = COMMAND_LIST.map((c) => c.name);
 
-/** Suggested quick-launch commands shown beneath the input. */
 export const SUGGESTED = [
   "whoami",
   "skills",
