@@ -1,0 +1,348 @@
+/* ---------- Design tokens ---------- */
+:root {
+  /* Surfaces */
+  --bg: #0a0d10;
+  --bg-elevated: #11161b;
+  --bg-card: #0f1418;
+  --border: #1c2530;
+  --border-strong: #2a3540;
+
+  /* Text */
+  --fg: #d6e4cc;
+  --fg-muted: #7a8a7d;
+  --fg-dim: #4a5550;
+
+  /* Accents (terminal palette) */
+  --accent: #5eff84;
+  --accent-dim: #3aaf5f;
+  --accent-glow: rgba(94, 255, 132, 0.35);
+  --amber: #ffb86c;
+  --cyan: #79e2f2;
+  --magenta: #ff7eb6;
+  --danger: #ff6b6b;
+
+  /* Layout */
+  --container: 1100px;
+  --gutter: clamp(20px, 4vw, 48px);
+  --radius: 6px;
+  --radius-lg: 10px;
+
+  /* Type */
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular,
+    Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* keep anchor jumps below sticky nav */
+  scroll-padding-top: 80px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--fg);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- Backdrop: grid + scanlines ---------- */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(94, 255, 132, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 255, 132, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(
+    ellipse at 50% 30%,
+    black 0%,
+    black 40%,
+    transparent 80%
+  );
+}
+
+.bg-scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, 0.18) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+}
+
+.bg-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+/* ---------- Layout helpers ---------- */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  position: relative;
+  z-index: 2;
+}
+
+.section {
+  padding: clamp(64px, 10vh, 120px) 0;
+  position: relative;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: clamp(32px, 5vh, 56px);
+  color: var(--fg-muted);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+
+.section-header::before {
+  content: "$";
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.section-header .h-num {
+  color: var(--accent-dim);
+}
+
+.section-header .h-title {
+  color: var(--fg);
+  font-size: 20px;
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.section-header .h-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--border-strong),
+    transparent
+  );
+  margin-left: 8px;
+}
+
+/* ---------- Generic accents ---------- */
+.text-accent {
+  color: var(--accent);
+}
+.text-amber {
+  color: var(--amber);
+}
+.text-muted {
+  color: var(--fg-muted);
+}
+.text-dim {
+  color: var(--fg-dim);
+}
+
+.kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--fg);
+  font-size: 11px;
+  line-height: 1;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--fg-muted);
+  background: rgba(94, 255, 132, 0.04);
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.3, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(
+    90deg,
+    var(--accent-dim),
+    var(--accent),
+    var(--cyan)
+  );
+  z-index: 100;
+  transition: width 0.05s linear;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* ---------- Skip link (a11y) ---------- */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: var(--bg-elevated);
+  color: var(--accent);
+  padding: 10px 14px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  z-index: 200;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ---------- Caret blink ---------- */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* ---------- Glow utility ---------- */
+.glow {
+  text-shadow:
+    0 0 1px var(--accent),
+    0 0 12px var(--accent-glow);
+}
+
+/* ---------- Visually-hidden (a11y) ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ---------- Scrollbar (webkit) ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-dim);
+}

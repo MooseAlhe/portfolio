@@ -1,0 +1,37 @@
+.footer {
+  padding: 28px 0 36px;
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+  font-size: 13px;
+  color: var(--fg-muted);
+  position: relative;
+  z-index: 2;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.right a {
+  color: var(--fg-muted);
+}
+.right a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 520px) {
+  .inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
