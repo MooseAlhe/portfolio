@@ -6,6 +6,7 @@ import Nav from "@/app/components/Nav";
 import ScrollProgress from "@/app/components/ScrollProgress";
 import ScrollReveal from "@/app/components/ScrollReveal";
 import { projects } from "@/app/lib/data";
+import { highlightTerms } from "@/app/lib/terms";
 import styles from "./project.module.css";
 
 type Params = { slug: string };
@@ -43,7 +44,9 @@ export default function ProjectPage({ params }: { params: Params }) {
               <span className="text-accent">{project.slug}</span>
             </p>
             <h1 className={styles.title}>{project.name}</h1>
-            <p className={styles.tagline}>{project.tagline}</p>
+            <p className={`${styles.tagline} highlight-scope`}>
+              {highlightTerms(project.tagline)}
+            </p>
 
             <div className={styles.meta}>
               <span className={styles.period}>{project.period}</span>
@@ -100,7 +103,9 @@ export default function ProjectPage({ params }: { params: Params }) {
                 </h2>
                 <div className={styles.prose}>
                   {project.overview.map((p, i) => (
-                    <p key={i}>{p}</p>
+                    <p key={i} className="highlight-scope">
+                      {highlightTerms(p)}
+                    </p>
                   ))}
                 </div>
               </ScrollReveal>
@@ -113,9 +118,9 @@ export default function ProjectPage({ params }: { params: Params }) {
                 </h2>
                 <ul className={styles.highlights}>
                   {project.highlights.map((h, i) => (
-                    <li key={i}>
+                    <li key={i} className="highlight-scope">
                       <span className={styles.bulletArrow} aria-hidden="true">▸</span>
-                      {h}
+                      {highlightTerms(h)}
                     </li>
                   ))}
                 </ul>
