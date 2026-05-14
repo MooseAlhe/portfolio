@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { profile } from "../lib/data";
 import Typewriter from "./Typewriter";
+import Term from "./Term";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -79,9 +80,20 @@ export default function Hero() {
             className={`${styles.tagline} ${bootDone ? styles.taglineIn : ""}`}
           >
             Currently at <strong>Bank of America Merrill Lynch</strong>, working
-            across the stack on a trade-confirmation platform that processes
-            millions of daily institutional transactions. On the side, I
-            prototype AI-driven finance tools and reinforcement-learning agents.
+            across the stack on a{" "}
+            <Term tip="System that matches & confirms institutional trades">
+              trade-confirmation platform
+            </Term>{" "}
+            that processes millions of daily institutional transactions. On the
+            side, I prototype{" "}
+            <Term tip="Plaid-backed personal finance app w/ LLM tooling">
+              AI-driven finance tools
+            </Term>{" "}
+            and{" "}
+            <Term tip="PPO agents trained in a custom Unity ML-Agents env">
+              reinforcement-learning agents
+            </Term>
+            .
           </p>
 
           <div className={`${styles.ctas} ${bootDone ? styles.ctasIn : ""}`}>

@@ -1,4 +1,5 @@
 import { experience } from "../lib/data";
+import { highlightTerms } from "../lib/terms";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeader from "./SectionHeader";
 import styles from "./Experience.module.css";
@@ -58,7 +59,7 @@ export default function Experience() {
                   </span>
                 </header>
 
-                <p className={styles.blurb}>{job.blurb}</p>
+                <p className={styles.blurb}>{highlightTerms(job.blurb)}</p>
 
                 {job.scope.length > 0 && (
                   <div
