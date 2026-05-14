@@ -120,7 +120,7 @@ export default function ProjectPage({ params }: { params: Params }) {
                   {project.highlights.map((h, i) => (
                     <li key={i} className="highlight-scope">
                       <span className={styles.bulletArrow} aria-hidden="true">▸</span>
-                      {highlightTerms(h)}
+                      <span>{highlightTerms(h)}</span>
                     </li>
                   ))}
                 </ul>
