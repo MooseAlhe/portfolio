@@ -59,7 +59,9 @@ export default function Experience() {
                   </span>
                 </header>
 
-                <p className={styles.blurb}>{highlightTerms(job.blurb)}</p>
+                <p className={`${styles.blurb} highlight-scope`}>
+                  {highlightTerms(job.blurb)}
+                </p>
 
                 {job.scope.length > 0 && (
                   <div
