@@ -31,7 +31,7 @@ const KEYWORDS: string[] = [
   "personal finance",
   "shared bills",
   "bank linking",
-  "transaction sync",
+  "transaction syncing",
   "gameplay programming",
   "gameplay systems",
   "multiplayer",
@@ -69,7 +69,7 @@ const KEYWORDS: string[] = [
 
 const SORTED = [...KEYWORDS].sort((a, b) => b.length - a.length);
 const PATTERN = new RegExp(
-  `(${SORTED.map((k) => k.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")).join("|")})`,
+  `(?<![\\w-])(${SORTED.map((k) => k.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")).join("|")})(?![\\w-])`,
   "gi"
 );
 
