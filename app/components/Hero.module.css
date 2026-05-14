@@ -109,6 +109,12 @@
   font-size: clamp(16px, 1.6vw, 19px);
   margin: 22px 0 18px;
   color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.roleLine {
+  margin: 0;
 }
 
 .tagline {

@@ -1,10 +1,44 @@
+"use client";
+
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { projects } from "../lib/data";
-import ScrollReveal from "./ScrollReveal";
 import SectionHeader from "./SectionHeader";
 import styles from "./Projects.module.css";
 
 export default function Projects() {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+
+  const updateArrows = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft < maxScroll - 4);
+  }, []);
+
+  useEffect(() => {
+    updateArrows();
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    return () => {
+      el.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
+    };
+  }, [updateArrows]);
+
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>(`.${styles.card}`);
+    const step = card ? card.offsetWidth + 22 : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
   return (
     <section id="projects" className="section" aria-labelledby="projects-h">
       <div className="container">
@@ -13,10 +47,24 @@ export default function Projects() {
         </h2>
         <SectionHeader num="03" title="Projects" command="ls ~/projects" />
 
-        <div className={styles.grid}>
-          {projects.map((p, i) => (
-            <ScrollReveal key={p.slug} delay={i * 80}>
+        <div className={styles.carousel}>
+          <button
+            type="button"
+            className={`${styles.arrow} ${styles.arrowLeft}`}
+            onClick={() => scrollBy(-1)}
+            disabled={!canPrev}
+            aria-label="Scroll to previous projects"
+          >
+            ←
+          </button>
+
+          <div
+            className={`${styles.scroller} ${canPrev ? styles.fadeLeft : ""} ${canNext ? styles.fadeRight : ""}`}
+            ref={scrollerRef}
+          >
+            {projects.map((p) => (
               <Link
+                key={p.slug}
                 href={`/projects/${p.slug}`}
                 className={styles.card}
                 aria-label={`Open ${p.name} project details`}
@@ -29,6 +77,7 @@ export default function Projects() {
                   </div>
                   <span className={styles.period}>{p.period}</span>
                 </header>
+
 
                 <p className={styles.summary}>{p.summary}</p>
 
@@ -46,8 +95,18 @@ export default function Projects() {
                   </span>
                 </footer>
               </Link>
-            </ScrollReveal>
-          ))}
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className={`${styles.arrow} ${styles.arrowRight}`}
+            onClick={() => scrollBy(1)}
+            disabled={!canNext}
+            aria-label="Scroll to next projects"
+          >
+            →
+          </button>
         </div>
       </div>
     </section>

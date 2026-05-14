@@ -4,6 +4,120 @@
   gap: 22px;
 }
 
+.carousel {
+  position: relative;
+}
+
+.scroller {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(400px, calc((100% - 44px) / 2.5));
+  gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 4px;
+  padding: 4px 4px 16px;
+  margin: 0 -4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.scroller > .card {
+  scroll-snap-align: start;
+}
+
+/* Fade edges based on scroll position — only where content is hidden */
+.scroller {
+  --fade-w: 80px;
+  transition: mask-image 0.3s ease;
+}
+.fadeRight {
+  mask-image: linear-gradient(to right, black calc(100% - var(--fade-w)), transparent 100%);
+}
+.fadeLeft {
+  mask-image: linear-gradient(to left, black calc(100% - var(--fade-w)), transparent 100%);
+}
+.fadeLeft.fadeRight {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black var(--fade-w),
+    black calc(100% - var(--fade-w)),
+    transparent 100%
+  );
+}
+.scroller::-webkit-scrollbar {
+  height: 8px;
+}
+.scroller::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  color: var(--accent);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  box-shadow: 0 8px 22px -10px rgba(0, 0, 0, 0.6);
+}
+.arrow:hover:not(:disabled) {
+  border-color: var(--accent-dim);
+  background: rgba(94, 255, 132, 0.08);
+}
+.arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+.arrowLeft {
+  left: -20px;
+}
+.arrowRight {
+  right: -20px;
+}
+
+@media (max-width: 900px) {
+  .scroller {
+    grid-auto-columns: min(480px, 88vw);
+  }
+}
+@media (max-width: 600px) {
+  .scroller {
+    grid-auto-columns: 90vw;
+  }
+  .arrowLeft {
+    left: 4px;
+  }
+  .arrowRight {
+    right: 4px;
+  }
+}
+
+@media (max-width: 520px) {
+  .cardHeader {
+    grid-template-columns: auto 1fr;
+  }
+  .period {
+    padding-left: 28px;
+  }
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -51,7 +165,7 @@
 
 .cardHeader {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 14px;
@@ -83,10 +197,12 @@
 }
 
 .period {
+  grid-column: 1 / -1;
   font-size: 11px;
   color: var(--fg-dim);
   white-space: nowrap;
-  padding-top: 4px;
+  padding-top: 0;
+  padding-left: 32px;
 }
 
 .summary {

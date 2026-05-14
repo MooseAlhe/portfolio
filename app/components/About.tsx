@@ -1,4 +1,5 @@
 import { aboutBio, skills, education } from "../lib/data";
+import { highlightTerms } from "../lib/terms";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeader from "./SectionHeader";
 import styles from "./About.module.css";
@@ -15,7 +16,9 @@ export default function About() {
         <div className={styles.grid}>
           <ScrollReveal className={styles.bio}>
             {aboutBio.map((p, i) => (
-              <p key={i}>{p}</p>
+              <p key={i} className="highlight-scope">
+                {highlightTerms(p)}
+              </p>
             ))}
             <p className={styles.edu}>
               <span className="text-muted">// education</span>

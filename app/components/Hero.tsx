@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { profile } from "../lib/data";
 import Typewriter from "./Typewriter";
+import { highlightTerms } from "../lib/terms";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -57,19 +58,33 @@ export default function Hero() {
             <span className={styles.nameDot}>.</span>
           </h1>
 
-          <p className={`${styles.role} ${bootDone ? styles.roleIn : ""}`}>
-            <span className="text-muted">&gt; </span>
-            <span>{profile.role}</span>
-            <span className="text-dim"> — full-stack, building distributed systems.</span>
-          </p>
+          <div className={`${styles.role} ${bootDone ? styles.roleIn : ""}`}>
+            <p className={styles.roleLine}>
+              <span className="text-muted">&gt; </span>
+              <span>{profile.role}</span>
+              <span className="text-dim"> — full-stack, building distributed systems.</span>
+            </p>
+            <p className={styles.roleLine}>
+              <span className="text-muted">&gt; </span>
+              <span>Hobbyist Unity Developer</span>
+              <span className="text-dim"> — gameplay systems, multiplayer, ML-Agents.</span>
+            </p>
+            <p className={styles.roleLine}>
+              <span className="text-muted">&gt; </span>
+              <span>Tinkerer &amp; Lifelong Learner</span>
+              <span className="text-dim"> — RL agents, finance tools, side-quests at 2am.</span>
+            </p>
+          </div>
 
           <p
-            className={`${styles.tagline} ${bootDone ? styles.taglineIn : ""}`}
+            className={`${styles.tagline} highlight-scope ${
+              bootDone ? styles.taglineIn : ""
+            }`}
           >
-            Currently at <strong>Bank of America Merrill Lynch</strong>, working
-            across the stack on a trade-confirmation platform that processes
-            millions of daily institutional transactions. On the side, I
-            prototype AI-driven finance tools and reinforcement-learning agents.
+            Currently at <strong>Bank of America Merrill Lynch</strong>,{" "}
+            {highlightTerms(
+              "working across the stack on a trade-confirmation platform that processes millions of daily institutional transactions. On the side, I prototype AI-driven finance tools and reinforcement-learning agents."
+            )}
           </p>
 
           <div className={`${styles.ctas} ${bootDone ? styles.ctasIn : ""}`}>

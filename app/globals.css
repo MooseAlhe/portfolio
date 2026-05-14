@@ -234,6 +234,33 @@ button {
   background: rgba(94, 255, 132, 0.04);
 }
 
+/* ---------- Keyword highlighter ---------- */
+/* Keywords sit invisible inside body copy. When the surrounding
+   .highlight-scope is hovered, they fade into the accent color so the
+   reader can scan the important phrases without reading everything. */
+.keyword {
+  color: inherit;
+  background-color: transparent;
+  border-radius: 3px;
+  padding: 0 2px;
+  margin: 0 -2px;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+.highlight-scope:hover .keyword,
+.highlight-scope:focus-within .keyword {
+  color: var(--accent);
+  background-color: rgba(94, 255, 132, 0.1);
+  text-shadow: 0 0 8px var(--accent-glow);
+}
+@media (prefers-reduced-motion: reduce) {
+  .keyword {
+    transition: none;
+  }
+}
+
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
