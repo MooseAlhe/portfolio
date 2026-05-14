@@ -11,7 +11,7 @@
 .scroller {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(320px, calc((100% - 44px) / 3));
+  grid-auto-columns: minmax(400px, calc((100% - 44px) / 2.5));
   gap: 22px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -71,15 +71,29 @@
   right: -20px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .scroller {
-    grid-auto-columns: 85%;
+    grid-auto-columns: min(480px, 88vw);
+  }
+}
+@media (max-width: 600px) {
+  .scroller {
+    grid-auto-columns: 90vw;
   }
   .arrowLeft {
     left: 4px;
   }
   .arrowRight {
     right: 4px;
+  }
+}
+
+@media (max-width: 520px) {
+  .cardHeader {
+    grid-template-columns: auto 1fr;
+  }
+  .period {
+    padding-left: 28px;
   }
 }
 
@@ -130,7 +144,7 @@
 
 .cardHeader {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 14px;
@@ -162,10 +176,12 @@
 }
 
 .period {
+  grid-column: 1 / -1;
   font-size: 11px;
   color: var(--fg-dim);
   white-space: nowrap;
-  padding-top: 4px;
+  padding-top: 0;
+  padding-left: 32px;
 }
 
 .summary {

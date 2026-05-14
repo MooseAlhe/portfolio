@@ -75,6 +75,7 @@ export default function Projects() {
                   <span className={styles.period}>{p.period}</span>
                 </header>
 
+
                 <p className={styles.summary}>{p.summary}</p>
 
                 <footer className={styles.cardFooter}>
