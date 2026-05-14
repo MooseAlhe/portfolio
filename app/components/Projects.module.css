@@ -24,6 +24,27 @@
 .scroller > .card {
   scroll-snap-align: start;
 }
+
+/* Fade edges based on scroll position — only where content is hidden */
+.scroller {
+  --fade-w: 80px;
+  transition: mask-image 0.3s ease;
+}
+.fadeRight {
+  mask-image: linear-gradient(to right, black calc(100% - var(--fade-w)), transparent 100%);
+}
+.fadeLeft {
+  mask-image: linear-gradient(to left, black calc(100% - var(--fade-w)), transparent 100%);
+}
+.fadeLeft.fadeRight {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black var(--fade-w),
+    black calc(100% - var(--fade-w)),
+    transparent 100%
+  );
+}
 .scroller::-webkit-scrollbar {
   height: 8px;
 }

@@ -58,7 +58,10 @@ export default function Projects() {
             ←
           </button>
 
-          <div className={styles.scroller} ref={scrollerRef}>
+          <div
+            className={`${styles.scroller} ${canPrev ? styles.fadeLeft : ""} ${canNext ? styles.fadeRight : ""}`}
+            ref={scrollerRef}
+          >
             {projects.map((p) => (
               <Link
                 key={p.slug}
