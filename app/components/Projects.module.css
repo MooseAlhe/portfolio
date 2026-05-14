@@ -4,6 +4,85 @@
   gap: 22px;
 }
 
+.carousel {
+  position: relative;
+}
+
+.scroller {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(320px, calc((100% - 44px) / 3));
+  gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 4px;
+  padding: 4px 4px 16px;
+  margin: 0 -4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.scroller > .card {
+  scroll-snap-align: start;
+}
+.scroller::-webkit-scrollbar {
+  height: 8px;
+}
+.scroller::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  color: var(--accent);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  box-shadow: 0 8px 22px -10px rgba(0, 0, 0, 0.6);
+}
+.arrow:hover:not(:disabled) {
+  border-color: var(--accent-dim);
+  background: rgba(94, 255, 132, 0.08);
+}
+.arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+.arrowLeft {
+  left: -20px;
+}
+.arrowRight {
+  right: -20px;
+}
+
+@media (max-width: 720px) {
+  .scroller {
+    grid-auto-columns: 85%;
+  }
+  .arrowLeft {
+    left: 4px;
+  }
+  .arrowRight {
+    right: 4px;
+  }
+}
+
 .card {
   display: flex;
   flex-direction: column;

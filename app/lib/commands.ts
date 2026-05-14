@@ -349,6 +349,78 @@ const themeCmd: Command = {
   },
 };
 
+type ColorPreset = { accent: string; dim: string; glow: string };
+
+const COLOR_PRESETS: Record<string, ColorPreset> = {
+  green: {
+    accent: "#5eff84",
+    dim: "#3aaf5f",
+    glow: "rgba(94, 255, 132, 0.35)",
+  },
+  amber: {
+    accent: "#ffb86c",
+    dim: "#c08a4a",
+    glow: "rgba(255, 184, 108, 0.35)",
+  },
+  cyan: {
+    accent: "#79e2f2",
+    dim: "#3aa8b8",
+    glow: "rgba(121, 226, 242, 0.35)",
+  },
+  magenta: {
+    accent: "#ff7eb6",
+    dim: "#c4568a",
+    glow: "rgba(255, 126, 182, 0.35)",
+  },
+  blue: {
+    accent: "#7aa2ff",
+    dim: "#4f6fbf",
+    glow: "rgba(122, 162, 255, 0.35)",
+  },
+  red: {
+    accent: "#ff6b6b",
+    dim: "#bf4f4f",
+    glow: "rgba(255, 107, 107, 0.35)",
+  },
+  white: {
+    accent: "#e6edf3",
+    dim: "#9aa4ad",
+    glow: "rgba(230, 237, 243, 0.3)",
+  },
+};
+
+const colorCmd: Command = {
+  name: "color",
+  aliases: ["colour", "colors"],
+  description: "Switch the terminal color scheme",
+  usage: "color [green|amber|cyan|magenta|blue|red|white|reset]",
+  run: (args, { print }) => {
+    const target = args[0]?.toLowerCase();
+    const names = Object.keys(COLOR_PRESETS).join(", ");
+    if (!target) {
+      print([
+        sys("Available colors: " + names + ", reset"),
+        line("usage: color <name>     e.g. `color amber`"),
+        line("                        `color reset` to go back to green"),
+      ]);
+      return;
+    }
+    const key = target === "default" || target === "reset" ? "green" : target;
+    const t = COLOR_PRESETS[key];
+    if (!t) {
+      print(err(`color: unknown color '${target}'. Try: ${names}`));
+      return;
+    }
+    if (typeof document !== "undefined") {
+      const r = document.documentElement.style;
+      r.setProperty("--accent", t.accent);
+      r.setProperty("--accent-dim", t.dim);
+      r.setProperty("--accent-glow", t.glow);
+    }
+    print(sys(`color scheme → ${key}`));
+  },
+};
+
 const BANNER = String.raw`
   __  __           _        __
  |  \/  |_   _ ___| |_ __ _/ _| __ _
@@ -381,6 +453,7 @@ export const COMMAND_LIST: Command[] = [
   echoCmd,
   dateCmd,
   themeCmd,
+  colorCmd,
   bannerCmd,
   sudoCmd,
   matrixCmd,

@@ -25,7 +25,8 @@ export const heroLines: string[] = [
 export const aboutBio: string[] = [
   "Software engineer based in New Jersey. I work full-stack at Bank of America Merrill Lynch on a trade-confirmation platform that moves millions of daily institutional transactions.",
   "Off-hours I'm usually building something — a Plaid-backed finance app right now, plus a reinforcement-learning sandbox for training PPO agents in Unity.",
-  "Rutgers ECE '22. I like distributed systems, figuring out how things work, and shipping.",
+  "I'm also a hobbyist Unity dev — currently building Echobound, a multiplayer extraction roguelike with a voice-controlled AI companion, and running PPO experiments in a custom ML-Agents environment.",
+  "Rutgers ECE '22. I'm into distributed systems, gameplay programming, taking things apart to see how they work, and shipping side projects until 2am.",
 ];
 
 export type SkillGroup = {
