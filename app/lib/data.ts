@@ -138,6 +138,8 @@ export type Media = {
   alt: string;
   type?: "image" | "video";
   poster?: string;
+  /** "logo" centers the asset and constrains its size — for marks/icons rather than screenshots. */
+  kind?: "screenshot" | "logo";
 };
 
 export type Project = {
@@ -148,6 +150,14 @@ export type Project = {
   period: string;
   status: "active" | "completed" | "archived";
   featured?: boolean;
+  /** Card layout variant on the home page. "featured" gets the expanded product-showcase treatment. */
+  cardVariant?: "default" | "featured";
+  /** Extra copy used only by the "featured" card variant. */
+  featuredCopy?: {
+    eyebrow: string;
+    headline: string;
+    featurePills: string[];
+  };
   stack: string[];
   overview: string[];
   highlights: string[];
@@ -160,6 +170,56 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "splits",
+    name: "Splits",
+    tagline: "Auto-split shared bills via Plaid · Beta at splitshq.com",
+    summary:
+      "Link your bank, mark the bills you share, and Splits tracks who owes who as transactions land. Settle up in Venmo or Cash App — we never touch your money.",
+    period: "Apr 2026 — Present",
+    status: "active",
+    featured: true,
+    cardVariant: "featured",
+    featuredCopy: {
+      eyebrow: "Beta · splitshq.com",
+      headline: "Your half of rent, settled before you ask.",
+      featurePills: [
+        "Bank-linked",
+        "Auto-detect recurring",
+        "Live balances",
+      ],
+    },
+    stack: [
+      "Next.js 14",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Plaid",
+      "Tailwind",
+      "pnpm workspaces",
+    ],
+    cover: {
+      src: "/projects/splits/logo.png",
+      alt: "Splits logo — a stylized yellow banana split down the middle",
+      kind: "logo",
+    },
+    overview: [
+      "Splits is live in beta at splitshq.com — anyone can sign up and try it. Bank linking runs against Plaid's sandbox environment for now, which means you connect to simulated test banks with fake transactions rather than a real account, so the full flow is safe to explore end-to-end without exposing any real financial data. Production Plaid access is the next milestone.",
+      "Splits solves a tiny but constant friction: figuring out who paid for what and who still owes who. You link your bank through Plaid, tell the app which bills you share with which people (rent with your roommate, the streaming bundle with your partner, groceries with both), and from then on every matching transaction is split automatically and added to a running balance.",
+      "When it's time to pay someone back, the app hands you off to Venmo or Cash App with the amount pre-filled — Splits itself never holds or moves money, which keeps it out of the legal territory that comes with handling other people's funds. Behind the scenes it's a Next.js web app on top of a Postgres database (via Supabase), with all the rules for how money is divided pulled into a single shared library so the math is identical everywhere it runs.",
+    ],
+    highlights: [
+      "Connects to real bank accounts through Plaid and detects recurring shared bills automatically, so users set a rule once and stop thinking about it.",
+      "Every bank transaction is processed with a unique fingerprint, which means even if Plaid sends the same charge twice (it sometimes does), no one gets double-charged.",
+      "All the actual money math — who owes what share of which bill — lives in one isolated, dependency-free package. The web app, tests, and any future mobile or server-side jobs all use the same code, so balances can't drift between surfaces.",
+      "Friend relationships are stored as a single row per pair with a database-level rule that makes it impossible for the friendship to exist on only one side — no \"I added you but you don't see me\" bugs.",
+      "Database-level access rules (row-level security in Postgres) mean every user can only ever read or change their own data, even if a bug in the app tries otherwise — a second line of defense underneath the app's own permission checks.",
+      "Live notifications: when someone adds a bill, accepts a friend request, or marks a debt as settled, the other person sees it instantly without refreshing — powered by a single realtime connection per user.",
+    ],
+    links: {
+      demo: "https://splitshq.com",
+    },
+  },
   {
     slug: "echobound",
     name: "Echobound",

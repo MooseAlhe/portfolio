@@ -106,14 +106,14 @@ button {
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(94, 255, 132, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(94, 255, 132, 0.035) 1px, transparent 1px);
-  background-size: 32px 32px;
+    linear-gradient(rgba(94, 255, 132, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 255, 132, 0.022) 1px, transparent 1px);
+  background-size: 36px 36px;
   mask-image: radial-gradient(
-    ellipse at 50% 30%,
+    ellipse at 50% 25%,
     black 0%,
-    black 40%,
-    transparent 80%
+    black 35%,
+    transparent 75%
   );
 }
 
