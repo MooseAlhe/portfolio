@@ -39,11 +39,13 @@ export const skills: SkillGroup[] = [
     label: "Languages",
     items: [
       "Scala",
-      "TypeScript",
       "JavaScript",
+      "TypeScript",
       "Python",
       "C#",
       "Java",
+      "Kotlin",
+      "Swift",
       "C/C++",
       "Bash",
     ],
@@ -51,16 +53,28 @@ export const skills: SkillGroup[] = [
   {
     label: "Backend",
     items: [
+      "REST APIs",
       "Distributed Systems",
       "Microservices",
-      "REST APIs",
       "JSON",
       "CI/CD",
+      "Ktor",
+      "KMP",
+      "Realtime",
+      "RLS/auth",
     ],
   },
   {
     label: "Frontend",
-    items: ["React", "Next.js", "Node.js"],
+    items: ["React", "Node.js", "Next.js", "Tailwind CSS"],
+  },
+  {
+    label: "Mobile",
+    items: [
+      "Android (Jetpack Compose)",
+      "iOS (SwiftUI)",
+      "Kotlin Multiplatform",
+    ],
   },
   {
     label: "Database",
@@ -75,12 +89,16 @@ export const skills: SkillGroup[] = [
     items: [
       "Git",
       "Cursor",
+      "Claude",
       "Unity",
       "Cypress",
       "Gradle",
       "Jenkins",
       "Linux",
       "Splunk",
+      "Plaid",
+      "Sentry",
+      "Docker",
     ],
   },
 ];
@@ -173,20 +191,20 @@ export const projects: Project[] = [
   {
     slug: "splits",
     name: "Splits",
-    tagline: "Auto-split shared bills via Plaid · Beta at splitshq.com",
+    tagline: "Auto-split shared bills via Plaid · Waitlist at splitshq.com",
     summary:
-      "Link your bank, mark the bills you share, and Splits tracks who owes who as transactions land. Settle up in Venmo or Cash App — we never touch your money.",
+      "Link your bank, mark the bills you share, and Splits tracks who owes who as transactions land. Settle up in Venmo or Cash App — we never touch your money. Web is on a waitlist; iOS and Android apps are in active development.",
     period: "Apr 2026 — Present",
     status: "active",
     featured: true,
     cardVariant: "featured",
     featuredCopy: {
-      eyebrow: "Beta · splitshq.com",
+      eyebrow: "Waitlist · splitshq.com",
       headline: "Your half of rent, settled before you ask.",
       featurePills: [
         "Bank-linked",
         "Auto-detect recurring",
-        "Live balances",
+        "iOS & Android in progress",
       ],
     },
     stack: [
@@ -204,7 +222,7 @@ export const projects: Project[] = [
       kind: "logo",
     },
     overview: [
-      "Splits is live in beta at splitshq.com — anyone can sign up and try it. Bank linking runs against Plaid's sandbox environment for now, which means you connect to simulated test banks with fake transactions rather than a real account, so the full flow is safe to explore end-to-end without exposing any real financial data. Production Plaid access is the next milestone.",
+      "Splits is currently in private development at splitshq.com — the landing page is open and you can join the waitlist while I onboard users in batches. Bank linking runs against Plaid's sandbox environment for now, which means early users connect to simulated test banks with fake transactions rather than a real account, so the full flow is safe to explore end-to-end without exposing any real financial data. Production Plaid access is the next milestone, and native iOS and Android apps are in active development alongside the web client. Recruiters: if you'd like early access to try the app, email me at mustafa.alhelawe@gmail.com and I'll send over an invite.",
       "Splits solves a tiny but constant friction: figuring out who paid for what and who still owes who. You link your bank through Plaid, tell the app which bills you share with which people (rent with your roommate, the streaming bundle with your partner, groceries with both), and from then on every matching transaction is split automatically and added to a running balance.",
       "When it's time to pay someone back, the app hands you off to Venmo or Cash App with the amount pre-filled — Splits itself never holds or moves money, which keeps it out of the legal territory that comes with handling other people's funds. Behind the scenes it's a Next.js web app on top of a Postgres database (via Supabase), with all the rules for how money is divided pulled into a single shared library so the math is identical everywhere it runs.",
     ],
@@ -242,7 +260,11 @@ export const projects: Project[] = [
       "Echobound is a multiplayer extraction roguelike I'm building with a small team. The core hook is the companion system: instead of binding pet commands to a hotbar, you press-to-talk on your mic and tell the thing what to do — \"attack the big one,\" \"follow me,\" \"bolt the guy on the ridge\" — and it actually does it.",
       "Audio is captured locally and transcribed with whisper.unity, the transcript runs through an LLM that interprets intent against the companion's available abilities, and the resulting command is dispatched through FishNet so every player on the server sees the same companion behavior. Steamworks handles lobbies and identity.",
     ],
-    highlights: [],
+    highlights: [
+      "Voice-driven companion pipeline: press-to-talk → whisper.unity transcription → LLM intent resolution → networked ability dispatch.",
+      "FishNet authoritative networking keeps the companion's behavior in sync for every player on the server, no client desync.",
+      "Steamworks-backed lobbies and identity; HDRP visuals in Unity 6 for moody, high-contrast extraction runs.",
+    ],
     links: {},
   },
   {

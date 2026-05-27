@@ -196,14 +196,14 @@ function DefaultBody({ project }: { project: Project }) {
 const HERO_STATS = [
   { value: "0%", label: "of your money handled" },
   { value: "Auto", label: "recurring detection" },
-  { value: "Real-time", label: "shared balances" },
+  { value: "iOS + Android", label: "in active development" },
 ];
 
 const HOW_IT_WORKS = [
   {
     step: "01",
     title: "Connect your bank",
-    body: "Plaid handles the link — Splits gets read-only access to the transactions you'd see in your banking app. Sandbox in beta, real banks soon.",
+    body: "Plaid handles the link — Splits gets read-only access to the transactions you'd see in your banking app. Sandbox during the waitlist period, real banks once production Plaid access is granted.",
     chip: "Plaid · Chase **** 1284",
   },
   {
@@ -311,7 +311,7 @@ function FeaturedHero({ project }: { project: Project }) {
                 className={styles.featCtaPrimary}
               >
                 <span className={styles.featCtaPrimaryLabel}>
-                  View live app
+                  Join the waitlist
                 </span>
                 <span className={styles.featCtaArrow} aria-hidden="true">↗</span>
               </a>
@@ -480,24 +480,33 @@ function FinalCta({ demoUrl }: { demoUrl?: string }) {
           <div className={styles.ctaCopy}>
             <p className={styles.ctaEyebrow}>
               <span className={styles.featEyebrowDot} aria-hidden="true" />
-              Beta · open access
+              Waitlist · early access
             </p>
             <h2 id="cta-h" className={styles.ctaTitle}>
-              It&apos;s live. Try it.
+              Join the waitlist.
             </h2>
             <p className={styles.ctaSub}>
-              Sign up at splitshq.com — Plaid is in sandbox mode for the beta, so
-              you can poke around with simulated banks without exposing any real
-              financial data.
+              Head to splitshq.com to join the waitlist — I&apos;m onboarding
+              users in batches while Plaid runs in sandbox mode, so early access
+              is safe to explore with simulated banks. Native iOS and Android
+              apps are in active development alongside the web client.
+            </p>
+            <p className={styles.ctaSub}>
+              <strong>Recruiters:</strong> if you&apos;d like to skip the
+              waitlist and try the app, email{" "}
+              <a className={styles.ctaInlineLink} href="mailto:mustafa.alhelawe@gmail.com?subject=Splits%20early%20access">
+                mustafa.alhelawe@gmail.com
+              </a>{" "}
+              and I&apos;ll send over an invite.
             </p>
             <ul className={styles.ctaRoadmap}>
               <li>
                 <span className={styles.ctaCheck} aria-hidden="true">▸</span>
-                <span><strong>Now:</strong> bank linking · auto-split · realtime balances · Venmo / Cash App handoff</span>
+                <span><strong>Now:</strong> waitlist live · bank linking · auto-split · realtime balances · Venmo / Cash App handoff</span>
               </li>
               <li>
                 <span className={styles.ctaCheck} aria-hidden="true">◇</span>
-                <span><strong>Next:</strong> production Plaid · group bills · mobile-first iOS shell</span>
+                <span><strong>In progress:</strong> native iOS app · native Android app · production Plaid · group bills</span>
               </li>
               <li>
                 <span className={styles.ctaCheck} aria-hidden="true">◇</span>
@@ -515,11 +524,17 @@ function FinalCta({ demoUrl }: { demoUrl?: string }) {
                 className={styles.featCtaPrimary}
               >
                 <span className={styles.featCtaPrimaryLabel}>
-                  Launch splitshq.com
+                  Join the waitlist
                 </span>
                 <span className={styles.featCtaArrow} aria-hidden="true">↗</span>
               </a>
             )}
+            <a
+              href="mailto:mustafa.alhelawe@gmail.com?subject=Splits%20early%20access"
+              className={styles.featCtaSecondary}
+            >
+              <span aria-hidden="true">✉</span> Email for early access
+            </a>
             <Link href="/#projects" className={styles.featCtaSecondary}>
               <span aria-hidden="true">←</span> back to projects
             </Link>

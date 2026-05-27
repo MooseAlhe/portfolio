@@ -15,6 +15,7 @@
     0 30px 60px -25px rgba(0, 0, 0, 0.7);
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
   cursor: text;
+  position: relative;
 }
 .frameFocused {
   border-color: var(--accent-dim);
