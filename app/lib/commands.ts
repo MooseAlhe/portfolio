@@ -280,15 +280,15 @@ const sudoCmd: Command = {
   },
 };
 
-const matrixCmd: Command = {
-  name: "matrix",
-  description: "Take the red pill (visual easter egg)",
+const mrrobotCmd: Command = {
+  name: "mrrobot",
+  aliases: ["fsociety"],
+  description: "Hello, friend. (visual easter egg)",
   run: (_args, { print }) => {
-    print([
-      sys("Wake up, Neo…"),
-      { kind: "ascii", text: MATRIX_RAIN },
-      sys("The Matrix has you. (press any key to exit)"),
-    ]);
+    print(sys("[fsociety] tunnel open. esc or click to disconnect."));
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("portfolio:mrrobot"));
+    }
   },
 };
 
@@ -421,20 +421,14 @@ const colorCmd: Command = {
   },
 };
 
-const BANNER = String.raw`
-  __  __           _        __
- |  \/  |_   _ ___| |_ __ _/ _| __ _
- | |\/| | | | / __| __/ _\` | |_ / _\` |
- | |  | | |_| \__ \ || (_| |  _| (_| |
- |_|  |_|\__,_|___/\__\__,_|_|  \__,_|
+const BANNER = `
+  __  __           _         __
+ |  \\/  |_   _ ___| |_ __ _ / _| __ _
+ | |\\/| | | | / __| __/ _\` | |_ / _\` |
+ | |  | | |_| \\__ \\ || (_| |  _| (_| |
+ |_|  |_|\\__,_|___/\\__\\__,_|_|  \\__,_|
 
          A L H E L A W E   //   portfolio.dev
-`;
-
-const MATRIX_RAIN = String.raw`
-  ｱ ｲ ﾜ ﾑ ｴ 0 1 1 0 ｲ ﾐ ｦ ﾈ ｵ 0 1 0 ｵ ｾ ﾜ
-  ｲ ﾜ ﾈ ｵ ﾈ ﾑ ｵ ｾ ﾜ ｲ ﾜ ﾑ ｴ 0 1 0 ﾈ ｵ ｱ
-  ﾈ ｵ ﾑ ｴ 0 1 0 ｾ ﾜ ｲ ｦ ｴ 0 0 1 1 ｲ ｦ
 `;
 
 export const COMMAND_LIST: Command[] = [
@@ -456,7 +450,7 @@ export const COMMAND_LIST: Command[] = [
   colorCmd,
   bannerCmd,
   sudoCmd,
-  matrixCmd,
+  mrrobotCmd,
   exitCmd,
   clearCmd,
 ];

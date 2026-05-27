@@ -1,0 +1,248 @@
+.root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0a0303;
+  color: #ff4d4d;
+  z-index: 5;
+  cursor: pointer;
+  animation: rootIn 220ms ease-out both;
+  font-family: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+}
+
+@keyframes rootIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Streaming background log */
+.logWrap {
+  position: absolute;
+  inset: 0;
+  padding: 18px 22px;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 12%,
+    #000 78%,
+    transparent 100%
+  );
+  opacity: 0.55;
+}
+.log {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.logLine {
+  font-size: 12px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: lineIn 220ms ease-out both;
+}
+.cmd  { color: #ff6b6b; }
+.out  { color: #c2625e; }
+.ok   { color: #ffb86c; }
+.warn { color: #ffd166; }
+
+@keyframes lineIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* CRT scanlines */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.28) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.65;
+}
+
+/* Red-tint vignette */
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0) 30%,
+      rgba(0, 0, 0, 0.55) 75%,
+      rgba(0, 0, 0, 0.85) 100%
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(255, 50, 50, 0.06) 0%,
+      transparent 65%
+    );
+}
+
+/* Faint film-grain pulse */
+.noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-radial-gradient(
+    circle at 30% 40%,
+    rgba(255, 80, 80, 0.04) 0,
+    rgba(255, 80, 80, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: screen;
+  animation: noiseShift 1.6s steps(3) infinite;
+  opacity: 0.4;
+}
+@keyframes noiseShift {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-4px, 2px); }
+  66%  { transform: translate(3px, -3px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Center foreground content */
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  pointer-events: none;
+  padding: 24px;
+}
+
+.title {
+  margin: 0;
+  font-family: inherit;
+  font-size: clamp(8px, 1.15vw, 13px);
+  line-height: 1.05;
+  color: #ff5252;
+  text-shadow:
+    0 0 6px rgba(255, 76, 76, 0.55),
+    0 0 22px rgba(255, 76, 76, 0.3);
+  position: relative;
+  white-space: pre;
+}
+
+/* Subtle continuous flicker even when not glitching */
+.title::before,
+.title::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  white-space: pre;
+  font: inherit;
+}
+.title::before {
+  color: rgba(0, 200, 255, 0.55);
+  transform: translate(-1px, 0);
+  mix-blend-mode: screen;
+  opacity: 0.35;
+}
+.title::after {
+  color: rgba(255, 255, 100, 0.4);
+  transform: translate(1px, 0);
+  mix-blend-mode: screen;
+  opacity: 0.3;
+}
+
+/* Heavy glitch burst — kicks in occasionally */
+.titleGlitch {
+  animation: titleShake 180ms steps(4) 1;
+}
+.titleGlitch::before {
+  transform: translate(-3px, -1px);
+  opacity: 0.85;
+  animation: glitchCyan 180ms steps(3) 1;
+}
+.titleGlitch::after {
+  transform: translate(3px, 1px);
+  opacity: 0.85;
+  animation: glitchYellow 180ms steps(3) 1;
+}
+@keyframes titleShake {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2px, 1px); }
+  50%  { transform: translate(2px, -1px); }
+  75%  { transform: translate(-1px, 2px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes glitchCyan {
+  0%   { transform: translate(-1px, 0); }
+  50%  { transform: translate(-4px, 2px); }
+  100% { transform: translate(-1px, 0); }
+}
+@keyframes glitchYellow {
+  0%   { transform: translate(1px, 0); }
+  50%  { transform: translate(4px, -2px); }
+  100% { transform: translate(1px, 0); }
+}
+
+.phrase {
+  margin: 0;
+  font-family: inherit;
+  font-size: clamp(16px, 2.2vw, 26px);
+  letter-spacing: 0.14em;
+  color: #ffd2c2;
+  text-shadow:
+    0 0 8px rgba(255, 76, 76, 0.65),
+    0 0 22px rgba(255, 76, 76, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 1.4em;
+}
+.phraseText {
+  white-space: pre;
+}
+.phraseCaret {
+  display: inline-block;
+  width: 0.55ch;
+  height: 1.1em;
+  background: #ffb3b3;
+  box-shadow: 0 0 8px rgba(255, 130, 130, 0.7);
+  animation: caretBlink 900ms steps(2, start) infinite;
+}
+@keyframes caretBlink {
+  0%, 50%      { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+.hint {
+  margin: 0;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 170, 170, 0.55);
+  animation: hintPulse 2.4s ease-in-out infinite;
+}
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.85; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root { animation: none; }
+  .noise { animation: none; }
+  .phraseCaret { animation: none; }
+  .hint { animation: none; opacity: 0.65; }
+  .titleGlitch { animation: none; }
+}

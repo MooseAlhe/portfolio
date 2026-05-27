@@ -15,6 +15,7 @@ import {
   findCommand,
 } from "../lib/commands";
 import { profile } from "../lib/data";
+import MrRobot from "./MrRobot";
 import styles from "./Terminal.module.css";
 
 const PROMPT = `${profile.handle}@${profile.host}:~$ `;
@@ -31,6 +32,7 @@ export default function Terminal() {
   const [history, setHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState<number | null>(null);
   const [focused, setFocused] = useState(false);
+  const [mrrobotActive, setMrrobotActive] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -90,6 +92,16 @@ export default function Terminal() {
     if (!el) return;
     el.scrollTop = el.scrollHeight;
   }, [lines]);
+
+  useEffect(() => {
+    const onMrRobot = () => setMrrobotActive(true);
+    window.addEventListener("portfolio:mrrobot", onMrRobot as EventListener);
+    return () =>
+      window.removeEventListener(
+        "portfolio:mrrobot",
+        onMrRobot as EventListener
+      );
+  }, []);
 
   useEffect(() => {
     const node = scrollRef.current?.parentElement;
@@ -274,6 +286,10 @@ export default function Terminal() {
               />
             </div>
           </div>
+
+          {mrrobotActive && (
+            <MrRobot onExit={() => setMrrobotActive(false)} />
+          )}
         </div>
 
         <div className={styles.suggestRow} aria-label="Suggested commands">

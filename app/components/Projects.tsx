@@ -88,6 +88,9 @@ export default function Projects() {
 }
 
 function DefaultCard({ p }: { p: Project }) {
+  const useFinanceMock = p.slug === "finance-app";
+  const cardHighlights = p.highlights.slice(0, 3);
+
   return (
     <Link
       href={`/projects/${p.slug}`}
@@ -115,6 +118,23 @@ function DefaultCard({ p }: { p: Project }) {
 
       <p className={styles.summary}>{p.summary}</p>
 
+      <div className={styles.cardExtras} aria-hidden={useFinanceMock}>
+        {useFinanceMock ? (
+          <FinanceMock />
+        ) : cardHighlights.length > 0 ? (
+          <ul className={styles.cardHighlights}>
+            {cardHighlights.map((h, i) => (
+              <li key={i}>
+                <span className={styles.cardHighlightArrow} aria-hidden="true">
+                  ▸
+                </span>
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+
       <footer className={styles.cardFooter}>
         <div className={styles.tags}>
           {p.stack.slice(0, 5).map((s) => (
@@ -129,6 +149,57 @@ function DefaultCard({ p }: { p: Project }) {
         </span>
       </footer>
     </Link>
+  );
+}
+
+function FinanceMock() {
+  return (
+    <div className={styles.finance} aria-hidden="true">
+      <div className={styles.financePrompt}>
+        <span className={styles.financePromptCaret}>$</span>
+        <span className={styles.financePromptText}>
+          how much did I spend on coffee in March?
+        </span>
+      </div>
+
+      <ul className={styles.financeRows}>
+        <li className={styles.financeRow}>
+          <span className={styles.financeRowLabel}>Coffee</span>
+          <span className={styles.financeBar} aria-hidden="true">
+            <span
+              className={styles.financeBarFill}
+              style={{ width: "42%" }}
+            />
+          </span>
+          <span className={styles.financeRowAmount}>$84.50</span>
+        </li>
+        <li className={styles.financeRow}>
+          <span className={styles.financeRowLabel}>Groceries</span>
+          <span className={styles.financeBar} aria-hidden="true">
+            <span
+              className={styles.financeBarFill}
+              style={{ width: "92%" }}
+            />
+          </span>
+          <span className={styles.financeRowAmount}>$312.00</span>
+        </li>
+        <li className={styles.financeRow}>
+          <span className={styles.financeRowLabel}>Transit</span>
+          <span className={styles.financeBar} aria-hidden="true">
+            <span
+              className={styles.financeBarFill}
+              style={{ width: "28%" }}
+            />
+          </span>
+          <span className={styles.financeRowAmount}>$67.20</span>
+        </li>
+      </ul>
+
+      <div className={styles.financeTotal}>
+        <span className={styles.financeTotalLabel}>March · total</span>
+        <span className={styles.financeTotalAmount}>$1,847.32</span>
+      </div>
+    </div>
   );
 }
 
@@ -202,7 +273,7 @@ function FeaturedCard({ p }: { p: Project }) {
                 className={styles.featuredCtaSecondary}
                 aria-label={`Launch ${p.name} app in a new tab`}
               >
-                Launch app
+                Join waitlist
                 <span className={styles.featuredCtaArrow} aria-hidden="true">
                   ↗
                 </span>
