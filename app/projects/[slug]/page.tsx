@@ -204,7 +204,7 @@ const HOW_IT_WORKS = [
   {
     step: "01",
     title: "Connect your bank",
-    body: "Plaid handles the link — Splits gets read-only access to the transactions you'd see in your banking app. Sandbox during the waitlist period, real banks once production Plaid access is granted.",
+    body: "Plaid handles the link. Splits gets read-only access to the transactions you'd see in your banking app. Sandbox during the waitlist period, real banks once production Plaid access is granted.",
     chip: "Plaid · Chase **** 1284",
   },
   {
@@ -216,7 +216,7 @@ const HOW_IT_WORKS = [
   {
     step: "03",
     title: "Settle when you want",
-    body: "Balances update as new transactions land. When you're ready to settle, Splits hands you off to Venmo or Cash App with the amount pre-filled — we never hold your money.",
+    body: "Balances update as new transactions land. When you're ready to settle, Splits hands you off to Venmo or Cash App with the amount pre-filled. We never hold your money.",
     chip: "Settle $42.18 · Venmo ↗",
   },
 ];
@@ -225,7 +225,7 @@ const FEATURES = [
   {
     glyph: "↻",
     title: "Recurring, on autopilot",
-    body: "Rent, utilities, the streaming bundle — set one rule and Splits keeps splitting them every month. No reminders, no spreadsheets.",
+    body: "Set one rule for rent, or utilities, or the streaming bundle, and Splits keeps splitting it every month. No reminders, no spreadsheets.",
   },
   {
     glyph: "⚡",
@@ -235,22 +235,22 @@ const FEATURES = [
   {
     glyph: "⌁",
     title: "We never touch money",
-    body: "Splits is a ledger, not a wallet. Settle-up hands off to Venmo or Cash App with the amount and recipient pre-filled. Your money stays your money.",
+    body: "Splits is a ledger, not a wallet. Settling up hands off to Venmo or Cash App with the amount and recipient pre-filled, and the actual money never passes through us.",
   },
   {
     glyph: "▣",
     title: "Math that doesn't drift",
-    body: "Every split is computed by the same pure-TS engine — same balance on the web, in tests, in future jobs. No surface ever disagrees with another.",
+    body: "Every split is computed by one pure-TS engine, so the web app, the tests, and any future mobile client all agree on the balance.",
   },
   {
     glyph: "◇",
     title: "Idempotent by design",
-    body: "Every imported transaction carries a deterministic fingerprint. If Plaid sends the same charge twice (it does), no one gets double-billed.",
+    body: "Every imported transaction carries a deterministic fingerprint, so when Plaid sends the same charge twice, no one gets double-billed.",
   },
   {
     glyph: "✶",
     title: "Locked at the database",
-    body: "Row-level security in Postgres means each user can only see their own data — even if a bug in the app tried otherwise. Defense in depth, not a single firewall.",
+    body: "Row-level security in Postgres means each user can only see their own data, even if a bug in the app tries otherwise.",
   },
 ];
 
@@ -465,7 +465,7 @@ function WhyBuilt() {
           </p>
           <footer className={styles.whyFooter}>
             <span className={styles.whySig} aria-hidden="true">~</span>
-            <span>built solo · April 2026 — present</span>
+            <span>built solo · April 2026 – present</span>
           </footer>
         </blockquote>
       </section>
@@ -487,10 +487,10 @@ function FinalCta({ demoUrl }: { demoUrl?: string }) {
               Join the waitlist.
             </h2>
             <p className={styles.ctaSub}>
-              Head to splitshq.com to join the waitlist — I&apos;m onboarding
+              Head to splitshq.com to join the waitlist. I&apos;m onboarding
               users in batches while Plaid runs in sandbox mode, so early access
               is safe to explore with simulated banks. Native iOS and Android
-              apps are in active development alongside the web client.
+              apps are in development alongside the web client.
             </p>
             <p className={styles.ctaSub}>
               <strong>Recruiters:</strong> if you&apos;d like to skip the

@@ -1,4 +1,4 @@
-# Mustafa Alhelawe — Portfolio
+# Mustafa Alhelawe · Portfolio
 
 Personal portfolio site built with Next.js 14, TypeScript, and zero UI dependencies. Terminal/hacker aesthetic, fully responsive, accessibility-conscious.
 
@@ -35,7 +35,7 @@ public/
 
 ## Deploying
 
-The site is plain Next.js — works on Vercel, Netlify, Cloudflare Pages, Railway, or any Node host.
+The site is plain Next.js. It works on Vercel, Netlify, Cloudflare Pages, Railway, or any Node host.
 
 **Vercel:** push to GitHub, import in Vercel dashboard. Add a custom domain in Project Settings → Domains. Vercel handles HTTPS automatically.
 

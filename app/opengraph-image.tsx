@@ -3,7 +3,7 @@ import path from "node:path";
 import { ImageResponse } from "next/og";
 import { profile } from "./lib/data";
 
-export const alt = `${profile.name} — ${profile.role}`;
+export const alt = `${profile.name} · ${profile.role}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -64,7 +64,7 @@ export default async function OgImage() {
           }}
         >
           <span style={{ color: "#5eff84", marginRight: 16 }}>&gt;</span>
-          <span>{profile.role} — full-stack, distributed systems.</span>
+          <span>{profile.role} · full-stack, distributed systems.</span>
         </div>
         <div
           style={{

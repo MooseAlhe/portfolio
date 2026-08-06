@@ -21,7 +21,7 @@ import styles from "./Terminal.module.css";
 const PROMPT = `${profile.handle}@${profile.host}:~$ `;
 
 const WELCOME: TerminalLine[] = [
-  { kind: "system", text: "Mustafa @ portfolio.dev — interactive shell (v1.0)" },
+  { kind: "system", text: "Mustafa @ portfolio.dev · interactive shell (v1.0)" },
   { kind: "system", text: "Type `help` to see what's available." },
   { kind: "output", text: "" },
 ];
@@ -196,7 +196,7 @@ export default function Terminal() {
         <div className="section-header">
           <span className="h-num">04.</span>
           <span className="h-title">Terminal</span>
-          <span className="text-muted">// try it — it actually works</span>
+          <span className="text-muted">// try it, it actually works</span>
           <span className="h-rule" aria-hidden="true" />
         </div>
 
@@ -260,7 +260,7 @@ export default function Terminal() {
                 autoComplete="off"
                 autoCapitalize="none"
                 autoCorrect="off"
-                aria-label="Terminal input — type a command"
+                aria-label="Terminal input. Type a command"
               />
             </div>
           </div>
