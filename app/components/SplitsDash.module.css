@@ -1,0 +1,487 @@
+/* Splits mock dashboard — shared by the home featured card and the
+   /projects/splits case study. */
+
+.dash {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  background:
+    radial-gradient(
+      600px 280px at 100% 0%,
+      rgba(94, 255, 132, 0.1),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #161d22 0%, #11171c 100%);
+  border: 1px solid rgba(94, 255, 132, 0.18);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 0 1px rgba(94, 255, 132, 0.04),
+    0 36px 70px -28px rgba(0, 0, 0, 0.85),
+    0 0 100px -20px rgba(94, 255, 132, 0.22);
+  transform: rotateY(-2deg) rotateX(1.5deg);
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+  position: relative;
+}
+.dash::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    rgba(94, 255, 132, 0.35) 0%,
+    rgba(94, 255, 132, 0) 40%,
+    rgba(121, 226, 242, 0.1) 100%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.dash:hover {
+  transform: rotateY(0deg) rotateX(0deg) translateY(-4px);
+}
+@media (max-width: 960px) {
+  .dash {
+    max-width: 560px;
+    transform: none;
+  }
+}
+
+/* Compact when the surrounding pane is narrow (e.g. the home featured card) —
+   keep the two stat cards side by side and drop the toast so the dash stays
+   short enough for a carousel card. */
+.dash {
+  container-type: inline-size;
+}
+@container (max-width: 349px) {
+  .dash .dashGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .dash .dashCard {
+    padding: 10px 12px;
+  }
+  .dash .dashCardAmountPos {
+    font-size: 17px;
+  }
+  .dash .dashCardAmountNeg {
+    font-size: 15px;
+  }
+  .dash .dashToast {
+    display: none;
+  }
+  .dash .dashCardTrend,
+  .dash .dashCardSub {
+    display: none;
+  }
+}
+
+.dashChromeLive {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid rgba(94, 255, 132, 0.25);
+  border-radius: 999px;
+  background: rgba(94, 255, 132, 0.06);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.dashChromeLiveDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: dashPulse 1.6s ease-in-out infinite;
+}
+
+.dashChrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--border);
+}
+.dashDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  opacity: 0.75;
+}
+.dashChromeLabel {
+  margin-left: 10px;
+  font-size: 11px;
+  color: var(--fg-dim);
+  letter-spacing: 0.06em;
+}
+
+.dashGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.dashCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #1a2127 0%, #141a1f 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 6px 14px -10px rgba(0, 0, 0, 0.6);
+}
+.dashCardOwed {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(94, 255, 132, 0.1),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #1a2127 0%, #141a1f 100%);
+  border-color: rgba(94, 255, 132, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 0 0 1px rgba(94, 255, 132, 0.04),
+    0 6px 20px -10px rgba(94, 255, 132, 0.18);
+}
+.dashCardOwe {
+  background: linear-gradient(180deg, #1a2127 0%, #141a1f 100%);
+}
+.dashCardLabel {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.dashCardRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.dashCardAmountPos {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 14px rgba(94, 255, 132, 0.25);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.dashCardAmountNeg {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.dashCardTrend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--accent-dim);
+  font-weight: 500;
+}
+.dashCardSub {
+  font-size: 11px;
+  color: var(--fg-dim);
+}
+
+.dashSpark {
+  position: relative;
+  width: 100%;
+  height: 36px;
+  margin-top: 2px;
+}
+.dashSpark svg {
+  display: block;
+  width: 100%;
+  height: 36px;
+}
+.dashSparkLine {
+  stroke: var(--accent);
+  filter: drop-shadow(0 0 8px rgba(94, 255, 132, 0.55));
+  stroke-dasharray: 360;
+  stroke-dashoffset: 360;
+  animation: dashDraw 1.8s cubic-bezier(0.2, 0.7, 0.3, 1) 0.4s forwards;
+}
+.dashSparkDot {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px rgba(94, 255, 132, 0.75));
+  opacity: 0;
+  animation:
+    dashDotIn 0.4s ease 2.1s forwards,
+    dashPulse 2.4s ease-in-out 2.6s infinite;
+  transform-origin: 160px 8px;
+}
+
+.dashBars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 36px;
+  margin-top: 2px;
+}
+.dashBar {
+  flex: 1;
+  background: linear-gradient(
+    180deg,
+    var(--fg-muted) 0%,
+    var(--fg-dim) 100%
+  );
+  border-radius: 2px;
+  opacity: 0.55;
+  transform-origin: bottom;
+  animation: dashBarRise 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
+}
+.dashBar:nth-child(1) { animation-delay: 0.6s; }
+.dashBar:nth-child(2) { animation-delay: 0.68s; }
+.dashBar:nth-child(3) { animation-delay: 0.76s; }
+.dashBar:nth-child(4) { animation-delay: 0.84s; }
+.dashBar:nth-child(5) { animation-delay: 0.92s; }
+.dashBar:nth-child(6) { animation-delay: 1s; }
+.dashBar:nth-child(7) { animation-delay: 1.08s; }
+
+.dashToast {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(94, 255, 132, 0.22);
+  border-radius: 10px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(94, 255, 132, 0.08),
+      rgba(94, 255, 132, 0.02)
+    ),
+    var(--bg-card);
+  box-shadow: inset 0 0 0 1px rgba(94, 255, 132, 0.03);
+  opacity: 0;
+  transform: translateY(-6px);
+  animation: dashToastIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) 1.2s forwards;
+}
+.dashToastIcon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(94, 255, 132, 0.12);
+  color: var(--accent);
+  font-size: 14px;
+  animation: dashSpin 4s linear 1.6s infinite;
+}
+.dashToastBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.dashToastTitle {
+  font-size: 12px;
+  color: var(--fg);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dashToastSub {
+  font-size: 10.5px;
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dashToastAction {
+  font-size: 10.5px;
+  color: var(--accent);
+  padding: 4px 8px;
+  border: 1px solid rgba(94, 255, 132, 0.3);
+  border-radius: 6px;
+  background: rgba(94, 255, 132, 0.06);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.dashList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dashListHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 6px;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.dashListHeadMeta {
+  color: var(--fg-muted);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+.dashRow {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+  border-top: 1px dashed var(--border);
+}
+.dashRow:first-of-type {
+  border-top: none;
+}
+.dashAvatar {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--bg);
+}
+.dashAvatarA {
+  background: linear-gradient(135deg, #79e2f2, #5eff84);
+}
+.dashAvatarB {
+  background: linear-gradient(135deg, #ffb86c, #ff7eb6);
+}
+.dashAvatarC {
+  background: linear-gradient(135deg, #5eff84, #3aaf5f);
+}
+.dashRowMain {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.dashRowTitle {
+  font-size: 12.5px;
+  color: var(--fg);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dashRowMeta {
+  font-size: 11px;
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+}
+.dashRowAmount {
+  font-size: 12.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.dashRowPos {
+  color: var(--accent);
+}
+.dashRowNeg {
+  color: var(--fg-muted);
+}
+
+@keyframes dashDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dashDotIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes dashPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.18);
+  }
+}
+@keyframes dashBarRise {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 0.55;
+  }
+}
+@keyframes dashToastIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes dashSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashSparkLine,
+  .dashSparkDot,
+  .dashChromeLiveDot,
+  .dashBar,
+  .dashToast,
+  .dashToastIcon {
+    animation: none;
+  }
+  .dashSparkLine {
+    stroke-dashoffset: 0;
+  }
+  .dashSparkDot {
+    opacity: 1;
+  }
+  .dashToast {
+    opacity: 1;
+    transform: none;
+  }
+  .dashBar {
+    opacity: 0.55;
+    transform: scaleY(1);
+  }
+  .dash {
+    transform: none;
+  }
+}

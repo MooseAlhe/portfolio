@@ -103,28 +103,6 @@ export default function Terminal() {
       );
   }, []);
 
-  useEffect(() => {
-    const node = scrollRef.current?.parentElement;
-    if (!node) return;
-
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (
-            entry.isIntersecting &&
-            entry.intersectionRatio > 0.4 &&
-            window.matchMedia("(min-width: 720px)").matches
-          ) {
-            inputRef.current?.focus();
-          }
-        });
-      },
-      { threshold: [0, 0.4, 1] }
-    );
-    obs.observe(node);
-    return () => obs.disconnect();
-  }, []);
-
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "l") {

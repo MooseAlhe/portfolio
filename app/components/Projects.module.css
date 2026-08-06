@@ -101,11 +101,10 @@
   .scroller {
     grid-auto-columns: 90vw;
   }
-  .arrowLeft {
-    left: 4px;
-  }
-  .arrowRight {
-    right: 4px;
+  /* Touch scrolling + snap take over — the floating arrows would overlap
+     card CTAs at this width. */
+  .arrow {
+    display: none;
   }
 }
 
@@ -424,7 +423,7 @@
 
 .featuredInner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(280px, 32%, 380px);
+  grid-template-columns: minmax(0, 1fr) clamp(300px, 38%, 400px);
   gap: clamp(24px, 4vw, 44px);
   align-items: stretch;
   height: 100%;
@@ -624,190 +623,6 @@
   position: relative;
 }
 
-.dash {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 16px;
-  background:
-    radial-gradient(
-      400px 200px at 100% 0%,
-      rgba(94, 255, 132, 0.06),
-      transparent 60%
-    ),
-    var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.02),
-    0 14px 30px -22px rgba(0, 0, 0, 0.6);
-}
-
-.dashChrome {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-bottom: 6px;
-  border-bottom: 1px dashed var(--border);
-}
-.dashDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  opacity: 0.7;
-}
-.dashChromeLabel {
-  margin-left: 8px;
-  font-size: 10.5px;
-  color: var(--fg-dim);
-  letter-spacing: 0.04em;
-}
-
-.dashBalance {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.dashBalanceLabel {
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-dim);
-}
-.dashBalanceRow {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-.dashBalanceAmount {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.015em;
-  text-shadow: 0 0 12px rgba(94, 255, 132, 0.18);
-}
-.dashBalanceTrend {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--accent-dim);
-  font-weight: 500;
-}
-
-.dashSpark {
-  position: relative;
-  width: 100%;
-  height: 40px;
-}
-.dashSpark svg {
-  display: block;
-  width: 100%;
-  height: 40px;
-}
-.dashSparkLine {
-  stroke: var(--accent);
-  filter: drop-shadow(0 0 6px rgba(94, 255, 132, 0.45));
-  stroke-dasharray: 360;
-  stroke-dashoffset: 360;
-  animation: featDraw 1.6s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
-  animation-delay: 0.3s;
-}
-.dashSparkDot {
-  fill: var(--accent);
-  filter: drop-shadow(0 0 6px rgba(94, 255, 132, 0.7));
-  opacity: 0;
-  animation: featDotIn 0.4s ease forwards, featPulse 2.2s ease-in-out 2s infinite;
-  animation-delay: 1.8s, 1.8s;
-  transform-origin: 160px 10px;
-}
-
-.dashList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 2px;
-}
-.dashRow {
-  display: grid;
-  grid-template-columns: 24px 1fr auto;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 4px;
-  border-top: 1px dashed var(--border);
-}
-.dashRow:first-child {
-  border-top: none;
-  padding-top: 2px;
-}
-.dashAvatar {
-  width: 24px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--bg);
-  letter-spacing: 0;
-}
-.dashAvatarA {
-  background: linear-gradient(135deg, #79e2f2, #5eff84);
-}
-.dashAvatarB {
-  background: linear-gradient(135deg, #ffb86c, #ff7eb6);
-}
-.dashAvatarC {
-  background: linear-gradient(135deg, #5eff84, #3aaf5f);
-}
-.dashRowMain {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-}
-.dashRowTitle {
-  font-size: 12px;
-  color: var(--fg);
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.dashRowMeta {
-  font-size: 10.5px;
-  color: var(--fg-dim);
-  letter-spacing: 0.02em;
-}
-.dashRowAmount {
-  font-size: 12px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-.dashRowPos {
-  color: var(--accent);
-}
-.dashRowNeg {
-  color: var(--fg-muted);
-}
-
-@keyframes featDraw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-@keyframes featDotIn {
-  from {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 @keyframes featPulse {
   0%, 100% {
     opacity: 1;
@@ -819,16 +634,8 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .dashSparkLine,
-  .dashSparkDot,
   .featuredEyebrowDot {
     animation: none;
-  }
-  .dashSparkLine {
-    stroke-dashoffset: 0;
-  }
-  .dashSparkDot {
-    opacity: 1;
   }
 }
 
@@ -851,11 +658,5 @@
   .featuredCtaPrimary,
   .featuredCtaSecondary {
     justify-content: center;
-  }
-  .dashBalanceAmount {
-    font-size: 20px;
-  }
-  .dashList .dashRow:last-child {
-    display: none;
   }
 }
