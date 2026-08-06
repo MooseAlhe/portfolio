@@ -54,17 +54,17 @@ export default function Hero() {
             <p className={styles.roleLine}>
               <span className="text-muted">&gt; </span>
               <span>{profile.role}</span>
-              <span className="text-dim"> — full-stack, from Scala pipelines to React UIs.</span>
+              <span className="text-dim"> // full-stack, from Scala pipelines to React UIs.</span>
             </p>
             <p className={styles.roleLine}>
               <span className="text-muted">&gt; </span>
               <span>Hobbyist Unity Developer</span>
-              <span className="text-dim"> — gameplay systems, multiplayer, ML-Agents.</span>
+              <span className="text-dim"> // gameplay systems, multiplayer, ML-Agents.</span>
             </p>
             <p className={styles.roleLine}>
               <span className="text-muted">&gt; </span>
               <span>Tinkerer &amp; Lifelong Learner</span>
-              <span className="text-dim"> — RL agents, finance tools, side-quests at 2am.</span>
+              <span className="text-dim"> // RL agents, finance tools, side-quests at 2am.</span>
             </p>
           </div>
 

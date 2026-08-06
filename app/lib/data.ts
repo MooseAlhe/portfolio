@@ -24,8 +24,8 @@ export const heroLines: string[] = [
 
 export const aboutBio: string[] = [
   "Software engineer based in New Jersey. I work full-stack at Bank of America Merrill Lynch on a trade-confirmation platform that moves millions of daily institutional transactions.",
-  "Off-hours I'm usually building something — right now that's Splits, a Plaid-backed app that auto-splits shared bills with roommates and partners (waitlist open at splitshq.com).",
-  "I'm also a hobbyist Unity dev — currently building Echobound, a multiplayer extraction roguelike with a voice-controlled AI companion, and running PPO experiments in a custom ML-Agents environment.",
+  "Off-hours I'm usually building something. Right now that's Splits, a Plaid-backed app that auto-splits shared bills with roommates and partners. The waitlist is open at splitshq.com.",
+  "I'm also a hobbyist Unity dev. My current project is Echobound, a multiplayer extraction roguelike with a voice-controlled AI companion, and I run PPO experiments in a custom ML-Agents environment on the side.",
   "Rutgers ECE '22. I'm into distributed systems, gameplay programming, taking things apart to see how they work, and shipping side projects until 2am.",
 ];
 
@@ -125,7 +125,7 @@ export const experience: Job[] = [
     start: "Jan 2023",
     end: "Present",
     blurb:
-      "I work full-stack on the trade-confirmation platform — the system that takes institutional orders and gets them matched, booked, and confirmed without anyone losing money. Scala services and ingestion pipelines on the backend, JavaScript/React on the operations UI, and zero-downtime rollouts across a distributed cluster in between. Most weeks are a mix of building new flows, getting ops out of release-cycle jail, and chasing down whatever is misbehaving in production.",
+      "I work full-stack on the trade-confirmation platform, the system that takes institutional orders and gets them matched, booked, and confirmed without anyone losing money. The backend is Scala services and ingestion pipelines, the operations UI is JavaScript/React, and rollouts have to land on a distributed cluster with zero downtime. Most weeks are a mix of building new flows, getting ops out of release-cycle jail, and chasing down whatever is misbehaving in production.",
     scope: [
       "1M+ daily txns",
       "10+ trade flows",
@@ -141,7 +141,7 @@ export const experience: Job[] = [
     start: "Jun 2022",
     end: "Aug 2022",
     blurb:
-      "A summer in corporate security. I sat with the SOC and triaged real Level 2/3 alerts — sometimes routine, sometimes someone's machine quietly phoning home to an IP nobody should be talking to. I also ran vendor risk reviews, which taught me that \"security\" is half tooling and half reading other companies' policies very carefully.",
+      "A summer in corporate security. I sat with the SOC and triaged real Level 2/3 alerts. Some were routine, and some were a machine quietly phoning home to an IP nobody should be talking to. I also ran vendor risk reviews, which mostly taught me how much of security comes down to reading other companies' policies very carefully.",
     scope: ["L2/L3 alert triage", "vendor risk reviews", "IOC review"],
     stack: ["LogRhythm SIEM", "CrowdStrike", "Splunk-style workflows"],
   },
@@ -193,8 +193,8 @@ export const projects: Project[] = [
     name: "Splits",
     tagline: "Auto-split shared bills via Plaid · Waitlist at splitshq.com",
     summary:
-      "Link your bank, mark the bills you share, and Splits tracks who owes who as transactions land. Settle up in Venmo or Cash App — we never touch your money. Web is on a waitlist; iOS and Android apps are in active development.",
-    period: "Apr 2026 — Present",
+      "Link your bank, mark the bills you share, and Splits tracks who owes who as transactions land. You settle up in Venmo or Cash App, so Splits never touches your money. Web is on a waitlist; iOS and Android apps are in active development.",
+    period: "Apr 2026 – Present",
     status: "active",
     featured: true,
     cardVariant: "featured",
@@ -218,21 +218,21 @@ export const projects: Project[] = [
     ],
     cover: {
       src: "/projects/splits/logo.png",
-      alt: "Splits logo — a stylized yellow banana split down the middle",
+      alt: "Splits logo: a stylized yellow banana split down the middle",
       kind: "logo",
     },
     overview: [
-      "Splits is currently in private development at splitshq.com — the landing page is open and you can join the waitlist while I onboard users in batches. Bank linking runs against Plaid's sandbox environment for now, which means early users connect to simulated test banks with fake transactions rather than a real account, so the full flow is safe to explore end-to-end without exposing any real financial data. Production Plaid access is the next milestone, and native iOS and Android apps are in active development alongside the web client. Recruiters: if you'd like early access to try the app, email me at mustafa.alhelawe@gmail.com and I'll send over an invite.",
-      "Splits solves a tiny but constant friction: figuring out who paid for what and who still owes who. You link your bank through Plaid, tell the app which bills you share with which people (rent with your roommate, the streaming bundle with your partner, groceries with both), and from then on every matching transaction is split automatically and added to a running balance.",
-      "When it's time to pay someone back, the app hands you off to Venmo or Cash App with the amount pre-filled — Splits itself never holds or moves money, which keeps it out of the legal territory that comes with handling other people's funds. Behind the scenes it's a Next.js web app on top of a Postgres database (via Supabase), with all the rules for how money is divided pulled into a single shared library so the math is identical everywhere it runs.",
+      "Splits is currently in private development. The landing page at splitshq.com is open and you can join the waitlist while I onboard users in batches. Bank linking runs against Plaid's sandbox environment for now, which means early users connect to simulated test banks with fake transactions rather than a real account, so the full flow is safe to explore end-to-end without exposing any real financial data. Production Plaid access is the next milestone, and native iOS and Android apps are in development alongside the web client. Recruiters: if you'd like early access to try the app, email me at mustafa.alhelawe@gmail.com and I'll send over an invite.",
+      "Splits exists because figuring out who paid for what, and who still owes who, is annoying in a way that never goes away. You link your bank through Plaid, tell the app which bills you share with which people (rent with your roommate, the streaming bundle with your partner, groceries with both), and from then on every matching transaction is split automatically and added to a running balance.",
+      "When it's time to pay someone back, the app hands you off to Venmo or Cash App with the amount pre-filled. Splits itself never holds or moves money, which keeps it out of the legal territory that comes with handling other people's funds. Behind the scenes it's a Next.js web app on top of a Postgres database (via Supabase), with all the rules for how money is divided pulled into a single shared library so the math comes out identical everywhere it runs.",
     ],
     highlights: [
-      "Connects to real bank accounts through Plaid and detects recurring shared bills automatically, so users set a rule once and stop thinking about it.",
-      "Every bank transaction is processed with a unique fingerprint, which means even if Plaid sends the same charge twice (it sometimes does), no one gets double-charged.",
-      "All the actual money math — who owes what share of which bill — lives in one isolated, dependency-free package. The web app, tests, and any future mobile or server-side jobs all use the same code, so balances can't drift between surfaces.",
-      "Friend relationships are stored as a single row per pair with a database-level rule that makes it impossible for the friendship to exist on only one side — no \"I added you but you don't see me\" bugs.",
-      "Database-level access rules (row-level security in Postgres) mean every user can only ever read or change their own data, even if a bug in the app tries otherwise — a second line of defense underneath the app's own permission checks.",
-      "Live notifications: when someone adds a bill, accepts a friend request, or marks a debt as settled, the other person sees it instantly without refreshing — powered by a single realtime connection per user.",
+      "Connects to real bank accounts through Plaid and detects recurring shared bills on its own. You set the rule once and it keeps applying to every future charge.",
+      "Every bank transaction is processed with a unique fingerprint. Plaid sometimes sends the same charge twice, and the fingerprint is what stops anyone from getting double-charged when it does.",
+      "All the actual money math (who owes what share of which bill) lives in one isolated, dependency-free package. The web app, the tests, and any future mobile or server-side jobs all run the same code, so balances can't drift between surfaces.",
+      "Friend relationships are stored as a single row per pair, with a database-level rule that makes it impossible for the friendship to exist on only one side. \"I added you but you don't see me\" bugs can't happen.",
+      "Database-level access rules (row-level security in Postgres) mean every user can only ever read or change their own data, even if a bug in the app tries otherwise. It's a second line of defense underneath the app's own permission checks.",
+      "Live notifications: when someone adds a bill, accepts a friend request, or marks a debt as settled, the other person sees it instantly without refreshing, all over a single realtime connection per user.",
     ],
     links: {
       demo: "https://splitshq.com",
@@ -243,8 +243,8 @@ export const projects: Project[] = [
     name: "Echobound",
     tagline: "Multiplayer Extraction Roguelike",
     summary:
-      "Multiplayer extraction roguelike in Unity 6. You play alongside an AI pet you can talk to through your mic — speech is transcribed and routed through an LLM that figures out what you actually meant.",
-    period: "Dec 2025 — Present",
+      "Multiplayer extraction roguelike in Unity 6. You play alongside an AI pet you can talk to through your mic. Speech gets transcribed and routed through an LLM that figures out what you actually meant.",
+    period: "Dec 2025 – Present",
     status: "active",
     featured: true,
     stack: [
@@ -257,7 +257,7 @@ export const projects: Project[] = [
       "HDRP",
     ],
     overview: [
-      "Echobound is a multiplayer extraction roguelike I'm building with a small team. The core hook is the companion system: instead of binding pet commands to a hotbar, you press-to-talk on your mic and tell the thing what to do — \"attack the big one,\" \"follow me,\" \"bolt the guy on the ridge\" — and it actually does it.",
+      "Echobound is a multiplayer extraction roguelike I'm building with a small team. The core hook is the companion system: instead of binding pet commands to a hotbar, you press-to-talk on your mic and tell the thing what to do (\"attack the big one,\" \"follow me,\" \"bolt the guy on the ridge\"), and it actually does it.",
       "Audio is captured locally and transcribed with whisper.unity, the transcript runs through an LLM that interprets intent against the companion's available abilities, and the resulting command is dispatched through FishNet so every player on the server sees the same companion behavior. Steamworks handles lobbies and identity.",
     ],
     highlights: [
@@ -272,13 +272,13 @@ export const projects: Project[] = [
     name: "Finance App",
     tagline: "Personal finance & AI spending insights",
     summary:
-      "Full-stack personal finance app with bank linking and natural-language spending insights — the sandbox where the ideas behind Splits started.",
-    period: "Feb 2026 — Present",
+      "Full-stack personal finance app with bank linking and natural-language spending insights. This is the sandbox where the ideas behind Splits started.",
+    period: "Feb 2026 – Present",
     status: "active",
     featured: true,
     stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Plaid"],
     overview: [
-      "A personal finance app built to answer the questions bank apps won't — \"how much did I spend on coffee in March?\" — and the project where the ideas that became Splits were first prototyped.",
+      "A personal finance app built to answer the questions bank apps won't, like \"how much did I spend on coffee in March?\" It's also where the ideas that became Splits were first prototyped.",
       "Plaid handles the bank linking and transaction sync, Supabase backs auth and storage, and a layer of LLM tooling translates natural-language questions into structured queries against the user's own data.",
     ],
     highlights: [
@@ -295,12 +295,12 @@ export const projects: Project[] = [
     tagline: "Reinforcement learning in Unity",
     summary:
       "Custom Unity ML-Agents environment for training autonomous agents with PPO + Python training pipelines.",
-    period: "Jan 2025 — Present",
+    period: "Jan 2025 – Present",
     status: "active",
     featured: true,
     stack: ["Unity", "C#", "Python", "ML-Agents", "PPO", "PyTorch"],
     overview: [
-      "A modular Unity environment for training reinforcement-learning agents end-to-end — environment, reward shaping, training pipeline, and analysis.",
+      "A modular Unity environment for training reinforcement-learning agents end-to-end, from reward shaping through the training pipeline to analysis.",
       "Wrote production-grade C# for the environment side and clean Python on the training side, with TensorBoard wired in for run comparison.",
     ],
     highlights: [
@@ -313,7 +313,7 @@ export const projects: Project[] = [
 ];
 
 export const education = {
-  school: "Rutgers University — New Brunswick",
+  school: "Rutgers University–New Brunswick",
   degree: "B.S. Electrical and Computer Engineering",
   year: "Class of 2022",
 };

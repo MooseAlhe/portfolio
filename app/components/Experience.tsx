@@ -51,7 +51,7 @@ export default function Experience() {
                       <span className={styles.company}>{job.company}</span>
                     </h3>
                     <p className={styles.meta}>
-                      {job.start} — {job.end} · {job.location}
+                      {job.start} – {job.end} · {job.location}
                     </p>
                   </div>
                   <span className={styles.commitHash} aria-hidden="true">

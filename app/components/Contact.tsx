@@ -36,8 +36,8 @@ export default function Contact() {
             Let&apos;s build something.
           </h3>
           <p className={styles.body}>
-            Whether it&apos;s a new role, a side project, or a half-formed idea
-            that sounds fun — my inbox is the fastest way to reach me.
+            New role, side project, or a half-formed idea that sounds fun:
+            my inbox is the fastest way to reach me.
           </p>
 
           <div className={styles.actions}>

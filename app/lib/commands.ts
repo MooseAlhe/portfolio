@@ -32,7 +32,7 @@ const help: Command = {
   description: "List available commands",
   run: (_args, { print }) => {
     print([
-      sys("Available commands — type any of these, or click below:"),
+      sys("Available commands (type any of these, or click below):"),
       line(""),
       ...COMMAND_LIST.map((c) =>
         line(
@@ -53,7 +53,7 @@ const whoami: Command = {
   run: (_args, { print }) => {
     print([
       line(`${profile.name}`),
-      line(`${profile.role} — ${profile.location}`),
+      line(`${profile.role} · ${profile.location}`),
       line(""),
       line(profile.tagline),
       line(""),
@@ -85,7 +85,7 @@ const projectsCmd: Command = {
     const verbose = args.includes("--verbose") || args.includes("-v");
     const out: TerminalLine[] = [sys("Personal projects:"), line("")];
     projects.forEach((p, i) => {
-      out.push(line(`  [${i + 1}] ${p.name} — ${p.tagline}`));
+      out.push(line(`  [${i + 1}] ${p.name}: ${p.tagline}`));
       out.push(line(`      stack: ${p.stack.join(", ")}`));
       out.push(line(`      when:  ${p.period}`));
       out.push(line(`      url:   /projects/${p.slug}`));
@@ -110,7 +110,7 @@ const experienceCmd: Command = {
     const out: TerminalLine[] = [sys("Work history:"), line("")];
     experience.forEach((j) => {
       out.push(line(`  ${j.role} @ ${j.company}`));
-      out.push(line(`  ${j.start} — ${j.end} · ${j.location}`));
+      out.push(line(`  ${j.start} – ${j.end} · ${j.location}`));
       out.push(line(""));
       out.push(line(`    ${j.blurb}`));
       out.push(line(""));
@@ -208,11 +208,11 @@ const catCmd: Command = {
         print([
           sys("# README"),
           line(""),
-          line(`Hi — I'm ${profile.name}, a ${profile.role.toLowerCase()} based`),
+          line(`Hi, I'm ${profile.name}, a ${profile.role.toLowerCase()} based`),
           line(`in ${profile.location}.`),
           line(""),
           line("This site is built with Next.js + TypeScript. The terminal you're"),
-          line("typing into is real — try `help` to see what's available, or use"),
+          line("typing into is real. Try `help` to see what's available, or use"),
           line("`whoami`, `projects --verbose`, `skills`, or `contact`."),
         ]);
         return;
@@ -258,7 +258,7 @@ const bannerCmd: Command = {
     print([
       { kind: "ascii", text: BANNER },
       line(""),
-      sys("Welcome — type `help` to begin."),
+      sys("Welcome. Type `help` to begin."),
     ]);
   },
 };
@@ -272,7 +272,7 @@ const sudoCmd: Command = {
         sys("[sudo] password for recruiter: ********"),
         line("Permission granted. ✅"),
         line(`Email dispatched to ${profile.email}.`),
-        sys("(But really — please reach out via the contact section!)"),
+        sys("(But really, please reach out via the contact section!)"),
       ]);
       return;
     }

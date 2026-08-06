@@ -14,18 +14,18 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://mustafa-alhe.dev"),
   title: {
-    default: `${profile.name} — ${profile.role}`,
+    default: `${profile.name} · ${profile.role}`,
     template: `%s · ${profile.name}`,
   },
   description: `${profile.role} based in ${profile.location}. ${profile.tagline}`,
   openGraph: {
-    title: `${profile.name} — ${profile.role}`,
+    title: `${profile.name} · ${profile.role}`,
     description: profile.tagline,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.role}`,
+    title: `${profile.name} · ${profile.role}`,
     description: profile.tagline,
   },
   robots: { index: true, follow: true },
