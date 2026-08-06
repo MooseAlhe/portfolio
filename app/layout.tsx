@@ -42,8 +42,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // suppressHydrationWarning: the inline script in <body> adds a "js" class to
+  // <html> before hydration, which React would otherwise flag as a
+  // server/client className mismatch. Only this element's own attributes are
+  // exempted; children still hydrate-check normally.
   return (
-    <html lang="en" className={jetbrains.variable}>
+    <html lang="en" className={jetbrains.variable} suppressHydrationWarning>
       <body>
         {/* Marks JS as available before first paint; scroll-reveal hiding is
             scoped to .js so content stays visible if JS never runs. */}
