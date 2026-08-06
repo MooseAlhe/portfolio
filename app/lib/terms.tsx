@@ -74,8 +74,11 @@ const KEYWORDS: string[] = [
 ];
 
 const SORTED = [...KEYWORDS].sort((a, b) => b.length - a.length);
+/* Boundary is matched with a capture group + lookahead instead of a
+   lookbehind — lookbehind throws at parse time on Safari < 16.4, which
+   would take down hydration for every client component importing this. */
 const PATTERN = new RegExp(
-  `(?<![\\w-])(${SORTED.map((k) => k.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")).join("|")})(?![\\w-])`,
+  `(^|[^\\w-])(${SORTED.map((k) => k.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")).join("|")})(?=$|[^\\w-])`,
   "gi"
 );
 
@@ -93,16 +96,18 @@ export function highlightTerms(text: string): ReactNode[] {
   PATTERN.lastIndex = 0;
   let m: RegExpExecArray | null;
   while ((m = PATTERN.exec(text))) {
-    if (m.index > last) out.push(text.slice(last, m.index));
-    const match = m[0];
+    const boundary = m[1];
+    const match = m[2];
+    const matchStart = m.index + boundary.length;
+    if (matchStart > last) out.push(text.slice(last, matchStart));
     const key = match.toLowerCase();
     if (seen.has(key)) {
       out.push(match);
     } else {
       seen.add(key);
-      out.push(<Term key={`${m.index}-${match}`}>{match}</Term>);
+      out.push(<Term key={`${matchStart}-${match}`}>{match}</Term>);
     }
-    last = m.index + match.length;
+    last = matchStart + match.length;
   }
   if (last < text.length) out.push(text.slice(last));
   return out;

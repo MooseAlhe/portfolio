@@ -18,13 +18,13 @@ export const profile = {
 
 export const heroLines: string[] = [
   "init portfolio.exe",
-  "loading profile…",
+  "fetching profile…",
   "ready.",
 ];
 
 export const aboutBio: string[] = [
   "Software engineer based in New Jersey. I work full-stack at Bank of America Merrill Lynch on a trade-confirmation platform that moves millions of daily institutional transactions.",
-  "Off-hours I'm usually building something — a Plaid-backed finance app right now, plus a reinforcement-learning sandbox for training PPO agents in Unity.",
+  "Off-hours I'm usually building something — right now that's Splits, a Plaid-backed app that auto-splits shared bills with roommates and partners (waitlist open at splitshq.com).",
   "I'm also a hobbyist Unity dev — currently building Echobound, a multiplayer extraction roguelike with a voice-controlled AI companion, and running PPO experiments in a custom ML-Agents environment.",
   "Rutgers ECE '22. I'm into distributed systems, gameplay programming, taking things apart to see how they work, and shipping side projects until 2am.",
 ];
@@ -127,7 +127,7 @@ export const experience: Job[] = [
     blurb:
       "I work full-stack on the trade-confirmation platform — the system that takes institutional orders and gets them matched, booked, and confirmed without anyone losing money. Scala services and ingestion pipelines on the backend, JavaScript/React on the operations UI, and zero-downtime rollouts across a distributed cluster in between. Most weeks are a mix of building new flows, getting ops out of release-cycle jail, and chasing down whatever is misbehaving in production.",
     scope: [
-      "~M daily txns",
+      "1M+ daily txns",
       "10+ trade flows",
       "15+ prod servers",
       "300+ client configs",
@@ -270,20 +270,20 @@ export const projects: Project[] = [
   {
     slug: "finance-app",
     name: "Finance App",
-    tagline: "Personal finance & shared bills",
+    tagline: "Personal finance & AI spending insights",
     summary:
-      "Full-stack personal finance app with bank linking, shared bills, and AI-assisted spending insights.",
+      "Full-stack personal finance app with bank linking and natural-language spending insights — the sandbox where the ideas behind Splits started.",
     period: "Feb 2026 — Present",
     status: "active",
     featured: true,
     stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Plaid"],
     overview: [
-      "A personal finance app that does what bank apps refuse to — let people who share rent, utilities, and groceries actually settle up without a spreadsheet.",
-      "Plaid handles the bank linking and transaction sync, Supabase backs auth and storage, and a layer of LLM tooling translates natural-language questions like \"how much did I spend on coffee in March?\" into structured queries against the user's own data.",
+      "A personal finance app built to answer the questions bank apps won't — \"how much did I spend on coffee in March?\" — and the project where the ideas that became Splits were first prototyped.",
+      "Plaid handles the bank linking and transaction sync, Supabase backs auth and storage, and a layer of LLM tooling translates natural-language questions into structured queries against the user's own data.",
     ],
     highlights: [
       "Designed the full-stack architecture: auth, secure financial data access, transaction syncing.",
-      "Plaid integration powering spending breakdowns, recurring-expense views, and contact-based shared bills.",
+      "Plaid integration powering spending breakdowns and recurring-expense views.",
       "Server-side API routes for secure data retrieval and transaction reconciliation.",
       "Prototyped AI workflows for natural-language spend queries and automated categorization.",
     ],

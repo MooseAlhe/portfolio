@@ -304,51 +304,6 @@ const exitCmd: Command = {
   },
 };
 
-const themeCmd: Command = {
-  name: "theme",
-  description: "List or set color theme",
-  usage: "theme [classic|amber|cyan]",
-  run: (args, { print }) => {
-    const target = args[0]?.toLowerCase();
-    const themes: Record<string, { accent: string; dim: string; glow: string }> = {
-      classic: {
-        accent: "#5eff84",
-        dim: "#3aaf5f",
-        glow: "rgba(94, 255, 132, 0.35)",
-      },
-      amber: {
-        accent: "#ffb86c",
-        dim: "#c08a4a",
-        glow: "rgba(255, 184, 108, 0.35)",
-      },
-      cyan: {
-        accent: "#79e2f2",
-        dim: "#3aa8b8",
-        glow: "rgba(121, 226, 242, 0.35)",
-      },
-    };
-    if (!target) {
-      print([
-        sys("Available themes: classic, amber, cyan"),
-        line("usage: theme <name>"),
-      ]);
-      return;
-    }
-    const t = themes[target];
-    if (!t) {
-      print(err(`theme: unknown theme '${target}'`));
-      return;
-    }
-    if (typeof document !== "undefined") {
-      const r = document.documentElement.style;
-      r.setProperty("--accent", t.accent);
-      r.setProperty("--accent-dim", t.dim);
-      r.setProperty("--accent-glow", t.glow);
-    }
-    print(sys(`theme set → ${target}`));
-  },
-};
-
 type ColorPreset = { accent: string; dim: string; glow: string };
 
 const COLOR_PRESETS: Record<string, ColorPreset> = {
@@ -391,7 +346,7 @@ const COLOR_PRESETS: Record<string, ColorPreset> = {
 
 const colorCmd: Command = {
   name: "color",
-  aliases: ["colour", "colors"],
+  aliases: ["colour", "colors", "theme"],
   description: "Switch the terminal color scheme",
   usage: "color [green|amber|cyan|magenta|blue|red|white|reset]",
   run: (args, { print }) => {
@@ -446,7 +401,6 @@ export const COMMAND_LIST: Command[] = [
   catCmd,
   echoCmd,
   dateCmd,
-  themeCmd,
   colorCmd,
   bannerCmd,
   sudoCmd,

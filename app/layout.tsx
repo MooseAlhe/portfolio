@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { profile } from "./lib/data";
 
@@ -44,6 +45,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={jetbrains.variable}>
       <body>
+        {/* Marks JS as available before first paint; scroll-reveal hiding is
+            scoped to .js so content stays visible if JS never runs. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
         <a href="#main" className="skip-link">
           Skip to content
         </a>
@@ -51,6 +59,7 @@ export default function RootLayout({
         <div className="bg-vignette" aria-hidden="true" />
         <div className="bg-scanlines" aria-hidden="true" />
         {children}
+        <Analytics />
       </body>
     </html>
   );

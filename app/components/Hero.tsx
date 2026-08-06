@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { profile } from "../lib/data";
+import { heroLines, profile } from "../lib/data";
 import Typewriter from "./Typewriter";
 import { highlightTerms } from "../lib/terms";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
-  const [bootDone, setBootDone] = useState(false);
   const [now, setNow] = useState<string>("");
 
   useEffect(() => {
@@ -32,37 +31,30 @@ export default function Hero() {
         <div className={styles.copy}>
           <div className={styles.boot}>
             <Typewriter
-              lines={[
-                "> init portfolio.exe",
-                "> fetching profile…",
-                "> ready.",
-              ]}
+              lines={heroLines.map((l) => `> ${l}`)}
               speed={28}
               linePause={220}
               startDelay={150}
               caret={false}
-              onDone={() => setBootDone(true)}
             />
           </div>
 
-          <p
-            className={`${styles.greeting} ${bootDone ? styles.greetingIn : ""}`}
-          >
+          <p className={styles.greeting}>
             <span className="text-accent">~</span>{" "}
             <span className="text-muted">$ whoami</span>
           </p>
 
-          <h1 className={`${styles.name} ${bootDone ? styles.nameIn : ""}`}>
+          <h1 className={styles.name}>
             <span className={styles.nameMain}>Mustafa</span>{" "}
             <span className={styles.nameAccent}>Alhelawe</span>
             <span className={styles.nameDot}>.</span>
           </h1>
 
-          <div className={`${styles.role} ${bootDone ? styles.roleIn : ""}`}>
+          <div className={styles.role}>
             <p className={styles.roleLine}>
               <span className="text-muted">&gt; </span>
               <span>{profile.role}</span>
-              <span className="text-dim"> — full-stack, building distributed systems.</span>
+              <span className="text-dim"> — full-stack, from Scala pipelines to React UIs.</span>
             </p>
             <p className={styles.roleLine}>
               <span className="text-muted">&gt; </span>
@@ -76,18 +68,14 @@ export default function Hero() {
             </p>
           </div>
 
-          <p
-            className={`${styles.tagline} highlight-scope ${
-              bootDone ? styles.taglineIn : ""
-            }`}
-          >
+          <p className={`${styles.tagline} highlight-scope`}>
             Currently at <strong>Bank of America Merrill Lynch</strong>,{" "}
             {highlightTerms(
               "working across the stack on a trade-confirmation platform that processes millions of daily institutional transactions. On the side, I prototype AI-driven finance tools and reinforcement-learning agents."
             )}
           </p>
 
-          <div className={`${styles.ctas} ${bootDone ? styles.ctasIn : ""}`}>
+          <div className={styles.ctas}>
             <a href="#projects" className={styles.ctaPrimary}>
               <span className="text-accent">$</span> view projects
             </a>
@@ -101,10 +89,7 @@ export default function Hero() {
           </p>
         </div>
 
-        <aside
-          className={`${styles.statusCard} ${bootDone ? styles.statusIn : ""}`}
-          aria-label="System status"
-        >
+        <aside className={styles.statusCard} aria-label="System status">
           <header className={styles.statusHead}>
             <span className={styles.dot} data-c="r" />
             <span className={styles.dot} data-c="y" />
@@ -116,13 +101,13 @@ export default function Hero() {
           <div className={styles.statusBody}>
             <pre>
 {`{
-  `}<span className="text-amber">"status"</span>{`:    `}<span className="text-accent">"online"</span>{`,
-  `}<span className="text-amber">"role"</span>{`:      `}<span className="text-accent">"{profile.role}"</span>{`,
-  `}<span className="text-amber">"location"</span>{`:  `}<span className="text-accent">"{profile.location}"</span>{`,
-  `}<span className="text-amber">"timezone"</span>{`:  `}<span className="text-accent">"America/New_York"</span>{`,
-  `}<span className="text-amber">"localTime"</span>{`: `}<span className="text-accent">"{now}"</span>{`,
-  `}<span className="text-amber">"focus"</span>{`:     `}<span className="text-accent">"distributed systems"</span>{`,
-  `}<span className="text-amber">"openTo"</span>{`:    [`}<span className="text-accent">"collaboration"</span>{`, `}<span className="text-accent">"new roles"</span>{`]
+  `}<span className="text-amber">&quot;status&quot;</span>{`:    `}<span className="text-accent">&quot;online&quot;</span>{`,
+  `}<span className="text-amber">&quot;role&quot;</span>{`:      `}<span className="text-accent">&quot;{profile.role}&quot;</span>{`,
+  `}<span className="text-amber">&quot;location&quot;</span>{`:  `}<span className="text-accent">&quot;{profile.location}&quot;</span>{`,
+  `}<span className="text-amber">&quot;timezone&quot;</span>{`:  `}<span className="text-accent">&quot;America/New_York&quot;</span>{`,
+  `}<span className="text-amber">&quot;localTime&quot;</span>{`: `}<span className="text-accent">&quot;{now}&quot;</span>{`,
+  `}<span className="text-amber">&quot;focus&quot;</span>{`:     `}<span className="text-accent">&quot;distributed systems&quot;</span>{`,
+  `}<span className="text-amber">&quot;openTo&quot;</span>{`:    [`}<span className="text-accent">&quot;collaboration&quot;</span>{`, `}<span className="text-accent">&quot;new roles&quot;</span>{`]
 }`}
             </pre>
           </div>
