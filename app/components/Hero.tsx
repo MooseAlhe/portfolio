@@ -54,24 +54,12 @@ export default function Hero() {
             <p className={styles.roleLine}>
               <span className="text-muted">&gt; </span>
               <span>{profile.role}</span>
-              <span className="text-dim"> // full-stack, from Scala pipelines to React UIs.</span>
-            </p>
-            <p className={styles.roleLine}>
-              <span className="text-muted">&gt; </span>
-              <span>Hobbyist Unity Developer</span>
-              <span className="text-dim"> // gameplay systems, multiplayer, ML-Agents.</span>
-            </p>
-            <p className={styles.roleLine}>
-              <span className="text-muted">&gt; </span>
-              <span>Tinkerer &amp; Lifelong Learner</span>
-              <span className="text-dim"> // RL agents, finance tools, side-quests at 2am.</span>
             </p>
           </div>
 
           <p className={`${styles.tagline} highlight-scope`}>
-            Currently at <strong>Bank of America Merrill Lynch</strong>,{" "}
             {highlightTerms(
-              "working across the stack on a trade-confirmation platform that processes millions of daily institutional transactions. On the side, I prototype AI-driven finance tools and reinforcement-learning agents."
+              "I work across the stack on financial software, and use my own projects to experiment with different technologies and ideas."
             )}
           </p>
 
@@ -106,7 +94,7 @@ export default function Hero() {
   `}<span className="text-amber">&quot;location&quot;</span>{`:  `}<span className="text-accent">&quot;{profile.location}&quot;</span>{`,
   `}<span className="text-amber">&quot;timezone&quot;</span>{`:  `}<span className="text-accent">&quot;America/New_York&quot;</span>{`,
   `}<span className="text-amber">&quot;localTime&quot;</span>{`: `}<span className="text-accent">&quot;{now}&quot;</span>{`,
-  `}<span className="text-amber">&quot;focus&quot;</span>{`:     `}<span className="text-accent">&quot;distributed systems&quot;</span>{`,
+  `}<span className="text-amber">&quot;focus&quot;</span>{`:     `}<span className="text-accent">&quot;full-stack development&quot;</span>{`,
   `}<span className="text-amber">&quot;openTo&quot;</span>{`:    [`}<span className="text-accent">&quot;collaboration&quot;</span>{`, `}<span className="text-accent">&quot;new roles&quot;</span>{`]
 }`}
             </pre>

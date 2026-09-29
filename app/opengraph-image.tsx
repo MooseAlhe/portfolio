@@ -64,7 +64,7 @@ export default async function OgImage() {
           }}
         >
           <span style={{ color: "#5eff84", marginRight: 16 }}>&gt;</span>
-          <span>{profile.role} · full-stack, distributed systems.</span>
+          <span>{profile.role}</span>
         </div>
         <div
           style={{

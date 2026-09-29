@@ -25,7 +25,7 @@
 
 .kicker {
   margin: 0 0 16px;
-  font-size: 12.5px;
+  font-size: 0.875rem;
   color: var(--fg-muted);
 }
 
@@ -41,7 +41,7 @@
   margin: 0 0 28px;
   color: var(--fg-muted);
   line-height: 1.7;
-  font-size: 15px;
+  font-size: 1rem;
 }
 
 .actions {
@@ -57,7 +57,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
+  padding: 12px 14px;
   background: var(--accent);
   color: var(--bg);
   border-radius: var(--radius);
@@ -65,6 +65,8 @@
   font-size: 14px;
   transition: transform 0.05s ease, box-shadow 0.2s ease, filter 0.2s ease;
   box-shadow: 0 0 28px -6px var(--accent-glow);
+  max-width: 100%;
+  min-height: 44px;
 }
 .primary:hover {
   color: var(--bg);
@@ -81,8 +83,9 @@
   color: var(--fg-muted);
   padding: 12px 16px;
   border-radius: var(--radius);
-  font-size: 13px;
+  font-size: 0.875rem;
   transition: color 0.2s ease, border-color 0.2s ease;
+  min-height: 44px;
 }
 .copyBtn:hover {
   color: var(--accent);
@@ -117,4 +120,12 @@
     width: 100%;
     justify-content: center;
   }
+}
+
+.primary > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.primary > span:first-child { flex-shrink: 0; }
+.links a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 32.5rem) {
+  .card { padding: 28px 18px; }
+  .links { gap: 4px 16px; }
 }

@@ -19,9 +19,14 @@ export function generateStaticParams(): Params[] {
 export function generateMetadata({ params }: { params: Params }): Metadata {
   const project = projects.find((p) => p.slug === params.slug);
   if (!project) return { title: "Project not found" };
+  const description = project.metaDescription ?? project.summary;
   return {
     title: project.name,
-    description: project.summary,
+    description,
+    ...(project.slug === "splits" ? {
+      openGraph: { title: "Splits · Mustafa Alhelawe", description },
+      twitter: { title: "Splits · Mustafa Alhelawe", description },
+    } : {}),
   };
 }
 
@@ -161,7 +166,7 @@ function DefaultBody({ project }: { project: Project }) {
       {project.highlights.length > 0 && (
         <ScrollReveal className={styles.section} delay={80}>
           <h2 className={styles.h2}>
-            <span className="text-accent">$</span> highlights
+            <span className="text-accent">$</span> implementation notes
           </h2>
           <ul className={styles.highlights}>
             {project.highlights.map((h, i) => (
@@ -195,62 +200,62 @@ function DefaultBody({ project }: { project: Project }) {
    ============================================================ */
 
 const HERO_STATS = [
-  { value: "0%", label: "of your money handled" },
-  { value: "Auto", label: "recurring detection" },
-  { value: "iOS + Android", label: "in active development" },
+  { value: "Web", label: "Next.js client" },
+  { value: "Mobile", label: "React Native / Expo" },
+  { value: "Demo", label: "sandbox data" },
 ];
 
 const HOW_IT_WORKS = [
   {
     step: "01",
-    title: "Connect your bank",
-    body: "Plaid handles the link. Splits gets read-only access to the transactions you'd see in your banking app. Sandbox during the waitlist period, real banks once production Plaid access is granted.",
-    chip: "Plaid · Chase **** 1284",
+    title: "Import sandbox transactions",
+    body: "The Plaid integration imports simulated bank transactions. That gives the recurring-bill logic transaction histories to work with without using real financial data.",
+    chip: "Plaid · sandbox transactions",
   },
   {
     step: "02",
-    title: "Mark what you share",
-    body: "Tell Splits which transactions belong to which person. Rent with Jamie. Spotify Family with Sam. Set the rule once and Splits handles every future charge.",
-    chip: "Rule · Rent · 50/50 with Jamie",
+    title: "Set a split rule",
+    body: "A rule says who shares a bill and how to divide it—for example, splitting rent equally with a roommate. Splits suggests rules for recurring bills and applies the rules you’ve set up when matching transactions arrive.",
+    chip: "Example · Rent · 50/50",
   },
   {
     step: "03",
-    title: "Settle when you want",
-    body: "Balances update as new transactions land. When you're ready to settle, Splits hands you off to Venmo or Cash App with the amount pre-filled. We never hold your money.",
-    chip: "Settle $42.18 · Venmo ↗",
+    title: "Track the balance",
+    body: "Each shared expense adds entries to the ledger and updates who owes what. Splits tracks those balances; it does not hold or transfer money.",
+    chip: "Example · $42.18 owed",
   },
 ];
 
 const FEATURES = [
   {
     glyph: "↻",
-    title: "Recurring, on autopilot",
-    body: "Set one rule for rent, or utilities, or the streaming bundle, and Splits keeps splitting it every month. No reminders, no spreadsheets.",
+    title: "Recognizing recurring bills",
+    body: "Merchant names and amounts aren't always identical from month to month. I normalize the names, group amounts within a 15% tolerance, and look for recurrence across at least two months before suggesting a split rule.",
   },
   {
     glyph: "⚡",
-    title: "Live balances",
-    body: "Add a bill, your friend sees it. Mark something paid, the balance drops on their phone too. Powered by realtime over a single subscription per user.",
+    title: "Sharing the calculations",
+    body: "The expense math had grown into three implementations. I brought it into one TypeScript package and added tests for splits, rounding, balances, and debt simplification.",
   },
   {
     glyph: "⌁",
-    title: "We never touch money",
-    body: "Splits is a ledger, not a wallet. Settling up hands off to Venmo or Cash App with the amount and recipient pre-filled, and the actual money never passes through us.",
+    title: "Coordinating sync jobs",
+    body: "I added a lock for each bank connection so two sync jobs do not process it at the same time. Each sync retrieves changes since the last saved position.",
   },
   {
     glyph: "▣",
-    title: "Math that doesn't drift",
-    body: "Every split is computed by one pure-TS engine, so the web app, the tests, and any future mobile client all agree on the balance.",
+    title: "When transactions change mid-sync",
+    body: "Plaid returns transactions a page at a time. Sometimes the data changes before all the pages have been fetched. I added recovery that restarts retrieval when that happens.",
   },
   {
     glyph: "◇",
-    title: "Idempotent by design",
-    body: "Every imported transaction carries a deterministic fingerprint, so when Plaid sends the same charge twice, no one gets double-billed.",
+    title: "Handling retries",
+    body: "A sync can fail after it has already added bills. Retrying it shouldn’t add them again. I write the bill entries before saving the sync’s progress, and use database-enforced idempotency keys to prevent duplicate entries on a retry.",
   },
   {
     glyph: "✶",
-    title: "Locked at the database",
-    body: "Row-level security in Postgres means each user can only see their own data, even if a bug in the app tries otherwise.",
+    title: "Using one backend",
+    body: "I moved the mobile backend into Next.js API routes. Web and mobile now share Supabase authentication and PostgreSQL storage, removing a separate backend deployment.",
   },
 ];
 
@@ -312,11 +317,14 @@ function FeaturedHero({ project }: { project: Project }) {
                 className={styles.featCtaPrimary}
               >
                 <span className={styles.featCtaPrimaryLabel}>
-                  Join the waitlist
+                  Try the demo
                 </span>
                 <span className={styles.featCtaArrow} aria-hidden="true">↗</span>
               </a>
             )}
+            <a href="#feat-h" className={styles.featCtaSecondary}>
+              Explore the implementation <span aria-hidden="true">↓</span>
+            </a>
             {project.links.github && (
               <a
                 href={project.links.github}
@@ -329,7 +337,7 @@ function FeaturedHero({ project }: { project: Project }) {
             )}
           </div>
 
-          <dl className={styles.featStats} aria-label="Product highlights">
+          <dl className={styles.featStats} aria-label="Project highlights">
             {HERO_STATS.map((s) => (
               <div key={s.label} className={styles.featStat}>
                 <dt className={styles.featStatLabel}>{s.label}</dt>
@@ -364,9 +372,10 @@ function FeaturedHero({ project }: { project: Project }) {
 function FeaturedBody({ project }: { project: Project }) {
   return (
     <>
-      <HowItWorks />
-      <FeatureGrid />
       <WhyBuilt />
+      <HowItWorks />
+      <DemoExperience demoUrl={project.links.demo} />
+      <FeatureGrid />
       <FinalCta demoUrl={project.links.demo} />
     </>
   );
@@ -380,10 +389,11 @@ function HowItWorks() {
           <span className="text-accent">$</span> how it works
         </p>
         <h2 id="how-h" className={styles.sectionTitle}>
-          Three steps. Then it runs itself.
+          From transactions to shared bills.
         </h2>
         <p className={styles.sectionLede}>
-          You set it up once. The rest is the app paying attention so you don&apos;t have to.
+          I built web and mobile clients around three connected pieces:
+          importing transactions, applying split rules, and keeping a running balance.
         </p>
       </ScrollReveal>
 
@@ -408,6 +418,36 @@ function HowItWorks() {
   );
 }
 
+function DemoExperience({ demoUrl }: { demoUrl?: string }) {
+  return (
+    <section className={styles.howSec} aria-labelledby="demo-h">
+      <ScrollReveal>
+        <p className={styles.sectionKicker}>
+          <span className="text-accent">$</span> try it
+        </p>
+        <h2 id="demo-h" className={styles.sectionTitle}>
+          Explore the web demo.
+        </h2>
+        <p className={styles.sectionLede}>
+          Try shared expenses, split rules, and balance tracking in the web app
+          using demo data. Bank-data examples use Plaid&apos;s sandbox; no real
+          money moves through Splits. The demo is for exploring the project,
+          not managing real finances.
+        </p>
+        <p className={styles.sectionLede}>
+          The React Native/Expo app is part of the same implementation.
+          You can explore the web version directly here.
+        </p>
+        {demoUrl && (
+          <a href={demoUrl} target="_blank" rel="noopener noreferrer" className={styles.featCtaPrimary}>
+            Try the demo <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </ScrollReveal>
+    </section>
+  );
+}
+
 function FeatureGrid() {
   return (
     <section className={styles.featSec} aria-labelledby="feat-h">
@@ -416,10 +456,10 @@ function FeatureGrid() {
           <span className="text-accent">$</span> under the hood
         </p>
         <h2 id="feat-h" className={styles.sectionTitle}>
-          Boring fintech, on purpose.
+          The parts that took more thought.
         </h2>
         <p className={styles.sectionLede}>
-          Money apps fail loudly. Splits is built so the dull, invariant stuff just keeps working.
+          The basic idea was simple. Building it meant dealing with changing transaction data, syncs that needed to run again, and three versions of the expense math.
         </p>
       </ScrollReveal>
 
@@ -452,20 +492,20 @@ function WhyBuilt() {
         </h2>
         <blockquote className={styles.whyQuote}>
           <p>
-            I have a roommate. We split rent, utilities, the streaming bundle.
-            Every month I&apos;d open a spreadsheet, add up the receipts, send a
-            Venmo request, follow up when she didn&apos;t pay yet, then forget
-            half of it the next month and do it all again.
+            Rent and utilities come around every month, but keeping track of
+            who paid what can still turn into the same round of receipts and
+            messages. I wanted a way to keep those shared bills together and
+            reuse the split rules.
           </p>
           <p>
-            Splits is what that spreadsheet wanted to be. Connect your bank,
-            tell it who shares what, and stop thinking about it. The IOU
-            updates itself. You settle when you want, the way you already pay
-            people back.
+            The idea was simple enough: recognize a recurring bill, apply the
+            agreed split, and keep a running balance. Building it meant dealing
+            with the less obvious parts too, like rounding and what happens
+            when a transaction sync runs twice.
           </p>
           <footer className={styles.whyFooter}>
             <span className={styles.whySig} aria-hidden="true">~</span>
-            <span>built solo · April 2026 – present</span>
+            <span>independent project · 2026</span>
           </footer>
         </blockquote>
       </section>
@@ -481,42 +521,22 @@ function FinalCta({ demoUrl }: { demoUrl?: string }) {
           <div className={styles.ctaCopy}>
             <p className={styles.ctaEyebrow}>
               <span className={styles.featEyebrowDot} aria-hidden="true" />
-              Waitlist · early access
+              Lessons from building Splits
             </p>
             <h2 id="cta-h" className={styles.ctaTitle}>
-              Join the waitlist.
+              What I learned.
             </h2>
             <p className={styles.ctaSub}>
-              Head to splitshq.com to join the waitlist. I&apos;m onboarding
-              users in batches while Plaid runs in sandbox mode, so early access
-              is safe to explore with simulated banks. Native iOS and Android
-              apps are in development alongside the web client.
+              Getting the expense math right was only part of the work.
+              It also had to stay consistent across clients and across syncs
+              that overlap, change halfway through, or need to run again.
             </p>
             <p className={styles.ctaSub}>
-              <strong>Recruiters:</strong> if you&apos;d like to skip the
-              waitlist and try the app, email{" "}
-              <a
-                className={styles.ctaInlineLink}
-                href={`mailto:${profile.email}?subject=Splits%20early%20access`}
-              >
-                {profile.email}
-              </a>{" "}
-              and I&apos;ll send over an invite.
+              Once those workflows were complete, I stopped expanding the
+              feature set. Keeping the web and mobile apps on a shared backend
+              gave me fewer services to run and maintain, and room to move on
+              to other work.
             </p>
-            <ul className={styles.ctaRoadmap}>
-              <li>
-                <span className={styles.ctaCheck} aria-hidden="true">▸</span>
-                <span><strong>Now:</strong> waitlist live · bank linking · auto-split · realtime balances · Venmo / Cash App handoff</span>
-              </li>
-              <li>
-                <span className={styles.ctaCheck} aria-hidden="true">◇</span>
-                <span><strong>In progress:</strong> native iOS app · native Android app · production Plaid · group bills</span>
-              </li>
-              <li>
-                <span className={styles.ctaCheck} aria-hidden="true">◇</span>
-                <span><strong>Later:</strong> shared subscriptions detector · smart settlement reminders</span>
-              </li>
-            </ul>
           </div>
 
           <div className={styles.ctaActions}>
@@ -528,16 +548,16 @@ function FinalCta({ demoUrl }: { demoUrl?: string }) {
                 className={styles.featCtaPrimary}
               >
                 <span className={styles.featCtaPrimaryLabel}>
-                  Join the waitlist
+                  Try the demo
                 </span>
                 <span className={styles.featCtaArrow} aria-hidden="true">↗</span>
               </a>
             )}
             <a
-              href={`mailto:${profile.email}?subject=Splits%20early%20access`}
+              href={`mailto:${profile.email}?subject=About%20Splits`}
               className={styles.featCtaSecondary}
             >
-              <span aria-hidden="true">✉</span> Email for early access
+              <span aria-hidden="true">✉</span> Ask about the project
             </a>
             <Link href="/#projects" className={styles.featCtaSecondary}>
               <span aria-hidden="true">←</span> back to projects

@@ -4,8 +4,8 @@ export const profile = {
   name: "Mustafa Alhelawe",
   handle: "mustafa",
   host: "portfolio",
-  role: "Software Engineer",
-  tagline: "Full-stack engineer. Distributed systems. Curious about everything.",
+  role: "Full-stack Software Engineer",
+  tagline: "I build financial software at Bank of America Merrill Lynch and work on independent projects outside my day job.",
   location: "New Jersey, USA",
   email: "mustafa.alhelawe@gmail.com",
   phone: "(732) 337-8562",
@@ -23,10 +23,8 @@ export const heroLines: string[] = [
 ];
 
 export const aboutBio: string[] = [
-  "Software engineer based in New Jersey. I work full-stack at Bank of America Merrill Lynch on a trade-confirmation platform that moves millions of daily institutional transactions.",
-  "Off-hours I'm usually building something. Right now that's Splits, a Plaid-backed app that auto-splits shared bills with roommates and partners. The waitlist is open at splitshq.com.",
-  "I'm also a hobbyist Unity dev. My current project is Echobound, a multiplayer extraction roguelike with a voice-controlled AI companion, and I run PPO experiments in a custom ML-Agents environment on the side.",
-  "Rutgers ECE '22. I'm into distributed systems, gameplay programming, taking things apart to see how they work, and shipping side projects until 2am.",
+  "I'm a full-stack engineer based in New Jersey. At Bank of America Merrill Lynch, I work on institutional trading systems, with responsibility across backend services, user workflows, and production releases.",
+  "I like to tinker and experiment with different technologies, from web and mobile development to games and machine learning. My own projects give me room to try ideas, learn unfamiliar tools, and work through problems outside my day job."
 ];
 
 export type SkillGroup = {
@@ -44,63 +42,64 @@ export const skills: SkillGroup[] = [
       "Python",
       "C#",
       "Java",
-      "Kotlin",
-      "Swift",
-      "C/C++",
       "Bash",
-    ],
+      "SQL"
+    ]
   },
   {
     label: "Backend",
     items: [
+      "Node.js",
       "REST APIs",
-      "Distributed Systems",
-      "Microservices",
-      "JSON",
-      "CI/CD",
-      "Ktor",
-      "KMP",
-      "Realtime",
-      "RLS/auth",
-    ],
+      "Supabase Auth"
+    ]
   },
   {
     label: "Frontend",
-    items: ["React", "Node.js", "Next.js", "Tailwind CSS"],
+    items: [
+      "React",
+      "Next.js"
+    ]
   },
   {
     label: "Mobile",
     items: [
-      "Android (Jetpack Compose)",
-      "iOS (SwiftUI)",
-      "Kotlin Multiplatform",
-    ],
+      "React Native",
+      "Expo"
+    ]
   },
   {
     label: "Database",
-    items: ["PostgreSQL", "Supabase", "SQL"],
+    items: [
+      "PostgreSQL",
+      "Supabase",
+      "AMPS"
+    ]
   },
   {
     label: "AI / ML",
-    items: ["PyTorch", "Scikit-learn", "Reinforcement Learning", "LLMs"],
+    items: [
+      "PyTorch",
+      "Scikit-learn",
+      "Reinforcement Learning",
+      "LLMs"
+    ]
   },
   {
     label: "Tools",
     items: [
       "Git",
-      "Cursor",
-      "Claude",
-      "Unity",
-      "Cypress",
-      "Gradle",
-      "Jenkins",
-      "Linux",
-      "Splunk",
-      "Plaid",
-      "Sentry",
       "Docker",
-    ],
-  },
+      "Linux",
+      "Jenkins",
+      "Gradle",
+      "Cypress",
+      "Splunk",
+      "Unity",
+      "Claude",
+      "Codex"
+    ]
+  }
 ];
 
 export type Job = {
@@ -125,12 +124,12 @@ export const experience: Job[] = [
     start: "Jan 2023",
     end: "Present",
     blurb:
-      "I work full-stack on the trade-confirmation platform, the system that takes institutional orders and gets them matched, booked, and confirmed without anyone losing money. The backend is Scala services and ingestion pipelines, the operations UI is JavaScript/React, and rollouts have to land on a distributed cluster with zero downtime. Most weeks are a mix of building new flows, getting ops out of release-cycle jail, and chasing down whatever is misbehaving in production.",
+      "I'm one of two U.S.-based engineers responsible for a global institutional trading platform that processes millions of trades a day. I own full-stack workflows across the trade lifecycle, from bringing in orders to matching, booking, and confirming trades, and carry that work through production releases.",
     scope: [
-      "1M+ daily txns",
+      "Millions of trades/day",
       "10+ trade flows",
-      "15+ prod servers",
-      "300+ client configs",
+      "15+ production servers",
+      "300+ client configurations"
     ],
     stack: ["Scala", "JavaScript", "React", "AMPS", "Jenkins", "Splunk"],
   },
@@ -141,9 +140,16 @@ export const experience: Job[] = [
     start: "Jun 2022",
     end: "Aug 2022",
     blurb:
-      "A summer in corporate security. I sat with the SOC and triaged real Level 2/3 alerts. Some were routine, and some were a machine quietly phoning home to an IP nobody should be talking to. I also ran vendor risk reviews, which mostly taught me how much of security comes down to reading other companies' policies very carefully.",
-    scope: ["L2/L3 alert triage", "vendor risk reviews", "IOC review"],
-    stack: ["LogRhythm SIEM", "CrowdStrike", "Splunk-style workflows"],
+      "I investigated security alerts, reviewed suspicious emails, and assessed how vendors protected confidential information. One investigation involved unauthorized traffic to banned IP addresses. I used LogRhythm for alert triage and CrowdStrike's sandbox to examine suspicious emails.",
+    scope: [
+      "Alert triage",
+      "Vendor risk reviews",
+      "Email investigations"
+    ],
+    stack: [
+      "LogRhythm",
+      "CrowdStrike"
+    ],
   },
 ];
 
@@ -165,6 +171,7 @@ export type Project = {
   name: string;
   tagline: string;
   summary: string;
+  metaDescription?: string;
   period: string;
   status: "active" | "completed" | "archived";
   featured?: boolean;
@@ -191,30 +198,32 @@ export const projects: Project[] = [
   {
     slug: "splits",
     name: "Splits",
-    tagline: "Auto-split shared bills via Plaid · Waitlist at splitshq.com",
+    tagline: "Tracking shared expenses and recurring bills",
     summary:
-      "Link your bank, mark the bills you share, and Splits tracks who owes who as transactions land. You settle up in Venmo or Cash App, so Splits never touches your money. Web is on a waitlist; iOS and Android apps are in active development.",
-    period: "Apr 2026 – Present",
-    status: "active",
+      "I built Splits to handle the bills that come around every month: recognize recurring expenses, apply agreed split rules, and keep track of who owes what. The Next.js web app and React Native/Expo mobile app share the same calculation logic and backend.",
+    metaDescription:
+      "Splits tracks recurring shared expenses and balances across web and mobile. Explore the sandbox web demo and the engineering behind it.",
+    period: "2026",
+    status: "completed",
     featured: true,
     cardVariant: "featured",
     featuredCopy: {
-      eyebrow: "Waitlist · splitshq.com",
-      headline: "Your half of rent, settled before you ask.",
+      eyebrow: "Web + mobile project",
+      headline: "Keeping track of the bills we share.",
       featurePills: [
-        "Bank-linked",
-        "Auto-detect recurring",
-        "iOS & Android in progress",
+        "Recurring bills",
+        "Shared calculations",
+        "Web & mobile"
       ],
     },
     stack: [
-      "Next.js 14",
+      "Next.js",
       "TypeScript",
+      "React Native",
+      "Expo",
       "Supabase",
       "PostgreSQL",
-      "Plaid",
-      "Tailwind",
-      "pnpm workspaces",
+      "Plaid"
     ],
     cover: {
       src: "/projects/splits/logo.png",
@@ -222,17 +231,16 @@ export const projects: Project[] = [
       kind: "logo",
     },
     overview: [
-      "Splits is currently in private development. The landing page at splitshq.com is open and you can join the waitlist while I onboard users in batches. Bank linking runs against Plaid's sandbox environment for now, which means early users connect to simulated test banks with fake transactions rather than a real account, so the full flow is safe to explore end-to-end without exposing any real financial data. Production Plaid access is the next milestone, and native iOS and Android apps are in development alongside the web client. Recruiters: if you'd like early access to try the app, email me at mustafa.alhelawe@gmail.com and I'll send over an invite.",
-      "Splits exists because figuring out who paid for what, and who still owes who, is annoying in a way that never goes away. You link your bank through Plaid, tell the app which bills you share with which people (rent with your roommate, the streaming bundle with your partner, groceries with both), and from then on every matching transaction is split automatically and added to a running balance.",
-      "When it's time to pay someone back, the app hands you off to Venmo or Cash App with the amount pre-filled. Splits itself never holds or moves money, which keeps it out of the legal territory that comes with handling other people's funds. Behind the scenes it's a Next.js web app on top of a Postgres database (via Supabase), with all the rules for how money is divided pulled into a single shared library so the math comes out identical everywhere it runs.",
+      "I wanted to keep track of shared expenses without working out the same recurring bills from scratch each month. Splits brings those bills, split rules, and balances together in a web app and React Native/Expo mobile clients.",
+      "The calculation logic had grown into three implementations. I consolidated it into one TypeScript package and added fixture-based tests for splits, rounding, balances, and debt simplification. I also moved the mobile backend into Next.js API routes so both clients use the same authentication and storage.",
+      "Transaction syncing needed to handle interrupted runs and repeated data. The sync writes generated bill entries before saving its progress, with database-enforced keys to prevent duplicate entries on retries. The web demo lets you explore shared expenses, split rules, and balances with sandbox financial data. Splits does not hold or transfer money."
     ],
     highlights: [
-      "Connects to real bank accounts through Plaid and detects recurring shared bills on its own. You set the rule once and it keeps applying to every future charge.",
-      "Every bank transaction is processed with a unique fingerprint. Plaid sometimes sends the same charge twice, and the fingerprint is what stops anyone from getting double-charged when it does.",
-      "All the actual money math (who owes what share of which bill) lives in one isolated, dependency-free package. The web app, the tests, and any future mobile or server-side jobs all run the same code, so balances can't drift between surfaces.",
-      "Friend relationships are stored as a single row per pair, with a database-level rule that makes it impossible for the friendship to exist on only one side. \"I added you but you don't see me\" bugs can't happen.",
-      "Database-level access rules (row-level security in Postgres) mean every user can only ever read or change their own data, even if a bug in the app tries otherwise. It's a second line of defense underneath the app's own permission checks.",
-      "Live notifications: when someone adds a bill, accepts a friend request, or marks a debt as settled, the other person sees it instantly without refreshing, all over a single realtime connection per user.",
+      "Recurring-bill detection groups normalized merchant names and similar amounts across at least two months. It suggests split rules that can generate shared-bill entries.",
+      "I consolidated three versions of the calculation logic into one shared TypeScript package, with tests for splits, rounding, balances, and debt simplification.",
+      "Each bank connection has a concurrency lock to keep sync jobs from overlapping. If transactions change during pagination, the sync restarts retrieval.",
+      "Generated bill entries are written before the sync cursor advances. Database-enforced idempotency keys prevent a retry from creating a second copy of the same ledger entry.",
+      "I moved the mobile backend into Next.js API routes, so web and mobile share Supabase authentication and PostgreSQL storage without a separate backend deployment."
     ],
     links: {
       demo: "https://splitshq.com",
@@ -241,9 +249,9 @@ export const projects: Project[] = [
   {
     slug: "echobound",
     name: "Echobound",
-    tagline: "Multiplayer Extraction Roguelike",
+    tagline: "A multiplayer game with a voice-controlled companion",
     summary:
-      "Multiplayer extraction roguelike in Unity 6. You play alongside an AI pet you can talk to through your mic. Speech gets transcribed and routed through an LLM that figures out what you actually meant.",
+      "Echobound is an extraction roguelike I'm building with a small team. The idea is to let players speak to a companion during a run. The interesting part is turning a spoken request into an ability the game can execute and share with the other players.",
     period: "Dec 2025 – Present",
     status: "active",
     featured: true,
@@ -257,56 +265,55 @@ export const projects: Project[] = [
       "HDRP",
     ],
     overview: [
-      "Echobound is a multiplayer extraction roguelike I'm building with a small team. The core hook is the companion system: instead of binding pet commands to a hotbar, you press-to-talk on your mic and tell the thing what to do (\"attack the big one,\" \"follow me,\" \"bolt the guy on the ridge\"), and it actually does it.",
-      "Audio is captured locally and transcribed with whisper.unity, the transcript runs through an LLM that interprets intent against the companion's available abilities, and the resulting command is dispatched through FishNet so every player on the server sees the same companion behavior. Steamworks handles lobbies and identity.",
+      "I wanted to explore what it would feel like to talk to a game companion rather than choose every command from a menu. Echobound is a multiplayer extraction roguelike in development with a small team, with that interaction at the center of the companion system.",
+      "The pipeline captures push-to-talk audio, transcribes it with whisper.unity, and asks an LLM to interpret the request against the companion's available abilities. The resulting command goes through FishNet's server-authoritative networking. The challenge is connecting a loosely worded request like 'follow me' to a specific game action and keeping that action consistent for the other players."
     ],
     highlights: [
-      "Voice-driven companion pipeline: press-to-talk → whisper.unity transcription → LLM intent resolution → networked ability dispatch.",
-      "FishNet authoritative networking keeps the companion's behavior in sync for every player on the server, no client desync.",
-      "Steamworks-backed lobbies and identity; HDRP visuals in Unity 6 for moody, high-contrast extraction runs.",
+      "Spoken requests are interpreted against the companion's available abilities before being dispatched as game commands.",
+      "Companion actions run through server-authoritative networking so their execution can be coordinated across players.",
+      "Steamworks supplies lobbies and player identity for multiplayer sessions."
     ],
     links: {},
   },
   {
     slug: "finance-app",
     name: "Finance App",
-    tagline: "Personal finance & AI spending insights",
+    tagline: "Exploring questions about personal spending",
     summary:
-      "Full-stack personal finance app with bank linking and natural-language spending insights. This is the sandbox where the ideas behind Splits started.",
+      "I started this prototype to ask questions like 'how much did I spend on coffee in March?' It combines transaction syncing with experiments in translating those questions into data queries. Some of the ideas behind Splits started here.",
     period: "Feb 2026 – Present",
     status: "active",
     featured: true,
     stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Plaid"],
     overview: [
-      "A personal finance app built to answer the questions bank apps won't, like \"how much did I spend on coffee in March?\" It's also where the ideas that became Splits were first prototyped.",
-      "Plaid handles the bank linking and transaction sync, Supabase backs auth and storage, and a layer of LLM tooling translates natural-language questions into structured queries against the user's own data.",
+      "I wanted to ask questions about spending without manually filtering a transaction list each time. This prototype explores questions such as 'how much did I spend on coffee in March?' It's also where I first tried ideas that later became Splits.",
+      "I built bank linking and transaction syncing with Plaid, authentication and storage with Supabase, and server-side routes for retrieving the data. On top of that, I experimented with translating natural-language questions into structured queries. The challenge is translating a question about a merchant and a time period into a query over the user's transactions."
     ],
     highlights: [
-      "Designed the full-stack architecture: auth, secure financial data access, transaction syncing.",
-      "Plaid integration powering spending breakdowns and recurring-expense views.",
-      "Server-side API routes for secure data retrieval and transaction reconciliation.",
-      "Prototyped AI workflows for natural-language spend queries and automated categorization.",
+      "Bank linking and transaction syncing provide the records used for spending breakdowns and recurring-expense views.",
+      "Server-side routes handle transaction retrieval and reconciliation, with authentication and storage backed by Supabase.",
+      "I prototyped spending queries and transaction categorization to explore how people could work with their financial data in plain language."
     ],
     links: {},
   },
   {
     slug: "ai-simulation-platform",
-    name: "AI Simulation Platform",
-    tagline: "Reinforcement learning in Unity",
+    name: "Reinforcement Learning Simulations",
+    tagline: "Learning through observations and rewards",
     summary:
-      "Custom Unity ML-Agents environment for training autonomous agents with PPO + Python training pipelines.",
+      "I started with agents learning to find food, then added obstacles and visual observations. I built the simulations in Unity and training pipelines in Python, changing what agents could observe and how they were rewarded as the tasks became more complex.",
     period: "Jan 2025 – Present",
     status: "active",
     featured: true,
     stack: ["Unity", "C#", "Python", "ML-Agents", "PPO", "PyTorch"],
     overview: [
-      "A modular Unity environment for training reinforcement-learning agents end-to-end, from reward shaping through the training pipeline to analysis.",
-      "Wrote production-grade C# for the environment side and clean Python on the training side, with TensorBoard wired in for run comparison.",
+      "I wanted to understand how much an agent's behavior depends on what it can observe and what it gets rewarded for. I started with food-seeking agents without vision, then added static and moving obstacles, followed by visual observations.",
+      "I built the environments in Unity ML-Agents, with modular C# logic and Python pipelines for PPO training. Each new task gave me a reason to revisit the observations, reward functions, and training settings. I later extended the experiments to a six-axis robotic arm, which introduced a more complex action space and control problem."
     ],
     highlights: [
-      "Built a modular Unity ML-Agents environment with configurable reward systems and state observations.",
-      "Tuned PPO hyperparameters across experiments to improve learning stability.",
-      "Production-style C# integrated cleanly with Python training pipelines.",
+      "Progressed from food-seeking without vision to navigation around static and moving obstacles, then experiments with visual observations.",
+      "Reworked observations and reward functions through successive training runs, using C# environment logic and Python training pipelines.",
+      "Extended the simulations to a six-axis robotic arm to explore a more complex set of observations, actions, and rewards."
     ],
     links: {},
   },

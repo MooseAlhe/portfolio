@@ -14,7 +14,7 @@ export default function SplitsDash() {
         <span className={styles.dashChromeLabel}>splits.app / home</span>
         <span className={styles.dashChromeLive}>
           <span className={styles.dashChromeLiveDot} />
-          live
+          mockup
         </span>
       </div>
 

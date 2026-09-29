@@ -89,6 +89,10 @@ const projectsCmd: Command = {
       out.push(line(`      stack: ${p.stack.join(", ")}`));
       out.push(line(`      when:  ${p.period}`));
       out.push(line(`      url:   /projects/${p.slug}`));
+      if (p.slug === "splits") {
+        out.push(line(`      status: ${p.status} · demo available`));
+        out.push(line(`      demo:  ${p.links.demo} · sandbox data`));
+      }
       if (verbose) {
         out.push(line(`      ${p.summary}`));
         p.highlights.forEach((h) => out.push(line(`        · ${h}`)));
@@ -211,8 +215,8 @@ const catCmd: Command = {
           line(`Hi, I'm ${profile.name}, a ${profile.role.toLowerCase()} based`),
           line(`in ${profile.location}.`),
           line(""),
-          line("This site is built with Next.js + TypeScript. The terminal you're"),
-          line("typing into is real. Try `help` to see what's available, or use"),
+          line("I built this site with Next.js and TypeScript. Try `help`"),
+          line("to see the available commands, or use"),
           line("`whoami`, `projects --verbose`, `skills`, or `contact`."),
         ]);
         return;

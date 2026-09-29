@@ -1,9 +1,3 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 22px;
-}
-
 .carousel {
   position: relative;
 }
@@ -14,15 +8,11 @@
   grid-auto-columns: minmax(400px, calc((100% - 44px) / 2.5));
   gap: 22px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 4px;
   padding: 4px 4px 16px;
   margin: 0 -4px;
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
-}
-.scroller > .card {
-  scroll-snap-align: start;
+  align-items: stretch;
 }
 
 /* Fade edges based on scroll position — only where content is hidden */
@@ -58,8 +48,8 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 3;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -99,21 +89,12 @@
 }
 @media (max-width: 600px) {
   .scroller {
-    grid-auto-columns: 90vw;
+    grid-auto-columns: calc(100% - 20px);
   }
-  /* Touch scrolling + snap take over — the floating arrows would overlap
+  /* Touch scrolling takes over — the floating arrows would overlap
      card CTAs at this width. */
   .arrow {
     display: none;
-  }
-}
-
-@media (max-width: 520px) {
-  .cardHeader {
-    grid-template-columns: auto 1fr;
-  }
-  .period {
-    padding-left: 28px;
   }
 }
 
@@ -129,11 +110,13 @@
   color: inherit;
   text-decoration: none;
   cursor: pointer;
-  height: 100%;
+  height: auto;
   transition:
     border-color 0.25s ease,
     transform 0.25s ease,
     box-shadow 0.25s ease;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .card::before {
   content: "";
@@ -160,6 +143,7 @@
 .card:hover .openArrow {
   color: var(--accent);
   transform: translateX(2px);
+  font-size: 0.875rem;
 }
 
 .cardHeader {
@@ -192,23 +176,24 @@
 
 .name {
   margin: 0;
-  font-size: 17px;
+  font-size: 1.125rem;
   font-weight: 600;
   color: var(--fg);
   letter-spacing: -0.01em;
+  line-height: 1.35;
 }
 
 .tagline {
   margin: 2px 0 0;
   color: var(--fg-muted);
-  font-size: 12.5px;
+  font-size: 0.875rem;
 }
 
 .period {
   grid-column: 1 / -1;
-  font-size: 11px;
+  font-size: 0.8125rem;
   color: var(--fg-dim);
-  white-space: nowrap;
+  white-space: normal;
   padding-top: 0;
   padding-left: 32px;
 }
@@ -216,8 +201,8 @@
 .summary {
   margin: 0 0 14px;
   color: var(--fg);
-  font-size: 13.5px;
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
 .cardExtras {
@@ -238,8 +223,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 12.5px;
-  line-height: 1.55;
+  font-size: 0.875rem;
+  line-height: 1.65;
   color: var(--fg-muted);
 }
 .cardHighlights li {
@@ -282,9 +267,9 @@
 }
 .financePromptText {
   color: var(--fg-muted);
-  overflow: hidden;
+  overflow: visible;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
   min-width: 0;
 }
 .financeRows {
@@ -337,12 +322,14 @@
   padding-top: 8px;
   border-top: 1px dashed var(--border);
   font-size: 11.5px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .financeTotalLabel {
   color: var(--fg-dim);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 10px;
+  font-size: 0.75rem;
 }
 .financeTotalAmount {
   color: var(--accent);
@@ -352,12 +339,13 @@
 
 .cardFooter {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   padding-top: 14px;
   border-top: 1px dashed var(--border);
   margin-top: auto;
+  flex-direction: column;
 }
 
 .tags {
@@ -423,9 +411,9 @@
 
 .featuredInner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(300px, 38%, 400px);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   gap: clamp(24px, 4vw, 44px);
-  align-items: stretch;
+  align-items: center;
   height: 100%;
 }
 
@@ -441,8 +429,8 @@
   align-items: center;
   gap: 8px;
   margin: 0;
-  font-size: 11.5px;
-  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--accent);
   font-weight: 500;
@@ -498,7 +486,7 @@
 
 .featuredHeadline {
   margin: 0;
-  font-size: clamp(16px, 1.7vw, 19px);
+  font-size: clamp(1.125rem, 1.7vw, 1.375rem);
   font-weight: 500;
   line-height: 1.35;
   color: var(--fg);
@@ -508,10 +496,10 @@
 
 .featuredSummary {
   margin: 0;
-  font-size: 13.5px;
+  font-size: 1rem;
   line-height: 1.7;
   color: var(--fg-muted);
-  max-width: 48ch;
+  max-width: 56ch;
 }
 
 .featuredPills {
@@ -522,7 +510,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0 10px;
-  font-size: 12px;
+  font-size: 0.8125rem;
   color: var(--fg-muted);
   letter-spacing: 0.02em;
 }
@@ -541,8 +529,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin-top: auto;
-  padding-top: 18px;
+  margin-top: 0;
+  padding-top: 12px;
 }
 
 .featuredCtaPrimary {
@@ -611,16 +599,18 @@
   padding: 3px 8px;
   border: 1px solid var(--border-strong);
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 0.75rem;
   color: var(--fg-muted);
   background: rgba(94, 255, 132, 0.04);
+  max-width: 100%;
 }
 
 .featuredRight {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   min-width: 0;
   position: relative;
+  justify-content: center;
 }
 
 @keyframes featPulse {
@@ -644,10 +634,7 @@
     grid-column: span 1;
   }
   .featuredInner {
-    grid-template-columns: 1fr;
-  }
-  .featuredRight {
-    order: 2;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (max-width: 520px) {
@@ -659,4 +646,8 @@
   .featuredCtaSecondary {
     justify-content: center;
   }
+}
+
+@media (max-width: 47.5rem) {
+  .featuredCard { padding: 22px; }
 }
