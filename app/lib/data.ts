@@ -6,7 +6,7 @@ export const profile = {
   host: "portfolio",
   role: "Full-stack Software Engineer",
   tagline:
-    "I build institutional trading systems at Bank of America Merrill Lynch, and ship side projects across web, mobile, games, and ML.",
+    "I maintain and extend an institutional trading platform at Bank of America Merrill Lynch, and ship side projects across web, mobile, games, and ML.",
   location: "New Jersey, USA",
   email: "mustafa.alhelawe@gmail.com",
   phone: "(732) 337-8562",
@@ -188,6 +188,20 @@ export type Media = {
   kind?: "screenshot" | "logo";
 };
 
+/**
+ * Hero media shown beside a project page's header (below it on mobile).
+ * Put files in /public/projects/<slug>/. width/height are the intrinsic size
+ * and reserve space so the page doesn't shift while loading. Videos are muted,
+ * looping, and lazy-loaded; `poster` shows until they play.
+ *
+ *   media: { type: "image", src: "/projects/echobound/hero.png", alt: "…", width: 1600, height: 1000 }
+ *   media: { type: "video", src: "/projects/echobound/demo.mp4", poster: "/projects/echobound/demo.jpg",
+ *            alt: "…", width: 1280, height: 720, caption: "…" }
+ */
+export type ProjectMedia =
+  | { type: "image" | "gif"; src: string; alt: string; width: number; height: number; caption?: string }
+  | { type: "video"; src: string; poster: string; alt: string; width: number; height: number; caption?: string };
+
 export type Project = {
   slug: string;
   name: string;
@@ -209,6 +223,7 @@ export type Project = {
   overview: string[];
   highlights: string[];
   cover?: Media;
+  media?: ProjectMedia;
   gallery?: Media[];
   links: {
     github?: string;

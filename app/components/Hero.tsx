@@ -34,7 +34,6 @@ export default function Hero() {
     ["stack", statusCard.stack],
     ["openTo", statusCard.openTo],
   ];
-  const keyWidth = Math.max(...statusEntries.map(([k]) => k.length));
 
   return (
     <section id="top" className={styles.hero} aria-label="Introduction">
@@ -99,14 +98,10 @@ export default function Hero() {
             <pre>
               <span className={styles.statusLine}>{"{"}</span>
               {statusEntries.map(([key, value], i) => (
-                <span
-                  key={key}
-                  className={styles.statusEntry}
-                  style={{ "--indent": `${keyWidth + 6}ch` } as React.CSSProperties}
-                >
+                <span key={key} className={styles.statusLine}>
                   {"  "}
                   <span className="text-amber">&quot;{key}&quot;</span>
-                  {":".padEnd(keyWidth - key.length + 2)}
+                  {": "}
                   {Array.isArray(value) ? (
                     <>
                       [

@@ -9,7 +9,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(28px, 5vw, 64px);
   align-items: center;
 }
@@ -252,25 +252,21 @@
 
 .statusBody {
   padding: 18px 18px 22px;
+  container-type: inline-size;
 }
 .statusBody pre {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
   line-height: 1.7;
   color: var(--fg-muted);
-  white-space: pre-wrap;
-  word-break: break-word;
+  /* Every entry stays on one line. The font scales down with the card so the
+     longest line (~55ch) fits; overflow-x is only a safety net. */
+  white-space: pre;
+  font-size: min(0.75rem, calc(100cqi / 34));
+  overflow-x: auto;
 }
 .statusLine {
   display: block;
-}
-/* Hanging indent: a wrapped value lines up under its value column
-   instead of falling back to column 0. --indent is set from the key width. */
-.statusEntry {
-  display: block;
-  padding-left: var(--indent);
-  text-indent: calc(-1 * var(--indent));
 }
 
 @media (max-width: 920px) {

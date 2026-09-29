@@ -449,29 +449,6 @@
   max-width: 56ch;
 }
 
-.featuredPills {
-  list-style: none;
-  margin: var(--space-1) 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1) var(--space-4);
-  font-size: 0.8125rem;
-  color: var(--fg-muted);
-  letter-spacing: 0.02em;
-}
-.featuredPills li {
-  display: inline-flex;
-  align-items: baseline;
-  gap: var(--space-2);
-}
-.featuredPills li::before {
-  content: "▸";
-  color: var(--accent);
-  font-size: 11px;
-}
-
 .featuredCtaRow {
   display: flex;
   flex-wrap: wrap;

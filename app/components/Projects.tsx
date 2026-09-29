@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { projects, type Project } from "../lib/data";
+import FeaturePills from "./FeaturePills";
 import SectionHeader from "./SectionHeader";
 import SplitsDash from "./SplitsDash";
 import styles from "./Projects.module.css";
@@ -193,13 +194,7 @@ function FeaturedCard({ p }: { p: Project }) {
 
           <p className={styles.featuredSummary}>{p.summary}</p>
 
-          {copy?.featurePills && copy.featurePills.length > 0 && (
-            <ul className={styles.featuredPills} aria-label="Key capabilities">
-              {copy.featurePills.map((label) => (
-                <li key={label}>{label}</li>
-              ))}
-            </ul>
-          )}
+          {copy?.featurePills && <FeaturePills items={copy.featurePills} />}
 
           <div className={styles.featuredCtaRow}>
             <span className={styles.featuredCtaPrimary} aria-hidden="true">

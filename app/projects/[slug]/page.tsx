@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import FeaturePills from "@/app/components/FeaturePills";
 import Footer from "@/app/components/Footer";
 import Nav from "@/app/components/Nav";
+import ProjectMedia from "@/app/components/ProjectMedia";
 import ScrollProgress from "@/app/components/ScrollProgress";
 import ScrollReveal from "@/app/components/ScrollReveal";
 import SplitsDash from "@/app/components/SplitsDash";
@@ -52,23 +54,20 @@ export default function ProjectPage({ params }: { params: Params }) {
             <DefaultHeader project={project} />
           )}
 
-          {project.cover && project.cover.kind !== "logo" && !isFeatured && (
-            <ScrollReveal className={styles.cover}>
-              <MediaBlock m={project.cover} priority />
-            </ScrollReveal>
-          )}
-
           {isFeatured ? (
             <FeaturedBody project={project} />
           ) : (
             <DefaultBody project={project} />
           )}
 
-          <nav className={styles.foot} aria-label="Project navigation">
-            <Link href="/#projects" className={styles.back}>
-              <span aria-hidden="true">←</span> back to projects
-            </Link>
-          </nav>
+          {/* Splits already links back from its closing card. */}
+          {!isFeatured && (
+            <nav className={styles.foot} aria-label="Project navigation">
+              <Link href="/#projects" className={styles.back}>
+                <span aria-hidden="true">←</span> back to projects
+              </Link>
+            </nav>
+          )}
         </article>
       </main>
       <Footer />
@@ -81,66 +80,68 @@ export default function ProjectPage({ params }: { params: Params }) {
    ============================================================ */
 
 function DefaultHeader({ project }: { project: Project }) {
-  const hasLogo = project.cover?.kind === "logo";
+  const { media } = project;
   return (
-    <header className={`${styles.header} ${hasLogo ? styles.headerWithLogo : ""}`}>
-      <div className={styles.headerMain}>
-        <p className={styles.crumbs}>
-          <span className="text-muted">~/projects/</span>
-          <span className="text-accent">{project.slug}</span>
-        </p>
-        <h1 className={styles.title}>{project.name}</h1>
-        <p className={`${styles.tagline} highlight-scope`}>
-          {highlightTerms(project.tagline)}
-        </p>
+    <header className={styles.featHero}>
+      <p className={styles.featCrumbs}>
+        <span className="text-muted">~/projects/</span>
+        <span className="text-accent">{project.slug}</span>
+      </p>
 
-        <div className={styles.meta}>
-          <span className={styles.period}>{project.period}</span>
-          <span className="text-dim">·</span>
-          <span className={`${styles.status} ${styles[`status_${project.status}`]}`}>
-            <span className={styles.statusDot} aria-hidden="true" />
-            {project.status}
-          </span>
+      <div className={`${styles.featGrid} ${media ? "" : styles.featGridSolo}`}>
+        <div className={styles.featLeft}>
+          <h1 className={styles.featTitle}>{project.name}</h1>
+          <p className={`${styles.tagline} highlight-scope`}>
+            {highlightTerms(project.tagline)}
+          </p>
+
+          <div className={styles.meta}>
+            <span className={styles.period}>{project.period}</span>
+            <span className="text-dim">·</span>
+            <span className={`${styles.status} ${styles[`status_${project.status}`]}`}>
+              <span className={styles.statusDot} aria-hidden="true" />
+              {project.status}
+            </span>
+          </div>
+
+          <div className={styles.stack}>
+            {project.stack.map((s) => (
+              <span key={s} className="tag">{s}</span>
+            ))}
+          </div>
+
+          {(project.links.github || project.links.demo) && (
+            <div className={styles.linkRow}>
+              {project.links.github && (
+                <a
+                  href={project.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.linkBtn}
+                >
+                  <span aria-hidden="true">{"</>"}</span> code
+                </a>
+              )}
+              {project.links.demo && (
+                <a
+                  href={project.links.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.linkBtn}
+                >
+                  <span aria-hidden="true">↗</span> live demo
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
-        <div className={styles.stack}>
-          {project.stack.map((s) => (
-            <span key={s} className="tag">{s}</span>
-          ))}
-        </div>
-
-        {(project.links.github || project.links.demo) && (
-          <div className={styles.linkRow}>
-            {project.links.github && (
-              <a
-                href={project.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.linkBtn}
-              >
-                <span aria-hidden="true">{"</>"}</span> code
-              </a>
-            )}
-            {project.links.demo && (
-              <a
-                href={project.links.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.linkBtn}
-              >
-                <span aria-hidden="true">↗</span> live demo
-              </a>
-            )}
+        {media && (
+          <div className={styles.featRight}>
+            <ProjectMedia media={media} />
           </div>
         )}
       </div>
-
-      {hasLogo && project.cover && (
-        <div className={styles.headerLogo}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={project.cover.src} alt={project.cover.alt} />
-        </div>
-      )}
     </header>
   );
 }
@@ -295,18 +296,7 @@ function FeaturedHero({ project }: { project: Project }) {
 
           <p className={styles.featSummary}>{project.summary}</p>
 
-          {copy.featurePills.length > 0 && (
-            <ul className={styles.featPills} aria-label="Key capabilities">
-              {copy.featurePills.map((label, i) => (
-                <li key={label}>
-                  {i > 0 && (
-                    <span className={styles.featPillSep} aria-hidden="true">·</span>
-                  )}
-                  <span>{label}</span>
-                </li>
-              ))}
-            </ul>
-          )}
+          <FeaturePills items={copy.featurePills} />
 
           <div className={styles.featCtaRow}>
             {project.links.demo && (
@@ -353,7 +343,6 @@ function FeaturedHero({ project }: { project: Project }) {
               <span className={styles.statusDot} aria-hidden="true" />
               {project.status}
             </span>
-            <span className="text-dim">·</span>
             <span className={styles.featStackInline}>
               {project.stack.slice(0, stackMax).join(" · ")}
               {project.stack.length > stackMax && ` · +${project.stack.length - stackMax}`}

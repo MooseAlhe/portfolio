@@ -7,7 +7,7 @@
   z-index: 5;
   cursor: pointer;
   animation: rootIn 220ms ease-out both;
-  font-family: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  font-family: var(--font-mono);
 }
 
 @keyframes rootIn {
