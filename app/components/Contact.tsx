@@ -29,7 +29,7 @@ export default function Contact() {
 
         <ScrollReveal className={styles.card}>
           <p className={styles.kicker}>
-            <span className="text-accent">// </span>
+            <span className="text-accent">{"// "}</span>
             open to new roles and project conversations
           </p>
           <h3 className={styles.headline}>

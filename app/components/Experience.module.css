@@ -7,6 +7,9 @@
 .resumeLink {
   color: var(--accent);
   white-space: nowrap;
+  /* In-text link: underline so it isn't distinguished by colour alone. */
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .resumeLink:hover {
   color: var(--fg);

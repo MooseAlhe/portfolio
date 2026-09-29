@@ -1,100 +1,49 @@
-.carousel {
-  position: relative;
+.projects {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
-.scroller {
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(400px, calc((100% - 44px) / 2.5));
-  gap: 22px;
-  overflow-x: auto;
-  padding: 4px 4px 16px;
-  margin: 0 -4px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-strong) transparent;
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
 }
 
-/* Fade edges based on scroll position — only where content is hidden */
-.scroller {
-  --fade-w: 80px;
-  transition: mask-image 0.3s ease;
+.gridItem {
+  display: flex;
+  min-width: 0;
 }
-.fadeRight {
-  mask-image: linear-gradient(to right, black calc(100% - var(--fade-w)), transparent 100%);
-}
-.fadeLeft {
-  mask-image: linear-gradient(to left, black calc(100% - var(--fade-w)), transparent 100%);
-}
-.fadeLeft.fadeRight {
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black var(--fade-w),
-    black calc(100% - var(--fade-w)),
-    transparent 100%
-  );
-}
-.scroller::-webkit-scrollbar {
-  height: 8px;
-}
-.scroller::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 4px;
+.gridItem > .card {
+  flex: 1;
 }
 
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 3;
-  width: 44px;
-  height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-elevated);
-  color: var(--accent);
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    opacity 0.2s ease,
-    transform 0.2s ease;
-  box-shadow: 0 8px 22px -10px rgba(0, 0, 0, 0.6);
-}
-.arrow:hover:not(:disabled) {
-  border-color: var(--accent-dim);
-  background: rgba(94, 255, 132, 0.08);
-}
-.arrow:disabled {
-  opacity: 0;
-  pointer-events: none;
-}
-.arrowLeft {
-  left: -20px;
-}
-.arrowRight {
-  right: -20px;
-}
-
-@media (max-width: 900px) {
-  .scroller {
-    grid-auto-columns: min(480px, 88vw);
+/* Each card runs full width: copy on the left, stack and "open" on the
+   right. Below 40rem the card collapses to a single column. */
+@media (min-width: 40rem) {
+  .gridItem > .card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 15rem);
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      "header  footer"
+      "summary footer"
+      "extras  footer";
+    column-gap: var(--space-6);
   }
-}
-@media (max-width: 600px) {
-  .scroller {
-    grid-auto-columns: calc(100% - 20px);
-  }
-  /* Touch scrolling takes over — the floating arrows would overlap
-     card CTAs at this width. */
-  .arrow {
-    display: none;
+  .gridItem .cardHeader { grid-area: header; }
+  .gridItem .summary { grid-area: summary; }
+  .gridItem .cardExtras { grid-area: extras; margin-bottom: 0; }
+  .gridItem .cardFooter {
+    grid-area: footer;
+    margin-top: 0;
+    padding-top: 0;
+    padding-left: var(--space-6);
+    border-top: none;
+    border-left: 1px dashed var(--border);
   }
 }
 
@@ -381,8 +330,7 @@
    ============================================================ */
 
 .featuredCard {
-  grid-column: span 2;
-  padding: clamp(24px, 3vw, 36px);
+  padding: clamp(var(--space-6), 3vw, var(--space-8));
   background:
     radial-gradient(
       900px 360px at 100% 0%,
@@ -412,15 +360,14 @@
 .featuredInner {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: clamp(24px, 4vw, 44px);
-  align-items: center;
-  height: 100%;
+  gap: clamp(var(--space-6), 4vw, var(--space-10));
+  align-items: start;
 }
 
 .featuredLeft {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--space-3);
   min-width: 0;
 }
 
@@ -448,7 +395,7 @@
   margin: 0;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
   font-size: clamp(26px, 3vw, 34px);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -504,33 +451,33 @@
 
 .featuredPills {
   list-style: none;
-  margin: 4px 0 0;
+  margin: var(--space-1) 0 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0 10px;
+  gap: var(--space-1) var(--space-4);
   font-size: 0.8125rem;
   color: var(--fg-muted);
   letter-spacing: 0.02em;
 }
 .featuredPills li {
   display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  align-items: baseline;
+  gap: var(--space-2);
 }
-.featuredPillSep {
-  color: var(--accent-dim);
-  opacity: 0.6;
+.featuredPills li::before {
+  content: "▸";
+  color: var(--accent);
+  font-size: 11px;
 }
 
 .featuredCtaRow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
-  margin-top: 0;
-  padding-top: 12px;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
 }
 
 .featuredCtaPrimary {
@@ -592,7 +539,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 14px;
+  margin-top: var(--space-1);
 }
 .featuredStackChip {
   display: inline-block;
@@ -606,11 +553,17 @@
 }
 
 .featuredRight {
+  align-self: center;
   display: flex;
   align-items: center;
   min-width: 0;
   position: relative;
   justify-content: center;
+}
+/* Keep the dash under its 350px container-query breakpoint so it uses the
+   compact layout (no toast) and stays shorter than the copy beside it. */
+.featuredRight > * {
+  max-width: 340px;
 }
 
 @keyframes featPulse {
@@ -629,14 +582,6 @@
   }
 }
 
-@media (max-width: 1000px) {
-  .featuredCard {
-    grid-column: span 1;
-  }
-  .featuredInner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
 @media (max-width: 520px) {
   .featuredCtaRow {
     flex-direction: column;
@@ -649,5 +594,6 @@
 }
 
 @media (max-width: 47.5rem) {
-  .featuredCard { padding: 22px; }
+  .featuredCard { padding: var(--space-5); }
+  .featuredInner { grid-template-columns: minmax(0, 1fr); }
 }

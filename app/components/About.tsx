@@ -21,7 +21,7 @@ export default function About() {
               </p>
             ))}
             <p className={styles.edu}>
-              <span className="text-muted">// education</span>
+              <span className="text-muted">{"// education"}</span>
               <br />
               <strong>{education.school}</strong>
               <br />

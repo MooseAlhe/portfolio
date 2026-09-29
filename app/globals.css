@@ -21,6 +21,19 @@
   --magenta: #ff7eb6;
   --danger: #ff6b6b;
 
+  /* Spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --section-space: clamp(var(--space-8), 4.75vw, 60px);
+
   /* Layout */
   --container: 1100px;
   --gutter: clamp(20px, 4vw, 48px);
@@ -158,15 +171,15 @@ button {
 }
 
 .section {
-  padding: clamp(48px, 7vw, 88px) 0;
+  padding: var(--section-space) 0;
   position: relative;
 }
 
 .section-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
   color: var(--fg-muted);
   font-size: 0.8125rem;
   letter-spacing: 0.05em;

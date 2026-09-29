@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   padding-top: max(clamp(112px, 14vh, 160px), calc(var(--nav-height, 69px) + 32px));
-  padding-bottom: clamp(64px, 9vh, 100px);
+  padding-bottom: clamp(var(--space-10), 6vh, var(--space-16));
   position: relative;
 }
 
@@ -262,6 +262,16 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
+.statusLine {
+  display: block;
+}
+/* Hanging indent: a wrapped value lines up under its value column
+   instead of falling back to column 0. --indent is set from the key width. */
+.statusEntry {
+  display: block;
+  padding-left: var(--indent);
+  text-indent: calc(-1 * var(--indent));
+}
 
 @media (max-width: 920px) {
   .grid {
@@ -280,9 +290,6 @@
     min-height: auto;
     padding-top: max(110px, calc(var(--nav-height, 69px) + 24px));
   }
-  .boot {
-    min-height: 52px;
-  }
   .ctas {
     flex-direction: column;
     align-items: stretch;
@@ -299,9 +306,13 @@
   .statusCard { max-width: 560px; width: 100%; }
 }
 @media (max-width: 32.5rem) {
-  .hero { padding-top: max(96px, calc(var(--nav-height, 69px) + 24px)); padding-bottom: 40px; }
-  .boot { margin-bottom: 16px; }
+  .hero { padding-top: max(96px, calc(var(--nav-height, 69px) + 24px)); padding-bottom: var(--space-6); }
   .greeting { margin-bottom: 14px; }
   .statusBody { padding: 14px; }
   .ctas { gap: 4px; }
+}
+
+/* Boot lines are decoration; below md they only push the name down. */
+@media (max-width: 47.99rem) {
+  .boot { display: none; }
 }

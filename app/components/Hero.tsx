@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { heroLines, profile } from "../lib/data";
+import { heroLines, profile, statusCard } from "../lib/data";
 import Typewriter from "./Typewriter";
 import { highlightTerms } from "../lib/terms";
 import styles from "./Hero.module.css";
@@ -24,6 +24,17 @@ export default function Hero() {
     const id = window.setInterval(fmt, 1000);
     return () => window.clearInterval(id);
   }, []);
+
+  const statusEntries: [string, string | string[]][] = [
+    ["status", statusCard.status],
+    ["current", statusCard.current],
+    ["experience", statusCard.experience],
+    ["location", statusCard.location],
+    ["localTime", now],
+    ["stack", statusCard.stack],
+    ["openTo", statusCard.openTo],
+  ];
+  const keyWidth = Math.max(...statusEntries.map(([k]) => k.length));
 
   return (
     <section id="top" className={styles.hero} aria-label="Introduction">
@@ -58,9 +69,7 @@ export default function Hero() {
           </div>
 
           <p className={`${styles.tagline} highlight-scope`}>
-            {highlightTerms(
-              "I work across the stack on financial software, and use my own projects to experiment with different technologies and ideas."
-            )}
+            {highlightTerms(profile.tagline)}
           </p>
 
           <div className={styles.ctas}>
@@ -88,15 +97,39 @@ export default function Hero() {
           </header>
           <div className={styles.statusBody}>
             <pre>
-{`{
-  `}<span className="text-amber">&quot;status&quot;</span>{`:    `}<span className="text-accent">&quot;online&quot;</span>{`,
-  `}<span className="text-amber">&quot;role&quot;</span>{`:      `}<span className="text-accent">&quot;{profile.role}&quot;</span>{`,
-  `}<span className="text-amber">&quot;location&quot;</span>{`:  `}<span className="text-accent">&quot;{profile.location}&quot;</span>{`,
-  `}<span className="text-amber">&quot;timezone&quot;</span>{`:  `}<span className="text-accent">&quot;America/New_York&quot;</span>{`,
-  `}<span className="text-amber">&quot;localTime&quot;</span>{`: `}<span className="text-accent">&quot;{now}&quot;</span>{`,
-  `}<span className="text-amber">&quot;focus&quot;</span>{`:     `}<span className="text-accent">&quot;full-stack development&quot;</span>{`,
-  `}<span className="text-amber">&quot;openTo&quot;</span>{`:    [`}<span className="text-accent">&quot;collaboration&quot;</span>{`, `}<span className="text-accent">&quot;new roles&quot;</span>{`]
-}`}
+              <span className={styles.statusLine}>{"{"}</span>
+              {statusEntries.map(([key, value], i) => (
+                <span
+                  key={key}
+                  className={styles.statusEntry}
+                  style={{ "--indent": `${keyWidth + 6}ch` } as React.CSSProperties}
+                >
+                  {"  "}
+                  <span className="text-amber">&quot;{key}&quot;</span>
+                  {":".padEnd(keyWidth - key.length + 2)}
+                  {Array.isArray(value) ? (
+                    <>
+                      [
+                      {value.map((v, j) => (
+                        <span key={v}>
+                          {j > 0 && ", "}
+                          <span className="text-accent">&quot;{v}&quot;</span>
+                        </span>
+                      ))}
+                      ]
+                    </>
+                  ) : (
+                    <span
+                      className="text-accent"
+                      suppressHydrationWarning={key === "experience"}
+                    >
+                      &quot;{value}&quot;
+                    </span>
+                  )}
+                  {i < statusEntries.length - 1 && ","}
+                </span>
+              ))}
+              <span className={styles.statusLine}>{"}"}</span>
             </pre>
           </div>
         </aside>

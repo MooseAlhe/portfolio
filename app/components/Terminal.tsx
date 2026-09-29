@@ -198,7 +198,7 @@ export default function Terminal() {
         <div className="section-header">
           <span className="h-num">04.</span>
           <span className="h-title">Terminal</span>
-          <span className="text-muted">// another way to look around</span>
+          <span className="text-muted">{"// another way to look around"}</span>
           <span className="h-rule" aria-hidden="true" />
         </div>
 

@@ -38,3 +38,6 @@ next-env.d.ts
 /Mustafa*Resume*.pdf
 
 .vercel
+
+# local review tooling (Playwright/axe) — not shipped
+/review/

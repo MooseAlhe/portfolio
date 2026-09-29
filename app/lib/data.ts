@@ -5,7 +5,8 @@ export const profile = {
   handle: "mustafa",
   host: "portfolio",
   role: "Full-stack Software Engineer",
-  tagline: "I build financial software at Bank of America Merrill Lynch and work on independent projects outside my day job.",
+  tagline:
+    "I build institutional trading systems at Bank of America Merrill Lynch, and ship side projects across web, mobile, games, and ML.",
   location: "New Jersey, USA",
   email: "mustafa.alhelawe@gmail.com",
   phone: "(732) 337-8562",
@@ -49,9 +50,9 @@ export const skills: SkillGroup[] = [
   {
     label: "Backend",
     items: [
+      "Scala",
       "Node.js",
-      "REST APIs",
-      "Supabase Auth"
+      "REST APIs"
     ]
   },
   {
@@ -73,6 +74,7 @@ export const skills: SkillGroup[] = [
     items: [
       "PostgreSQL",
       "Supabase",
+      "Supabase Auth",
       "AMPS"
     ]
   },
@@ -152,6 +154,26 @@ export const experience: Job[] = [
     ],
   },
 ];
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** Whole years elapsed since a "Mon YYYY" date string (e.g. "Jan 2023"). */
+export function yearsSince(start: string, now: Date = new Date()): number {
+  const [mon, year] = start.split(" ");
+  const months =
+    (now.getFullYear() - Number(year)) * 12 + (now.getMonth() - MONTHS.indexOf(mon));
+  return Math.max(0, Math.floor(months / 12));
+}
+
+/** Fields shown in the hero's status.json card. localTime is added live by the Hero. */
+export const statusCard = {
+  status: "online",
+  current: "Software Engineer @ BofA Merrill Lynch",
+  experience: `${yearsSince(experience[0].start)}+ years`,
+  location: profile.location,
+  stack: ["Scala", "TypeScript", "React", "Next.js"],
+  openTo: ["new roles"],
+};
 
 /**
  * Media item used in project covers and galleries.
