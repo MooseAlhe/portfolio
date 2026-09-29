@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import FeaturePills from "@/app/components/FeaturePills";
@@ -279,12 +280,14 @@ function FeaturedHero({ project }: { project: Project }) {
 
           <div className={styles.featTitleRow}>
             {project.cover?.kind === "logo" && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 className={styles.featTitleLogo}
                 src={project.cover.src}
                 alt=""
                 aria-hidden="true"
+                width={68}
+                height={68}
+                priority
               />
             )}
             <h1 id="feat-hero-title" className={styles.featTitle}>

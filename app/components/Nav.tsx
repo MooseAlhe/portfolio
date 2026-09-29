@@ -104,7 +104,7 @@ export default function Nav() {
       role="banner"
     >
       <div className={styles.inner}>
-        <a href={sectionHref("#top")} className={styles.brand} aria-label="Home">
+        <a href={sectionHref("#top")} className={styles.brand} aria-label="mustafa.dev, home">
           <span className={styles.brandPrompt}>~/</span>
           <span className={styles.brandHandle}>{profile.handle}</span>
           <span className={styles.brandDot}>.</span>

@@ -39,13 +39,29 @@
   }
 }
 
+/* The status card is usually the LCP element. Starting it partly visible
+   lets it paint on first frame; from opacity 0 it only counts once the fade
+   lands (Lighthouse mobile measured ~2.1s of LCP render delay). */
+@keyframes heroRiseCard {
+  from {
+    opacity: 0.5;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .greeting,
 .name,
 .role,
 .tagline,
-.ctas,
-.statusCard {
+.ctas {
   animation: heroRise 0.6s ease both;
+}
+.statusCard {
+  animation: heroRiseCard 0.6s ease both;
 }
 
 .greeting {

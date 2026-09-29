@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { projects, type Project } from "../lib/data";
 import FeaturePills from "./FeaturePills";
@@ -47,12 +48,13 @@ function DefaultCard({ p }: { p: Project }) {
     >
       <header className={styles.cardHeader}>
         {p.cover?.kind === "logo" ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             className={styles.cardLogo}
             src={p.cover.src}
             alt=""
             aria-hidden="true"
+            width={22}
+            height={22}
           />
         ) : (
           <span className={styles.folder} aria-hidden="true">▢</span>
@@ -170,12 +172,13 @@ function FeaturedCard({ p }: { p: Project }) {
 
           <h3 className={styles.featuredTitle}>
             {p.cover?.kind === "logo" && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 className={styles.featuredTitleLogo}
                 src={p.cover.src}
                 alt=""
                 aria-hidden="true"
+                width={32}
+                height={32}
               />
             )}
             <Link
