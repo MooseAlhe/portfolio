@@ -1,15 +1,15 @@
 .hero {
-  min-height: 100vh;
+  min-height: auto;
   display: flex;
   align-items: center;
-  padding-top: 120px;
-  padding-bottom: 80px;
+  padding-top: max(clamp(112px, 14vh, 160px), calc(var(--nav-height, 69px) + 32px));
+  padding-bottom: clamp(64px, 9vh, 100px);
   position: relative;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   gap: clamp(28px, 5vw, 64px);
   align-items: center;
 }
@@ -21,7 +21,7 @@
 .boot {
   font-size: 13px;
   color: var(--fg-muted);
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   min-height: 64px;
   line-height: 1.8;
 }
@@ -53,12 +53,17 @@
 }
 .name {
   animation-delay: 220ms;
+  font-size: clamp(2.75rem, 7vw, 5rem);
+  line-height: 1.05;
 }
 .role {
   animation-delay: 340ms;
+  font-size: clamp(1rem, 1.5vw, 1.1875rem);
 }
 .tagline {
   animation-delay: 460ms;
+  font-size: 1rem;
+  max-width: 56ch;
 }
 .ctas {
   animation-delay: 580ms;
@@ -251,8 +256,8 @@
 .statusBody pre {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.75;
+  font-size: 0.75rem;
+  line-height: 1.7;
   color: var(--fg-muted);
   white-space: pre-wrap;
   word-break: break-word;
@@ -273,7 +278,7 @@
 @media (max-width: 520px) {
   .hero {
     min-height: auto;
-    padding-top: 110px;
+    padding-top: max(110px, calc(var(--nav-height, 69px) + 24px));
   }
   .boot {
     min-height: 52px;
@@ -286,4 +291,17 @@
   .ctaGhost {
     justify-content: center;
   }
+}
+
+@media (max-width: 57.5rem) {
+  .hero { padding-top: max(112px, calc(var(--nav-height, 69px) + 24px)); }
+  .grid { gap: 32px; }
+  .statusCard { max-width: 560px; width: 100%; }
+}
+@media (max-width: 32.5rem) {
+  .hero { padding-top: max(96px, calc(var(--nav-height, 69px) + 24px)); padding-bottom: 40px; }
+  .boot { margin-bottom: 16px; }
+  .greeting { margin-bottom: 14px; }
+  .statusBody { padding: 14px; }
+  .ctas { gap: 4px; }
 }

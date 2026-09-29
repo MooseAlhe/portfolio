@@ -38,6 +38,7 @@
   width: 11px;
   height: 11px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 .dot[data-c="r"] { background: #ff5f56; }
 .dot[data-c="y"] { background: #ffbd2e; }
@@ -45,15 +46,17 @@
 .title {
   margin-left: 12px;
   color: var(--fg-muted);
-  font-size: 12px;
+  font-size: 0.75rem;
   user-select: none;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .scroll {
-  height: clamp(360px, 56vh, 520px);
+  height: clamp(280px, 45vh, 440px);
   overflow-y: auto;
   padding: 18px 18px 14px;
-  font-size: 13.5px;
+  font-size: 0.875rem;
   line-height: 1.65;
 }
 
@@ -75,59 +78,34 @@
   font-size: 12px;
   white-space: pre;
   text-shadow: 0 0 8px var(--accent-glow);
+  overflow-x: auto;
+  max-width: 100%;
 }
 
-/*
- * Input row: prompt + visible typed-text + custom blinky caret + (optional hint).
- * The real <input> sits invisibly on top so it still receives focus and keystrokes
- * (and pops the mobile keyboard on tap). The visible "typed" span shows whatever
- * the user has typed so the caret naturally sits at the end of that text.
- */
 .inputRow {
   display: flex;
-  align-items: center;
-  gap: 0;
-  margin-top: 4px;
-  position: relative;
-  min-height: 1.65em;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  gap: 4px;
 }
-.prompt {
-  color: var(--accent);
-  white-space: pre;
-  user-select: none;
-}
-.typed {
-  color: var(--fg);
-  white-space: pre;
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  min-width: 1px;
-}
-.hint {
-  color: var(--fg-dim);
-  margin-left: 8px;
-  font-style: italic;
-  opacity: 0.7;
-  user-select: none;
-}
-.hiddenInput {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent;
+.prompt { color: var(--accent); white-space: pre-wrap; overflow-wrap: anywhere; }
+.commandInput {
+  flex: 1;
+  min-width: 8ch;
+  width: 0;
+  max-width: 100%;
+  padding: 4px 0;
   border: 0;
-  outline: 0;
-  padding: 0;
-  margin: 0;
-  color: transparent;
-  caret-color: transparent;
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-}
-.hiddenInput::selection {
   background: transparent;
+  color: var(--fg);
+  caret-color: var(--accent);
+  font: inherit;
+  font-size: 1rem;
 }
+.commandInput::placeholder { color: var(--fg-dim); font-style: italic; }
+.commandInput:focus,
+.commandInput:focus-visible { outline: none; box-shadow: none; }
 
 .suggestRow {
   display: flex;
@@ -144,8 +122,9 @@
   padding: 5px 10px;
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 0.8125rem;
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  min-height: 44px;
 }
 .chip:hover {
   border-color: var(--accent-dim);
@@ -161,4 +140,9 @@
   .ascii {
     font-size: 10px;
   }
+}
+
+@media (max-width: 32.5rem) {
+  .scroll { font-size: 0.875rem; padding: 16px 14px; }
+  .prompt { flex-basis: 100%; }
 }

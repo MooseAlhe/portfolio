@@ -18,8 +18,7 @@ export default function Experience() {
         />
 
         <p className={styles.subhead}>
-          A snapshot of where I&apos;ve worked and what the day-to-day actually
-          looked like.{" "}
+          My recent work. More detail in my{" "}
           <a
             href="/resume.pdf"
             target="_blank"
@@ -59,9 +58,11 @@ export default function Experience() {
                   </span>
                 </header>
 
-                <p className={`${styles.blurb} highlight-scope`}>
-                  {highlightTerms(job.blurb)}
-                </p>
+                {job.blurb.split("\n\n").map((paragraph, index) => (
+                  <p key={index} className={`${styles.blurb} highlight-scope`}>
+                    {highlightTerms(paragraph)}
+                  </p>
+                ))}
 
                 {job.scope.length > 0 && (
                   <div

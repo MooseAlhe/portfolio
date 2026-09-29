@@ -35,9 +35,16 @@ export default function Projects() {
   const scrollBy = (dir: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
-    const card = el.querySelector<HTMLElement>(`.${styles.card}`);
-    const step = card ? card.offsetWidth + 22 : el.clientWidth * 0.8;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
+    const positions = Array.from(el.children, (child) =>
+      child.getBoundingClientRect().left - el.getBoundingClientRect().left + el.scrollLeft - 4
+    );
+    const next = dir === 1
+      ? positions.find((left) => left > el.scrollLeft + 8)
+      : [...positions].reverse().find((left) => left < el.scrollLeft - 8);
+    el.scrollTo({
+      left: next ?? (dir === 1 ? el.scrollWidth : 0),
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
   };
 
   return (
@@ -196,7 +203,7 @@ function FinanceMock() {
       </ul>
 
       <div className={styles.financeTotal}>
-        <span className={styles.financeTotalLabel}>March · total</span>
+        <span className={styles.financeTotalLabel}>Sample · March total</span>
         <span className={styles.financeTotalAmount}>$1,847.32</span>
       </div>
     </div>
@@ -234,7 +241,7 @@ function FeaturedCard({ p }: { p: Project }) {
               id={`feat-${p.slug}-title`}
               href={`/projects/${p.slug}`}
               className={styles.featuredTitleLink}
-              aria-label={`Open ${p.name} case study`}
+              aria-label={`View ${p.name} project`}
             >
               {p.name}
             </Link>
@@ -263,7 +270,7 @@ function FeaturedCard({ p }: { p: Project }) {
 
           <div className={styles.featuredCtaRow}>
             <span className={styles.featuredCtaPrimary} aria-hidden="true">
-              Open case study <span className={styles.featuredCtaArrow}>→</span>
+              View project <span className={styles.featuredCtaArrow}>→</span>
             </span>
             {p.links.demo && (
               <a
@@ -271,9 +278,9 @@ function FeaturedCard({ p }: { p: Project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.featuredCtaSecondary}
-                aria-label={`Launch ${p.name} app in a new tab`}
+                aria-label={`Try the ${p.name} demo in a new tab`}
               >
-                Join waitlist
+                Try the demo
                 <span className={styles.featuredCtaArrow} aria-hidden="true">
                   ↗
                 </span>

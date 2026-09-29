@@ -149,13 +149,15 @@ export default function Terminal() {
       }
 
       if (e.key === "Tab") {
-        e.preventDefault();
+        if (e.shiftKey || !input.trim()) return;
         const parts = input.split(/\s+/);
         if (parts.length === 1) {
           const matches = completeCommand(parts[0]);
           if (matches.length === 1) {
+            e.preventDefault();
             setInput(matches[0] + " ");
           } else if (matches.length > 1) {
+            e.preventDefault();
             print([
               { kind: "input", text: PROMPT + input },
               { kind: "output", text: matches.join("    ") },
@@ -196,12 +198,12 @@ export default function Terminal() {
         <div className="section-header">
           <span className="h-num">04.</span>
           <span className="h-title">Terminal</span>
-          <span className="text-muted">// try it, it actually works</span>
+          <span className="text-muted">// another way to look around</span>
           <span className="h-rule" aria-hidden="true" />
         </div>
 
         <p className={styles.intro}>
-          Below is a real interactive shell with {totalCommands} commands.
+          Explore the site through {totalCommands} built-in commands.
           Type <span className="kbd">help</span> to start, use{" "}
           <span className="kbd">↑</span>/<span className="kbd">↓</span> to
           recall history, and <span className="kbd">Tab</span> to autocomplete.
@@ -239,18 +241,10 @@ export default function Terminal() {
 
             <div className={styles.inputRow}>
               <span className={styles.prompt}>{PROMPT}</span>
-              <span className={styles.typed} aria-hidden="true">
-                {input}
-              </span>
-              <span className="caret" aria-hidden="true" />
-              {showHint && (
-                <span className={styles.hint} aria-hidden="true">
-                  type &apos;help&apos;
-                </span>
-              )}
               <input
                 ref={inputRef}
-                className={styles.hiddenInput}
+                className={styles.commandInput}
+                placeholder={showHint ? "type 'help'" : undefined}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onKeyDown}

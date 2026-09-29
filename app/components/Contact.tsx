@@ -30,19 +30,19 @@ export default function Contact() {
         <ScrollReveal className={styles.card}>
           <p className={styles.kicker}>
             <span className="text-accent">// </span>
-            currently open to interesting conversations
+            open to new roles and project conversations
           </p>
           <h3 className={styles.headline}>
-            Let&apos;s build something.
+            Get in touch.
           </h3>
           <p className={styles.body}>
-            New role, side project, or a half-formed idea that sounds fun:
-            my inbox is the fastest way to reach me.
+            Happy to talk about my work, a role you&apos;re hiring for,
+            or a project you have in mind. Send me an email.
           </p>
 
           <div className={styles.actions}>
             <a href={`mailto:${profile.email}`} className={styles.primary}>
-              <span aria-hidden="true">✉</span> {profile.email}
+              <span aria-hidden="true">✉</span> <span>{profile.email}</span>
             </a>
             <button
               type="button"

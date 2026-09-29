@@ -9,8 +9,8 @@
 
   /* Text */
   --fg: #d6e4cc;
-  --fg-muted: #7a8a7d;
-  --fg-dim: #4a5550;
+  --fg-muted: #9aa99d;
+  --fg-dim: #7f8c83;
 
   /* Accents (terminal palette) */
   --accent: #5eff84;
@@ -43,12 +43,14 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-size: 1rem;
+  overflow-x: visible;
 }
 
 html {
   scroll-behavior: smooth;
   /* keep anchor jumps below sticky nav */
-  scroll-padding-top: 80px;
+  scroll-padding-top: calc(var(--nav-height, 69px) + 16px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -129,7 +131,7 @@ button {
     rgba(0, 0, 0, 0.18) 2px,
     rgba(0, 0, 0, 0.18) 3px
   );
-  opacity: 0.35;
+  opacity: 0.18;
   mix-blend-mode: multiply;
 }
 
@@ -156,17 +158,17 @@ button {
 }
 
 .section {
-  padding: clamp(64px, 10vh, 120px) 0;
+  padding: clamp(48px, 7vw, 88px) 0;
   position: relative;
 }
 
 .section-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: clamp(32px, 5vh, 56px);
+  gap: 12px;
+  margin-bottom: 32px;
   color: var(--fg-muted);
-  font-size: 13px;
+  font-size: 0.8125rem;
   letter-spacing: 0.05em;
 }
 
@@ -181,8 +183,10 @@ button {
 }
 
 .section-header .h-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--fg);
-  font-size: 20px;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: 500;
   margin-right: 4px;
 }
@@ -220,7 +224,7 @@ button {
   border-radius: 4px;
   background: var(--bg-elevated);
   color: var(--fg);
-  font-size: 11px;
+  font-size: 0.75rem;
   line-height: 1;
 }
 
@@ -229,9 +233,10 @@ button {
   padding: 3px 8px;
   border: 1px solid var(--border-strong);
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 0.75rem;
   color: var(--fg-muted);
   background: rgba(94, 255, 132, 0.04);
+  max-width: 100%;
 }
 
 /* ---------- Keyword highlighter ---------- */
@@ -372,4 +377,20 @@ button {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-dim);
+}
+
+/* Allow long labels and addresses to reflow without masking overflow. */
+p, h1, h2, h3, a, button, .tag { overflow-wrap: anywhere; }
+img, video { max-width: 100%; }
+[hidden] { display: none !important; }
+
+@media (max-width: 40rem) {
+  .section-header {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    gap: 6px 10px;
+    letter-spacing: 0;
+  }
+  .section-header > :nth-child(3) { grid-column: 3; }
+  .section-header .h-rule { display: none; }
 }
